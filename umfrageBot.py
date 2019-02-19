@@ -23,7 +23,7 @@ gcontext = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
 client = discord.Client()
 
 def helpembed():
-    embed = discord.Embed(title='Hilfe - umfrageBot v1', color=discord.colour.Colour.orange())
+    embed = discord.Embed(title='Hilfe - BundestagsBot v1', color=discord.colour.Colour.orange())
     embed.set_thumbnail(url='https://cdn0.iconfinder.com/data/icons/handdrawn-ui-elements/512/Question_Mark-512.png')
     embed.description = 'Benutze >umfrage [Parlamentsnummer]\nKeine Nummer für Bundestag'
 
