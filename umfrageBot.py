@@ -22,12 +22,34 @@ gcontext = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
 
 client = discord.Client()
 
+def createsurvey(title,text,author):
+
+    embed = discord.Embed(title='Umfrage: ' + title,color=discord.Colour.green(),url='https://github.com/zaanposni/bundestagsBot')
+    embed.timestamp = datetime.datetime.utcnow()
+    embed.description = text
+    embed.set_footer(text="Umfrage von " + author.name)
+    return embed
+
 def helpembed():
     embed = discord.Embed(title='Hilfe - BundestagsBot v1', color=discord.colour.Colour.orange())
     embed.set_thumbnail(url='https://cdn0.iconfinder.com/data/icons/handdrawn-ui-elements/512/Question_Mark-512.png')
-    embed.description = 'Benutze >umfrage [Parlamentsnummer]\nKeine Nummer für Bundestag'
+    embed.description = 'Benutze >survey; Titel; Beschreibung; <Anzahl> um eine Umfrage zu erstellen. >help survey für mehr Details\n\n'\
+                        'Benutze >umfrage [Parlamentsnummer]\nKeine Nummer für Bundestag'\
+
 
     embed.add_field(name='Liste:', value='0: Bundestag\n1: Baden-Württemberg\n2: Bayern\n3: Berlin\n4: Brandeburg\n5: Bremen\n6: Hamburg\n7: Hessen\n8: Mecklenburg-Vorpommern\n9: Niedersachsen\n10: NRW\n11: Rheinland-Pfalz\n12: Saarland\n13: Sachsen\n14: Sachsen-Anhalt\n15: Schleswig-Holstein\n16: Thüringen\n17: Europäisches Parlament')
+    return embed
+
+def surveyhelpembed():
+    embed = discord.Embed(title='Hilfe - BundestagsBot v1', color=discord.colour.Colour.orange())
+    embed.set_thumbnail(url='https://cdn0.iconfinder.com/data/icons/handdrawn-ui-elements/512/Question_Mark-512.png')
+
+    embed.description = '>survey Titel Beschreibung <Anzahl>\n'\
+                        'Anzahl ist optional und beschreibt die Anzahl an Reactionmöglichkeiten.\n'\
+                        'So erzeugt >survey; Titel; Beschreibung; 5 eine Umfrage mit 5 Antwortmöglichkeiten, die du\n'\
+                        'dann in deiner Beschreibung erklären musst.\n'\
+                        'Beachte bitte die Trennung der Argumente via Semikolon!'
+
     return embed
 
 def createembed(parl = 0):
@@ -70,17 +92,15 @@ async def on_message(message):
         else:
             print((str(datetime.datetime.now())[:-7]) + prefix + str(message.author) + ' used ' + message.content)
             await message.channel.send(content='Please use <#533005337482100736>')
-
-
-    if message.content == '>help':
+    if str(message.content).startswith('>help'):
         if message.channel.id == 533005337482100736 or isinstance(message.channel,discord.DMChannel):
             print((str(datetime.datetime.now())[:-7]) + prefix + str(message.author) + ' used ' + message.content)
-            embed = helpembed()
+            if str(message.content).strip() == '>help survey': embed=surveyhelpembed()
+            else: embed = helpembed()
             await message.channel.send(embed=embed)
         else:
             print((str(datetime.datetime.now())[:-7]) + prefix + str(message.author) + ' used ' + message.content)
             await message.channel.send(content='Please use <#533005337482100736>')
-
     if str(message.content).startswith('+warn'):
 
         for role in message.author.roles:
@@ -103,9 +123,38 @@ async def on_message(message):
                     punishrole = get(client.get_guild(531445761733296130).roles, id=533336650139435021)
 
                     await badboi.add_roles(punishrole)
+    if str(message.content).startswith('>survey'):
+        if not isinstance(message.channel,discord.DMChannel):
+            # aufbau: survey title text answers
+            # answers 0 für antwort ja/nein
+            # >1 für zaheln von 0-10 damit man dann im text schreibt 1:x 2:y 3:z 4:a 5:b 6:c und die leute dann deutlich mehr zur auswahl haben
+            args = str(message.content).split(';')
+            print(args)
+            embed = createsurvey(args[1],args[2],message.author)
 
-
-
+            if len(args) == 4 and args[3] != '':
+                args[3] = args[3].strip()
+                if args[3].isdigit():
+                    msg = await message.channel.send(embed=embed)
+                    if int(args[3]) in range(3, 10):
+                        emojis = ['1⃣', '2⃣', '3⃣', '4⃣', '5⃣', '6⃣', '7⃣', '8⃣', '9⃣']
+                        for e in range(0, int(args[3])):
+                            await msg.add_reaction(emojis[e])
+                    elif int(args[3]) in range(0, 3):
+                        await msg.add_reaction('✅')
+                        await msg.add_reaction('❌')
+                    else:
+                        await message.channel.send(content="Bitte gib eine gültige Zahl ein (3-9)..")
+                else:
+                    await message.channel.send(content="Bitte gib eine gültige Zahl ein (3-9).")
+            elif len(args) == 3 or args[3] == '':
+                msg = await message.channel.send(embed=embed)
+                await msg.add_reaction('✅')
+                await msg.add_reaction('❌')
+            else:
+                await message.channel.send(content="Ungültige Anzahl an Argumenten. Benutze >survey title text answers")
+        else:
+            await message.channel.send(content='Bitte benutze den Befehl auf einem Server.')
     return
 
 @client.event
