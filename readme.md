@@ -7,7 +7,7 @@
   <br>
   Der Bot dient ausschließlich dem CommunityServer des Youtube-Channels.
   <br>Im Hintergrund greife ich noch auf meine privaten Utils zurück.
-  <br> Diese werde ich zwar nicht freigeben ihr solltet aber auch ohne sie Sachen dazu programmieren können :)
+  <br>Siehe: https://github.com/zaanposni/utils Sind eigentlich nicht relevant.
 </div>
 <br>
 <br>
