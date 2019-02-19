@@ -62,7 +62,7 @@ async def on_message(message):
 
     if str(message.content).startswith('>umfrage'):
         #absofort nur noch im botchannel amk xD
-        if message.channel.id == 533005337482100736:
+        if message.channel.id == 533005337482100736 or message.server is None:
             print((str(datetime.datetime.now())[:-7]) + prefix + str(message.author) + ' used ' + message.content)
             if str(message.content)[8:].strip() != '': embed = createembed(int(str(message.content)[8:].strip()))
             else: embed = createembed()
@@ -73,9 +73,14 @@ async def on_message(message):
 
 
     if message.content == '>help':
-        print((str(datetime.datetime.now())[:-7]) + prefix + str(message.author) + ' used ' + message.content)
-        embed = helpembed()
-        await message.channel.send(embed=embed)
+        if message.channel.id == 533005337482100736 or message.server is None:
+            print((str(datetime.datetime.now())[:-7]) + prefix + str(message.author) + ' used ' + message.content)
+            embed = helpembed()
+            await message.channel.send(embed=embed)
+        else:
+            print((str(datetime.datetime.now())[:-7]) + prefix + str(message.author) + ' used ' + message.content)
+            await message.channel.send(content='Please use <#533005337482100736>')
+
     if str(message.content).startswith('+warn'):
 
         for role in message.author.roles:
