@@ -11,7 +11,7 @@ import os
 
 #testt
 
-data = handleJson.readjson('Y:/settings/tokens.json')
+data = handleJson.readjson('C:/server/settings/tokens.json')
 TOKEN = data['TOKENS']['umfrageBot']
 webhooklogs = webhooks.webhooks['logChannel']
 prefix = '\033[92m[umfrageBot] '
