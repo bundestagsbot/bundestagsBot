@@ -26,7 +26,7 @@ def createsurvey(title,text,author):
 
     embed = discord.Embed(title='Umfrage: ' + title,color=discord.Colour.green(),url='https://github.com/zaanposni/bundestagsBot')
     embed.timestamp = datetime.datetime.utcnow()
-    embed.description = text
+    embed.description = text.replace('|','\n')
     embed.set_footer(text="Umfrage von " + author.name)
     return embed
 
@@ -84,7 +84,7 @@ async def on_message(message):
 
     if str(message.content).startswith('>umfrage'):
         #absofort nur noch im botchannel amk xD
-        if message.channel.id == 533005337482100736 or isinstance(message.channel,discord.DMChannel):
+        if message.channel.id in [533005337482100736,546247189794652170] or isinstance(message.channel,discord.DMChannel):
             print((str(datetime.datetime.now())[:-7]) + prefix + str(message.author) + ' used ' + message.content)
             if str(message.content)[8:].strip() != '': embed = createembed(int(str(message.content)[8:].strip()))
             else: embed = createembed()
@@ -93,7 +93,7 @@ async def on_message(message):
             print((str(datetime.datetime.now())[:-7]) + prefix + str(message.author) + ' used ' + message.content)
             await message.channel.send(content='Please use <#533005337482100736>')
     if str(message.content).startswith('>help'):
-        if message.channel.id == 533005337482100736 or isinstance(message.channel,discord.DMChannel):
+        if message.channel.id in [533005337482100736,546247189794652170] or isinstance(message.channel,discord.DMChannel):
             print((str(datetime.datetime.now())[:-7]) + prefix + str(message.author) + ' used ' + message.content)
             if str(message.content).strip() == '>help survey': embed=surveyhelpembed()
             else: embed = helpembed()
@@ -124,6 +124,7 @@ async def on_message(message):
 
                     await badboi.add_roles(punishrole)
     if str(message.content).startswith('>survey'):
+        print((str(datetime.datetime.now())[:-7]) + prefix + str(message.author) + ' used ' + message.content)
         if not isinstance(message.channel,discord.DMChannel):
             # aufbau: survey title text answers
             # answers 0 für antwort ja/nein
