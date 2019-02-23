@@ -30,6 +30,22 @@ Liste der verfügbaren Umfragen.
 <hr>
 
 ```python
+>roles
+```
+
+<img src='https://i.imgur.com/e30ji4n.png' width=300>
+Liste der Rollenverteilung.
+<hr>
+
+```python
+>iam [Politik]
+```
+
+<img src='https://i.imgur.com/omSQ8Ca.png' width=300>
+Zuteilen von Ideologien.
+<hr>
+
+```python
 >warn @user
 ```
 Warnt den erwähnten User und fügt ihm die Rolle "ErsteVerwarnung" hinzu.
