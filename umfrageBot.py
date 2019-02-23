@@ -14,6 +14,7 @@ import os
 data = handleJson.readjson('C:/server/settings/tokens.json')
 TOKEN = data['TOKENS']['umfrageBot']
 webhooklogs = webhooks.webhooks['logChannel']
+webhooklogsBoB = webhooks.webhooks['logChannelBoB']
 prefix = '\033[92m[umfrageBot] '
 firstconnection = True
 tries_torec = 0
@@ -208,6 +209,7 @@ async def on_ready():
 
     # ================================================
     hook = Webhook(webhooklogs)
+    hookBoB = Webhook(webhooklogsBoB)
 
     # ================================================
 
@@ -219,6 +221,7 @@ async def on_ready():
     )
 
     hook.send(embed=embed)
+    hookBoB.send(embed=embed)
     pushedNotification.sendNot('BundestagBot: I am ready again!')
 
     # script related
