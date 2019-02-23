@@ -42,7 +42,7 @@ Liste der Rollenverteilung.
 ```
 
 <img src='https://i.imgur.com/omSQ8Ca.png' width=300>
-Zuteilen von Ideologien.
+Zuteilen von Rollen.
 <hr>
 
 ```python
