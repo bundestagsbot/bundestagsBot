@@ -84,6 +84,7 @@ async def on_message(message):
 
     if(str(message.content).startswith('>roles')):
         if message.channel.id in [533005337482100736, 546247189794652170]:
+            print((str(datetime.datetime.now())[:-7]) + prefix + str(message.author) + ' used ' + message.content)
             embed = discord.Embed(title='Rollen Übersicht',color= discord.colour.Colour.orange())
             desc = 'Insgesamt hat der Server ' + str(client.get_guild(531445761733296130).member_count) + ' Mitglieder.\n\n'
             for r in roles[:-1]:
