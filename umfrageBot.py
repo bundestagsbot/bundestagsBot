@@ -33,9 +33,10 @@ def createsurvey(title,text,author):
 def helpembed():
     embed = discord.Embed(title='Hilfe - BundestagsBot v1', color=discord.colour.Colour.orange())
     embed.set_thumbnail(url='https://cdn0.iconfinder.com/data/icons/handdrawn-ui-elements/512/Question_Mark-512.png')
-    embed.description = 'Benutze >survey; Titel; Beschreibung; <Anzahl> um eine Umfrage zu erstellen. >help survey für mehr Details\n'\
-                        'Benutze >iam [Politik] um dir diese Rolle zuzuweisen.\n\n'\
-                        'Benutze >umfrage [Parlamentsnummer]\nKeine Nummer für Bundestag'\
+    embed.description = '-Benutze >survey; Titel; Beschreibung; <Anzahl> um eine Umfrage zu erstellen. >help survey für mehr Details\n\n'\
+                        '-Benutze >iam [Politik] um dir diese Rolle zuzuweisen.\n\n'\
+                        '-Benutze >roles für eine Übersicht der Rollenverteilung\n\n'\
+                        '-Benutze >umfrage [Parlamentsnummer]\nKeine Nummer für Bundestag'\
 
 
     embed.add_field(name='Liste:', value='0: Bundestag\n1: Baden-Württemberg\n2: Bayern\n3: Berlin\n4: Brandeburg\n5: Bremen\n6: Hamburg\n7: Hessen\n8: Mecklenburg-Vorpommern\n9: Niedersachsen\n10: NRW\n11: Rheinland-Pfalz\n12: Saarland\n13: Sachsen\n14: Sachsen-Anhalt\n15: Schleswig-Holstein\n16: Thüringen\n17: Europäisches Parlament')
@@ -81,6 +82,19 @@ async def on_message(message):
         emoji = client.get_emoji(545649937598119936)
         await message.add_reaction(emoji)
 
+    if(str(message.content).startswith('>roles')):
+        if message.channel.id in [533005337482100736, 546247189794652170]:
+            embed = discord.Embed(title='Rollen Übersicht',color= discord.colour.Colour.orange())
+            desc = 'Insgesamt hat der Server ' + str(client.get_guild(531445761733296130).member_count) + ' Mitglieder.\n\n'
+            for r in roles[:-1]:
+                role = get(client.get_guild(531445761733296130).roles, name=r)
+                desc += role.name + ': ' + str(len(role.members)) + '.\n'
+            embed.description = desc
+            embed.timestamp = datetime.datetime.utcnow()
+            await message.channel.send(embed=embed)
+
+        else:
+            await message.channel.send(content='Please use <#533005337482100736>')
     if(str(message.content).startswith('>iam')):
         if message.channel.id in [533005337482100736, 546247189794652170]:
             print((str(datetime.datetime.now())[:-7]) + prefix + str(message.author) + ' used ' + message.content)
@@ -94,7 +108,6 @@ async def on_message(message):
                 await message.channel.send(content='Please use one of the following roles: ```\n' + '\n'.join(roles[:-1]) + ' ```')
                 # letzte rolle nicht um nsfw zu verheimlichen ^.^
         else:
-            print((str(datetime.datetime.now())[:-7]) + prefix + str(message.author) + ' used ' + message.content)
             await message.channel.send(content='Please use <#533005337482100736>')
         return
     if str(message.content).startswith('>umfrage'):
