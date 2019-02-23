@@ -18,7 +18,7 @@ webhooklogsBoB = webhooks.webhooks['logChannelBoB']
 prefix = '\033[92m[umfrageBot] '
 firstconnection = True
 tries_torec = 0
-roles = ['Liberal','Konservativ','Grün','Sozialdemokratisch','Sozialistisch','Nationalistisch','nsfw'] # usable roles for >iam
+roles = ['Liberal', 'Konservativ', 'Grün', 'Sozialdemokratisch', 'Sozialistisch', 'Nationalistisch', 'nsfw'] # usable roles for >iam
 
 gcontext = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
 
@@ -140,12 +140,14 @@ async def on_message(message):
                 for member in client.get_all_members():
                     if member.mention == badbois:
                         badboi = member
+                        break
 
                 vorbestraft = False
                 for role in badboi.roles:
                     if role.name == 'ErsteVerwarnung':
                         vorbestraft = True
                         await message.channel.send(content='Benutzer wurde bereits einmal verwarnt!')
+                        break
 
                 if not vorbestraft:
                     await message.channel.send(content=badboi.mention + ' verwarnt!')
