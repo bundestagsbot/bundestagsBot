@@ -81,6 +81,7 @@ async def on_message(message):
         await message.add_reaction(emoji)
 
     if(str(message.content).startswith('>iam')):
+        print((str(datetime.datetime.now())[:-7]) + prefix + str(message.author) + ' used ' + message.content)
         role = str(message.content)[4:].strip()
         if role in roles:
             role = get(client.get_guild(531445761733296130).roles, name=role)
