@@ -33,7 +33,8 @@ def createsurvey(title,text,author):
 def helpembed():
     embed = discord.Embed(title='Hilfe - BundestagsBot v1', color=discord.colour.Colour.orange())
     embed.set_thumbnail(url='https://cdn0.iconfinder.com/data/icons/handdrawn-ui-elements/512/Question_Mark-512.png')
-    embed.description = 'Benutze >survey; Titel; Beschreibung; <Anzahl> um eine Umfrage zu erstellen. >help survey für mehr Details\n\n'\
+    embed.description = 'Benutze >survey; Titel; Beschreibung; <Anzahl> um eine Umfrage zu erstellen. >help survey für mehr Details\n'\
+                        'Benutze >iam [Politik] um dir diese Rolle zuzuweisen.\n\n'\
                         'Benutze >umfrage [Parlamentsnummer]\nKeine Nummer für Bundestag'\
 
 
@@ -81,18 +82,21 @@ async def on_message(message):
         await message.add_reaction(emoji)
 
     if(str(message.content).startswith('>iam')):
-        print((str(datetime.datetime.now())[:-7]) + prefix + str(message.author) + ' used ' + message.content)
-        role = str(message.content)[4:].strip()
-        if role in roles:
-            role = get(client.get_guild(531445761733296130).roles, name=role)
-            await message.author.add_roles(role)
-            await message.channel.send(content=message.author.mention + ' Rolle ' + role.name + ' hinzugefügt.')
+        if message.channel.id in [533005337482100736, 546247189794652170]:
+            print((str(datetime.datetime.now())[:-7]) + prefix + str(message.author) + ' used ' + message.content)
+            role = str(message.content)[4:].strip()
+            if role in roles:
+                role = get(client.get_guild(531445761733296130).roles, name=role)
+                await message.author.add_roles(role)
+                await message.channel.send(content=message.author.mention + ' Rolle ' + role.name + ' hinzugefügt.')
 
+            else:
+                await message.channel.send(content='Please use one of the following roles: ```\n' + '\n'.join(roles[:-1]) + ' ```')
+                # letzte rolle nicht um nsfw zu verheimlichen ^.^
         else:
-            await message.channel.send(content='Please use one of the following roles: ```\n' + '\n'.join(roles[:-1]) + ' ```')
-            # letzte rolle nicht um nsfw zu verheimlichen ^.^
+            print((str(datetime.datetime.now())[:-7]) + prefix + str(message.author) + ' used ' + message.content)
+            await message.channel.send(content='Please use <#533005337482100736>')
         return
-
     if str(message.content).startswith('>umfrage'):
         #absofort nur noch im botchannel amk xD
         if message.channel.id in [533005337482100736,546247189794652170] or isinstance(message.channel,discord.DMChannel):
