@@ -11,12 +11,13 @@ import os
 
 #testt
 
-data = handleJson.readjson('C:/server/settings/tokens.json')
+data = handleJson.readjson('Y:/settings/tokens.json')
 TOKEN = data['TOKENS']['umfrageBot']
 webhooklogs = webhooks.webhooks['logChannel']
 prefix = '\033[92m[umfrageBot] '
 firstconnection = True
 tries_torec = 0
+roles = ['Liberal','Konservativ','Grün','Sozialdemokratisch','Sozialistisch','Nationalistisch','nsfw'] # usable roles for >iam
 
 gcontext = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
 
@@ -29,7 +30,6 @@ def createsurvey(title,text,author):
     embed.description = text.replace('|','\n')
     embed.set_footer(text="Umfrage von " + author.name)
     return embed
-
 def helpembed():
     embed = discord.Embed(title='Hilfe - BundestagsBot v1', color=discord.colour.Colour.orange())
     embed.set_thumbnail(url='https://cdn0.iconfinder.com/data/icons/handdrawn-ui-elements/512/Question_Mark-512.png')
@@ -39,7 +39,6 @@ def helpembed():
 
     embed.add_field(name='Liste:', value='0: Bundestag\n1: Baden-Württemberg\n2: Bayern\n3: Berlin\n4: Brandeburg\n5: Bremen\n6: Hamburg\n7: Hessen\n8: Mecklenburg-Vorpommern\n9: Niedersachsen\n10: NRW\n11: Rheinland-Pfalz\n12: Saarland\n13: Sachsen\n14: Sachsen-Anhalt\n15: Schleswig-Holstein\n16: Thüringen\n17: Europäisches Parlament')
     return embed
-
 def surveyhelpembed():
     embed = discord.Embed(title='Hilfe - BundestagsBot v1', color=discord.colour.Colour.orange())
     embed.set_thumbnail(url='https://cdn0.iconfinder.com/data/icons/handdrawn-ui-elements/512/Question_Mark-512.png')
@@ -51,7 +50,6 @@ def surveyhelpembed():
                         'Beachte bitte die Trennung der Argumente via Semikolon!'
 
     return embed
-
 def createembed(parl = 0):
 
 
@@ -81,6 +79,18 @@ async def on_message(message):
     if message.author.id == 272655001329991681:
         emoji = client.get_emoji(545649937598119936)
         await message.add_reaction(emoji)
+
+    if(str(message.content).startswith('>iam')):
+        role = str(message.content)[4:].strip()
+        if role in roles:
+            role = get(client.get_guild(531445761733296130).roles, name=role)
+            await message.author.add_roles(role)
+            await message.channel.send(content=message.author.mention + ' Rolle ' + role.name + ' hinzugefügt.')
+
+        else:
+            await message.channel.send(content='Please use one of the following roles: ```\n' + '\n'.join(roles[:-1]) + ' ```')
+            # letzte rolle nicht um nsfw zu verheimlichen ^.^
+        return
 
     if str(message.content).startswith('>umfrage'):
         #absofort nur noch im botchannel amk xD
