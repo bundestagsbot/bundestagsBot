@@ -33,7 +33,7 @@ Liste der verfügbaren Umfragen.
 >roles
 ```
 
-<img src='https://i.imgur.com/e30ji4n.png' width=300>
+<img src='https://i.imgur.com/vBG5lfJ.png' width=300>
 Liste der Rollenverteilung.
 <hr>
 
