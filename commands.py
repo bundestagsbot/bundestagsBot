@@ -55,7 +55,7 @@ def register(name, **kwargs):
                         await message.channel.send(content='Folgende Kanäle sind nicht zulässig: ' + "".join(blacklisted))
                 print((str(datetime.datetime.now())[:-7]) + " " + str(message.author) + ' used ' + message.content) # logging
         commands[prefix + name] = wrapper2
-        print(f"registered {name} {kwargs}")
+        print('\033[92m' + (str(datetime.datetime.now())[:-7]) + f' \033[92m[BundestagsBot] registered {name} {kwargs}')
         return wrapper2
     return wrapper1
 

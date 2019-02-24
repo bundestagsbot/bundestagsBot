@@ -3,13 +3,16 @@ from utils import webhooks,handleJson,pushedNotification
 import datetime
 import subprocess
 from dhooks import Webhook,Embed
+
+prefix = ' \033[92m[BundestagsBot] '
+print('\033[92m' + (str(datetime.datetime.now())[:-7]) + prefix + 'started BundestagsBot')
+subprocess.call('cls', shell=True)
 import commands
 
 data = handleJson.readjson('C:/server/settings/tokens.json')
 TOKEN = data['TOKENS']['umfrageBot']
 webhooklogs = webhooks.webhooks['logChannel']
 webhooklogsBoB = webhooks.webhooks['logChannelBoB']
-prefix = '\033[92m[umfrageBot] '
 firstconnection = True
 tries_torec = 0
 client = discord.Client()
@@ -33,7 +36,7 @@ async def on_ready():
     # console related
     # ================================================
 
-    subprocess.call('cls', shell=True)
+
     print('\033[92m' + (str(datetime.datetime.now())[:-7]) + prefix + 'Logged in as')
     print((str(datetime.datetime.now())[:-7]) + prefix + client.user.name)
     print((str(datetime.datetime.now())[:-7]) + prefix + str(client.user.id))
