@@ -11,6 +11,7 @@ class prefixmgr():
     mod_cmd_prefix = "+"
 
 roles = handleJson.readjson(path='C:/server/settings/roles.json')['roles']
+roles.append('Grün')
 # usable roles for >iam
 commands = {}
 
