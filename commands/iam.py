@@ -16,6 +16,6 @@ async def main(client, message, params):
             await message.channel.send(content=message.author.mention + ' Rolle ' + role.name + ' hinzugefügt.')
         else:
             await message.author.remove_roles(role)
-            await message.channel.send(centent=message.author.mention + ' Rolle ' + role.name + ' entfernt.')
+            await message.channel.send(content=message.author.mention + ' Rolle ' + role.name + ' entfernt.')
     else:
         await message.channel.send(content='Please use one of the following roles: ```\n' + '\n'.join([e for e in roles if e != 'nsfw']) + ' ```')
