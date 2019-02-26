@@ -46,7 +46,16 @@ Zuteilen von Rollen.
 <hr>
 
 ```python
->warn @user
+>survey; [Title]; [Beschreibung]; [Answers]
+```
+
+<img src='https://i.imgur.com/ytHU5hB.png' width=300>
+Erstellen einer Umfrage.<br>
+Answers sind optional (von 1-9)
+<hr>
+
+```python
++warn @user
 ```
 Warnt den erwähnten User und fügt ihm die Rolle "ErsteVerwarnung" hinzu.
 <hr>
