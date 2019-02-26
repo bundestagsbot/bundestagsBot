@@ -23,10 +23,8 @@ class prefix():
 
 def parse(content, mod_cmd):
     if mod_cmd:
-        print(content[len(prefix.mod):].split(" "))
         ret =  content[len(prefix.mod):].split(" ")
     else:
-        print(content[len(prefix.standard):].split(" "))
         ret = content[len(prefix.standard):].split(" ")
     return [e for e in ret if e != ""]
 
