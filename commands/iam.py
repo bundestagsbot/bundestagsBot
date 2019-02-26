@@ -11,7 +11,7 @@ async def main(client, message, params):
     role = ''.join(params)
     if role.lower() in [e.lower() for e in roles]:
         role = get(client.get_guild(531445761733296130).roles, name=role[0].upper()+role[1:].lower())
-        if role in message.author.roles:
+        if role not in message.author.roles:
             await message.author.add_roles(role)
             await message.channel.send(content=message.author.mention + ' Rolle ' + role.name + ' hinzugefügt.')
         else:
