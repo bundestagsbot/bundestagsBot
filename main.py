@@ -34,14 +34,11 @@ async def on_message(message):
         print(params)
         if params[0] in commands.commands.keys():
             await commands.commands[params[0]](client, message, params[1:])
-        else:
-            await message.channel.send(content='Ungültiger Befehl!')
+
     elif  message.content.startswith(commands.prefix.mod):
         params = commands.parse(message.content, True)
         if params[0] in commands.mod_commands.keys():
             await commands.mod_commands[params[0]](client, message, params[1:])
-        else:
-            await message.channel.send(content='Ungültiger Befehl')
 
 @client.event
 async def on_ready():
