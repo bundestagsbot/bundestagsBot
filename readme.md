@@ -63,4 +63,4 @@ Warnt den erwähnten User und fügt ihm die Rolle "ErsteVerwarnung" hinzu.
 
 ### License:
 
-This project is licensed under GPL.
+This project is licensed under MIT.
