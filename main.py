@@ -56,6 +56,7 @@ async def on_ready():
 
     game1 = discord.Game(name='>umfrage')
     await client.change_presence(activity=game1)
+    print((str(datetime.datetime.now())[:-7]) + prefix + game1.name + ' als Status gesetzt.')
 
     # ================================================
     hook = Webhook(webhooklogs)
@@ -71,8 +72,11 @@ async def on_ready():
     )
 
     hook.send(embed=embed)
+    print((str(datetime.datetime.now())[:-7]) + prefix + 'Webhook Server')
     hookBoB.send(embed=embed)
+    print((str(datetime.datetime.now())[:-7]) + prefix + 'Webhook BoB-Server')
     pushedNotification.sendNot('BundestagBot: I am ready again!')
+    print((str(datetime.datetime.now())[:-7]) + prefix + 'Mobil Notification')
 
     # script related
     #================================================
