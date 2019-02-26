@@ -1,5 +1,6 @@
 import discord
 from discord.utils import get
+from utils import handleJson
 import requests
 import json
 import datetime
@@ -9,7 +10,7 @@ class prefixmgr():
     standard_prefix = ">"
     mod_cmd_prefix = "+"
 
-roles = ['Liberal', 'Konservativ', 'Grün', 'Sozialdemokratisch', 'Sozialistisch', 'Nationalistisch', 'nsfw']
+roles = handleJson.readjson(path='C:/server/settings/roles.json')['roles']
 # usable roles for >iam
 commands = {}
 
