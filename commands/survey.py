@@ -34,9 +34,9 @@ async def main(client, message, params):
             await msg.add_reaction('✅')
             await msg.add_reaction('❌')
         else:
-            await message.channel.send(content='Ungültige Anzahl an Argumenten. Benutze >survey; title; text; answers')
+            await message.channel.send(content='Ungültige Anzahl an Argumenten. Benutze >survey; title; text; [answers]')
     else:
-        await message.channel.send(content='Ungültige Anzahl an Argumenten. Benutze >survey; title; text; answers')
+        await message.channel.send(content='Ungültige Anzahl an Argumenten. Benutze >survey; title; text; [answers]')
 
 def createsurvey(title,text,author):
     embed = discord.Embed(title='Umfrage: ' + title,color=discord.Colour.green(),url='https://github.com/zaanposni/bundestagsBot')

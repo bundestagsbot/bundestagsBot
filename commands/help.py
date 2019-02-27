@@ -18,7 +18,7 @@ async def main(client, message, params):
 def helpembed():
     embed = discord.Embed(title='Hilfe - BundestagsBot v1', color=discord.colour.Colour.orange())
     embed.set_thumbnail(url='https://cdn0.iconfinder.com/data/icons/handdrawn-ui-elements/512/Question_Mark-512.png')
-    embed.description = '-Benutze >survey; Titel; Beschreibung; <Anzahl> um eine Umfrage zu erstellen. >help survey für mehr Details\n\n'\
+    embed.description = '-Benutze >survey; Titel; Beschreibung; <Anzahl>\num eine Umfrage zu erstellen. >help survey für mehr Details\n\n'\
                         '-Benutze >iam [Politik] um dir diese Rolle zuzuweisen.\n\n'\
                         '-Benutze >roles für eine Übersicht der Rollenverteilung\n\n'\
                         '-Benutze >umfrage [Parlamentsnummer]\nKeine Nummer für Bundestag'\
@@ -31,7 +31,7 @@ def surveyhelpembed():
     embed = discord.Embed(title='Hilfe - BundestagsBot v1', color=discord.colour.Colour.orange())
     embed.set_thumbnail(url='https://cdn0.iconfinder.com/data/icons/handdrawn-ui-elements/512/Question_Mark-512.png')
 
-    embed.description = '>survey Titel Beschreibung <Anzahl>\n\n'\
+    embed.description = '>survey; Titel; Beschreibung; <Anzahl>\n\n'\
                         'Anzahl ist optional und beschreibt die Anzahl an Reactionmöglichkeiten.\n\n'\
                         'So erzeugt >survey; Titel; Beschreibung; 5 eine Umfrage mit 5 Antwortmöglichkeiten, die du\n'\
                         'dann in deiner Beschreibung erklären musst.\n'\
