@@ -10,13 +10,10 @@ async def main(client, message, params):
     for member in client.get_all_members():
         if member.mention == badbois:
             badboi = member
-    vorbestraft = False
-    for role in badboi.roles:
-        if role.name == 'ErsteVerwarnung':
-            vorbestraft = True
-            await message.channel.send(content='Benutzer wurde bereits einmal verwarnt!')
-            break
-    if not vorbestraft:
+    warned = get(client.get_guild(531445761733296130).roles, name='ErsteVerwarnung') in badboi.roles
+    if not warned:
         await message.channel.send(content=badboi.mention + ' verwarnt!')
         punishrole = get(client.get_guild(531445761733296130).roles, id=533336650139435021)
         await badboi.add_roles(punishrole)
+    else:
+        await message.channel.send(content='Benutzer wurde bereits einmal verwarnt!')
