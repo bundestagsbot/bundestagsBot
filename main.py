@@ -31,7 +31,6 @@ async def on_message(message):
 
     if message.content.startswith(commands.prefix.standard):
         params = commands.parse(message.content, False)
-        print(params)
         if params[0] in commands.commands.keys():
             await commands.commands[params[0]](client, message, params[1:])
 
