@@ -31,8 +31,8 @@ def surveyhelpembed():
     embed = discord.Embed(title='Hilfe - BundestagsBot v1', color=discord.colour.Colour.orange())
     embed.set_thumbnail(url='https://cdn0.iconfinder.com/data/icons/handdrawn-ui-elements/512/Question_Mark-512.png')
 
-    embed.description = '>survey Titel Beschreibung <Anzahl>\n'\
-                        'Anzahl ist optional und beschreibt die Anzahl an Reactionmöglichkeiten.\n'\
+    embed.description = '>survey Titel Beschreibung <Anzahl>\n\n'\
+                        'Anzahl ist optional und beschreibt die Anzahl an Reactionmöglichkeiten.\n\n'\
                         'So erzeugt >survey; Titel; Beschreibung; 5 eine Umfrage mit 5 Antwortmöglichkeiten, die du\n'\
                         'dann in deiner Beschreibung erklären musst.\n'\
                         'Beachte bitte die Trennung der Argumente via Semikolon!'
