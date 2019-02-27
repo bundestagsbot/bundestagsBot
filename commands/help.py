@@ -35,5 +35,5 @@ def surveyhelpembed():
                         'Anzahl ist optional und beschreibt die Anzahl an Reactionmöglichkeiten.\n\n'\
                         'So erzeugt >survey; Titel; Beschreibung; 5 eine Umfrage mit 5 Antwortmöglichkeiten, die du\n'\
                         'dann in deiner Beschreibung erklären musst.\n'\
-                        'Beachte bitte die Trennung der Argumente via Semikolon!'
+                        '**Beachte bitte die Trennung der Argumente via Semikolon!**'
     return embed
