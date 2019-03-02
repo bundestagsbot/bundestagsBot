@@ -62,12 +62,12 @@ def register(**kwargs):
                 await func(client, message, params)
             else:
                 if len(channel_names) != 0:
-                    await message.channel.send(content='Benutze einen dieser Kanäle: ' + "".join(channel_names))
+                    await message.channel.send(content='Benutze einen dieser Kanäle: \n' + "\n".join(channel_names))
                 else:
-                    await message.channel.send(content='Folgende Kanäle sind nicht zulässig: ' + "".join(blacklisted))
+                    await message.channel.send(content='Folgende Kanäle sind nicht zulässig: \n' + "\n".join(blacklisted))
             print((str(datetime.datetime.now())[:-7]) + " " + str(message.author) + ' used ' + message.content) # logging
         commands[name] = wrapper
-    print('\033[92m' + (str(datetime.datetime.now())[:-7]) + f' \033[92m[BundestagsBot] registered {name} {kwargs}')
+    print('\033[92m' + (str(datetime.datetime.now())[:-7]) + f' \033[92m[BundestagsBot] registered {kwargs}')
 
 
 def user_in_team(user):
