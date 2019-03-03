@@ -9,6 +9,7 @@ print('\033[92m' + (str(datetime.datetime.now())[:-7]) + prefix + 'started Bunde
 subprocess.call('cls', shell=True)
 import commands
 
+blacklist = handleJson.readjson('C:/server/settings/botblacklist.json')["blacklist"]
 data = handleJson.readjson('C:/server/settings/tokens.json')
 TOKEN = data['TOKENS']['umfrageBot']
 webhooklogs = webhooks.webhooks['logChannel']
@@ -28,6 +29,9 @@ async def on_message(message):
     if message.author.id == 272655001329991681:
         emoji = client.get_emoji(545649937598119936)
         await message.add_reaction(emoji)
+
+    if str(message.author.id) in blacklist:
+        return 0
 
     if message.content.startswith(commands.prefix.standard):
         params = commands.parse(message.content, False)
