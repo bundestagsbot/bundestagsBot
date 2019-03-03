@@ -18,7 +18,7 @@ async def main(client, message, params):
                 embed = createembed(survey_id)
                 await message.channel.send(embed=embed)
             else:
-                await message.channel.send(content=survey_id + ' ist keine gültige ID.')
+                await message.channel.send(content='#' + survey_id + ' konnte keiner Umfrage zugeordnet werden.')
         else:
             await message.channel.send(content=survey_id + ' ist keine gültige ID.')
     else:
