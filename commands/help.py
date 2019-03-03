@@ -20,7 +20,10 @@ def helpembed():
     embed.set_thumbnail(url='https://cdn0.iconfinder.com/data/icons/handdrawn-ui-elements/512/Question_Mark-512.png')
     embed.description = '-Benutze >survey; Titel; Beschreibung; <Anzahl>\num eine Umfrage zu erstellen. >help survey für mehr Details\n\n'\
                         '-Benutze >iam [Politik] um dir diese Rolle zuzuweisen.\n\n'\
-                        '-Benutze >roles für eine Übersicht der Rollenverteilung\n\n'\
+                        '-Benutze >roles für eine Übersicht der Rollenverteilung.\n\n'\
+                        '-Benutze >answer #id answer um auf eine Umfrage zu antworten.\n\n' \
+                        '-Benutze >result #id um Ergebnisse einer Umfrage einzusehen.\n\n' \
+                        '-Benutze >sub False um keine weiteren Umfragen mehr zu erhalten.\n\n' \
                         '-Benutze >umfrage [Parlamentsnummer]\nKeine Nummer für Bundestag'\
 
 
