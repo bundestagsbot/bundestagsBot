@@ -66,6 +66,8 @@ async def main(client, message, params):
     data[survey_id]["voted"] = []
     data[survey_id]["answers"] = [a.lower().strip() for a in params[3].strip().split(',')]
     data[survey_id]["results"] = {}
+    for a in data[survey_id]["answers"]:  # so answers will be displayed sorted
+        data[survey_id]['results'][a] = 0
     data["latestID"] += 1
 
     handleJson.saveasjson(path, data)
