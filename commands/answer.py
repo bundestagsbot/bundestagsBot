@@ -20,7 +20,7 @@ async def main(client, message, params):
                 if surveyID_is_valid(survey_id):
                     surveyData = handleJson.readjson(path)[survey_id]
                     if message.author.id not in surveyData['voted']:
-                        if str(params[2]) in surveyData['answers']:
+                        if str(params[2]).lower().strip() in surveyData['answers']:
                             vote(message.author.id, survey_id, params[2].lower())
                             await message.channel.send(content='Danke für deine Antwort!\nDu kannst die Ergebnisse mit\n>result #' + survey_id + ' sehen.')
                         else:
