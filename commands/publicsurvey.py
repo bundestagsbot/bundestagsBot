@@ -79,7 +79,7 @@ async def main(client, message, params):
             await m.send(embed=embed)
         except:
             failed += 1
-            pass
+
     await message.channel.send(content='Done.\nUmfrage an ' + str(received-failed) + ' Personen gesendet.\n' + str(failed) + ' Personen haben die Nachricht abgelehnt.')
 
 def createsurvey(title, text, author, answers, url, survey_id):
