@@ -28,9 +28,9 @@ async def main(client, message, params):
                     else:
                         await message.channel.send(content='Du kannst nicht nochmal abstimmen.')
                 else:
-                    await message.channel.send(content=str(survey_id) + ' ist keine gültige ID.')
+                    await message.channel.send(content='#' + str(survey_id) + ' konnte keiner Umfrage zugeordnet werden.')
             else:
-                await message.channel.send(content=str(params[1][1:]) + ' ist keine gültige ID.')
+                await message.channel.send(content=str(params[1]) + ' ist keine gültige ID.')
         else:
             await message.channel.send(content='Ungültige Anzahl an Argumenten. Verwende:\n>answer #survey_id Antwort')
     else:
