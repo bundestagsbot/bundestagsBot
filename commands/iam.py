@@ -18,4 +18,4 @@ async def main(client, message, params):
             await message.author.remove_roles(role)
             await message.channel.send(content=message.author.mention + ' Rolle ' + role.name + ' entfernt.')
     else:
-        await message.channel.send(content='Please use one of the following roles: ```\n' + '\n'.join([e for e in roles if e != 'nsfw']) + ' ```')
+        await message.channel.send(content='Bitte benutze eine dieser Rollen: ```\n' + '\n'.join([e for e in roles if e != 'nsfw']) + ' ```')

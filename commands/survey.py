@@ -38,7 +38,7 @@ async def main(client, message, params):
     else:
         await message.channel.send(content='Ungültige Anzahl an Argumenten. Benutze >survey; title; text; [answers]')
 
-def createsurvey(title,text,author):
+def createsurvey(title, text, author):
     embed = discord.Embed(title='Umfrage: ' + title,color=discord.Colour.green(),url='https://github.com/zaanposni/bundestagsBot')
     embed.timestamp = datetime.datetime.utcnow()
     embed.description = text.replace('|','\n')
