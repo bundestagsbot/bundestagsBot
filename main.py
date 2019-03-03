@@ -1,8 +1,8 @@
 import discord
-from utils import webhooks,handleJson,pushedNotification
+from utils import webhooks, handleJson, pushedNotification
 import datetime
 import subprocess
-from dhooks import Webhook,Embed
+from dhooks import Webhook, Embed
 
 prefix = ' \033[92m[BundestagsBot] '
 print('\033[92m' + (str(datetime.datetime.now())[:-7]) + prefix + 'started BundestagsBot')
@@ -26,12 +26,12 @@ async def on_message(message):
     if message.author == client.user:
         return 0
 
+    if str(message.author.id) in blacklist:
+        return 0
+
     if message.author.id == 272655001329991681:
         emoji = client.get_emoji(545649937598119936)
         await message.add_reaction(emoji)
-
-    if str(message.author.id) in blacklist:
-        return 0
 
     if message.content.startswith(commands.prefix.standard):
         params = commands.parse(message.content, False)
@@ -47,7 +47,6 @@ async def on_message(message):
 async def on_ready():
     # console related
     # ================================================
-
 
     print('\033[92m' + (str(datetime.datetime.now())[:-7]) + prefix + 'Logged in as')
     print((str(datetime.datetime.now())[:-7]) + prefix + client.user.name)
@@ -82,7 +81,7 @@ async def on_ready():
     print((str(datetime.datetime.now())[:-7]) + prefix + 'Mobil Notification')
 
     # script related
-    #================================================
+    # ================================================
 
 
 client.run(TOKEN, reconnect=True)
