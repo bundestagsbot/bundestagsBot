@@ -6,6 +6,7 @@ from discord.utils import get
 settings = {
     'name': 'publicsurvey;',
     'mod_cmd': True,
+    'channels': ['team'],
 }
 
 '''

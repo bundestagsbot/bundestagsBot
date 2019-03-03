@@ -28,6 +28,7 @@ allowed_channels = {
     'dm': {"cond": lambda message: isinstance(message.channel, discord.DMChannel), "name": "Dm"},
     'dev': {"cond": lambda message: message.channel.id == 546247189794652170, "name": ""},
     'bot': {"cond": lambda message: message.channel.id == 533005337482100736, "name": "<#533005337482100736>"},
+    'team': {"cond": lambda message: message.channel.id == 531818586105315355, "name": ""},
 }
 
 
