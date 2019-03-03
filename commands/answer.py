@@ -24,7 +24,7 @@ async def main(client, message, params):
                             vote(message.author.id, survey_id, params[2].lower())
                             await message.channel.send(content='Danke für deine Antwort!\nDu kannst die Ergebnisse mit\n>result #' + survey_id + ' sehen.')
                         else:
-                            await message.channel.send(content='Keine gültige Antwort.\nMögliche Antworten:\n' + '\n'.join(surveyData['answers']) + '\n```')
+                            await message.channel.send(content='Keine gültige Antwort.\nMögliche Antworten:\n```\n' + '\n'.join(surveyData['answers']) + '\n```')
                     else:
                         await message.channel.send(content='Du kannst nicht nochmal abstimmen.')
                 else:
@@ -40,10 +40,7 @@ async def main(client, message, params):
 def vote(user_id, survey_id, answer):
     surveyData = handleJson.readjson(path)
     surveyData[survey_id]['voted'].append(user_id)
-    if answer in surveyData[survey_id]['results'].keys():
-        surveyData[survey_id]['results'][answer] += 1
-    else:
-        surveyData[survey_id]['results'][answer] = 1
+    surveyData[survey_id]['results'][answer] += 1
     handleJson.saveasjson(path, surveyData)
 
 def surveyID_is_valid(survey_id):
