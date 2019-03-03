@@ -50,6 +50,7 @@ def register(func, settings):
     channels = settings.get('channels', ['bot'])  # if no channels are supplied the bot channel will be used
     log = settings.get('log', True)
     if "dev" not in channels: channels.append('dev')
+    if "team" not in channels: channels.append('team')
     # use ['all'] to allow all channels
     mod_cmd = settings.get('mod_cmd', False)
     blacklisted = [channel[1:] for channel in channels if
