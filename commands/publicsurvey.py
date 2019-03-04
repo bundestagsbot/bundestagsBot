@@ -1,6 +1,6 @@
 import discord
 import datetime
-from utils import handleJson
+from utils import handleJson, pushedNotification
 from discord.utils import get
 
 settings = {
@@ -56,6 +56,8 @@ async def main(client, message, params):
 
     if str(reaction.emoji).startswith('❌'):  return
     # if approved add to json and send embed to all discord members who are not unsubscribed:
+
+    pushedNotification.sendNot(text="PublicSurvey: " + params[1].strip() + " von " + str(message.author.name))
 
     data = handleJson.readjson(path)
     data[survey_id] = {}
