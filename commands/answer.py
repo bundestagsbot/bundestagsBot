@@ -24,11 +24,13 @@ async def main(client, message, params):
                             vote(message.author.id, survey_id, params[2].lower().strip())
                             await message.channel.send(content='Danke für deine Antwort!\nDu kannst die Ergebnisse mit\n>result #' + survey_id + ' sehen.')
                         else:
-                            await message.channel.send(content='Keine gültige Antwort.\nMögliche Antworten:\n```\n' + '\n'.join(surveyData['answers']) + '\n```')
+                            await message.channel.send(content='Keine gültige Antwort.\nMögliche Antworten: 1-'
+                                                               + str(surveyData['answers']))
                     else:
                         await message.channel.send(content='Du kannst nicht nochmal abstimmen.')
                 else:
-                    await message.channel.send(content='#' + str(survey_id) + ' konnte keiner Umfrage zugeordnet werden.')
+                    await message.channel.send(content='#' + str(survey_id) +
+                                                       ' konnte keiner Umfrage zugeordnet werden.')
             else:
                 await message.channel.send(content=str(params[1]) + ' ist keine gültige ID.')
         else:
