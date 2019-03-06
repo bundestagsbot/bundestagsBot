@@ -12,7 +12,7 @@ async def main(client, message, params):
     elif params[0] == 'survey':
         embed = surveyhelpembed()
     else:
-        return
+        embed = helpembed()
     await message.channel.send(embed=embed)
 
 def helpembed():
