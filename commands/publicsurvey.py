@@ -37,6 +37,7 @@ path: C:/server/settings/
 
 path = 'C:/server/settings/surveys.json'
 
+
 async def main(client, message, params):
 
     params = [p for p in str(message.content).split(';')]
@@ -86,6 +87,7 @@ async def main(client, message, params):
             failed += 1
 
     await message.channel.send(content='Done.\nUmfrage an ' + str(received-failed) + ' Personen gesendet.\n' + str(failed) + ' Personen haben die Nachricht abgelehnt.')
+
 
 def createsurvey(title, text, author, answers, url, survey_id):
     embed = discord.Embed(title='Umfrage #' + str(survey_id) + ': ' + title, color=discord.Colour.green(), url=url)

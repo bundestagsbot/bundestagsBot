@@ -21,6 +21,7 @@ client = discord.Client()
 commands.prefix.standard = '>'
 commands.prefix.mod = '+'
 
+
 @client.event
 async def on_message(message):
     if message.author == client.user:
@@ -42,6 +43,7 @@ async def on_message(message):
         params = commands.parse(message.content, True)
         if params[0] in commands.mod_commands.keys():
             await commands.mod_commands[params[0]](client, message, params[1:])
+
 
 @client.event
 async def on_ready():

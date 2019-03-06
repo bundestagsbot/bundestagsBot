@@ -45,6 +45,7 @@ def vote(user_id, survey_id, answer):
     surveyData[survey_id]['results'][answer] += 1
     handleJson.saveasjson(path, surveyData)
 
+
 def surveyID_is_valid(survey_id):
     return str(survey_id) in [key for key in handleJson.readjson(path).keys() if key not in ['unsubs', 'latestID']]
 

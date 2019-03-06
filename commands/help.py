@@ -5,8 +5,8 @@ settings = {
     'channels': ['dm', 'bot'],
 }
 
-async def main(client, message, params):
 
+async def main(client, message, params):
     if len(params) == 0:
         embed = helpembed()
     elif params[0] == 'survey':
@@ -14,6 +14,7 @@ async def main(client, message, params):
     else:
         embed = helpembed()
     await message.channel.send(embed=embed)
+
 
 def helpembed():
     embed = discord.Embed(title='Hilfe - BundestagsBot v1', color=discord.colour.Colour.orange())
@@ -29,6 +30,7 @@ def helpembed():
 
     embed.add_field(name='Liste:', value='0: Bundestag\n1: Baden-Württemberg\n2: Bayern\n3: Berlin\n4: Brandeburg\n5: Bremen\n6: Hamburg\n7: Hessen\n8: Mecklenburg-Vorpommern\n9: Niedersachsen\n10: NRW\n11: Rheinland-Pfalz\n12: Saarland\n13: Sachsen\n14: Sachsen-Anhalt\n15: Schleswig-Holstein\n16: Thüringen\n17: Europäisches Parlament')
     return embed
+
 
 def surveyhelpembed():
     embed = discord.Embed(title='Hilfe - BundestagsBot v1', color=discord.colour.Colour.orange())
