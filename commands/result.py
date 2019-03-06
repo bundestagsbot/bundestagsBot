@@ -42,9 +42,10 @@ def createembed(survey_id):
     embed = discord.Embed(title='Umfrage #' + str(survey_id) + ': ' + title, color=discord.Colour.green(), url=url)
     embed.timestamp = datetime.datetime.utcnow()
     embed.add_field(name='Frage:', value=text.replace('|', '\n'), inline=False)
-    embed.add_field(name='Antwortmöglichkeiten:', value='|'.join([a.capitalize() for a in answers]))
+    embed.add_field(name='Antwortmöglichkeiten:', value='1 - ' + str(answers))
     embed.add_field(name='Beteiligung: ', value='Insgesamt abgestimmt haben: ' + str(votes))
-    embed.add_field(name='Ergebnis:', value='\n'.join([f"{results[e]} Stimmen für: {e}" for e in results.keys()]), inline=False)
+    embed.add_field(name='Ergebnis:', value='\n'.join([f"{results[e]} Stimmen für: {e}" for e in results.keys()
+                                                       if results[e] != 0]), inline=False)
     embed.set_footer(text="Umfrage von " + author)
 
     return embed
