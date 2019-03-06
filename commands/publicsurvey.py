@@ -91,7 +91,7 @@ def createsurvey(title, text, author, answers, url, survey_id):
     embed = discord.Embed(title='Umfrage #' + str(survey_id) + ': ' + title, color=discord.Colour.green(), url=url)
     embed.timestamp = datetime.datetime.utcnow()
     embed.add_field(name='Frage:', value= text.replace('|', '\n'), inline=False)
-    embed.add_field(name='Antwort:', value='Beantworte diese Umfrage mit:\n>answer #' + str(survey_id) + ' 1-' + answers)
+    embed.add_field(name='Antwort:', value='Beantworte diese Umfrage mit:\n>answer #' + str(survey_id) + ' 1-' + answers.strip())
     embed.add_field(name='Ergebnisse:', value='Ergebnisse erhälst du mit:\n>result #' + str(survey_id))
     embed.add_field(name='Keine weitere Umfrage:', value='Wenn du keine weiteren Umfragen mehr erhalten willst, verwende: >sub False')
     embed.add_field(name='Information:', value='Du kannst deine Antwort nicht mehr ändern.\nDiese Umfrage ist anonym.\nBei Fragen wende dich an die Developer.')
