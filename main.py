@@ -30,6 +30,9 @@ async def on_message(message):
     if str(message.author.id) in blacklist:
         return 0
 
+    if len(str(message.content)) > 1999:
+        return 0
+
     if message.author.id == 272655001329991681:
         emoji = client.get_emoji(545649937598119936)
         await message.add_reaction(emoji)
