@@ -113,8 +113,9 @@ def register_all():
     from . import result
     from . import sub
     from . import answer
+    from . import submit
 
-    for command in [survey, help, umfrage, iam, roles, warn, publicsurvey, result, sub, answer]:
+    for command in [survey, help, umfrage, iam, roles, warn, publicsurvey, result, sub, answer, submit]:
         register(command.main, command.settings)
 
 
