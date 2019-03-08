@@ -9,7 +9,7 @@ print('\033[92m' + (str(datetime.datetime.now())[:-7]) + prefix + 'started Bunde
 subprocess.call('cls', shell=True)
 import commands
 
-blacklist = handleJson.readjson('C:/server/settings/botblacklist.json')["blacklist"]
+blacklist = handleJson.readjson('C:/server/settings/BoB/botblacklist.json')["blacklist"]
 data = handleJson.readjson('C:/server/settings/tokens.json')
 TOKEN = data['TOKENS']['umfrageBot']
 webhooklogs = webhooks.webhooks['logChannel']

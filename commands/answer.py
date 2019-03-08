@@ -7,7 +7,7 @@ settings = {
     'log': False
 }
 
-path = 'C:/server/settings/surveys.json'
+path = 'C:/server/settings/BoB/surveys.json'
 
 
 async def main(client, message, params):
