@@ -61,7 +61,7 @@ async def on_ready():
     # discord related
     # ================================================
 
-    game1 = discord.Game(name='>umfrage')
+    game1 = discord.Game(name='>help')
     await client.change_presence(activity=game1)
     print((str(datetime.datetime.now())[:-7]) + prefix + game1.name + ' als Status gesetzt.')
 
