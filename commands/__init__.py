@@ -29,6 +29,7 @@ allowed_channels = {
     'dev': {"cond": lambda message: message.channel.id == 546247189794652170, "name": ""},
     'bot': {"cond": lambda message: message.channel.id == 533005337482100736, "name": "<#533005337482100736>"},
     'team': {"cond": lambda message: message.channel.id == 531818586105315355, "name": ""},
+    'team2': {"cond": lambda message: message.channel.id == 545330367150817310, "name": ""},
 }
 
 
@@ -51,6 +52,7 @@ def register(func, settings):
     log = settings.get('log', True)
     if "dev" not in channels: channels.append('dev')
     if "team" not in channels: channels.append('team')
+    if "team2" not in channels: channels.append('team2')
     # use ['all'] to allow all channels
     mod_cmd = settings.get('mod_cmd', False)
     blacklisted = [channel[1:] for channel in channels if
@@ -114,8 +116,10 @@ def register_all():
     from . import sub
     from . import answer
     from . import submit
+    from . import respond
+    from . import resolve
 
-    for command in [survey, help, umfrage, iam, roles, warn, publicsurvey, result, sub, answer, submit]:
+    for command in [survey, help, umfrage, iam, roles, warn, publicsurvey, result, sub, answer, submit, resolve, respond]:
         register(command.main, command.settings)
 
 
