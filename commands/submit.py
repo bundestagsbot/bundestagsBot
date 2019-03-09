@@ -14,7 +14,7 @@ path = 'C:/server/settings/BoB/submits.json'
 
 async def main(client, message, params):
     id = savejson(message)
-    embed = createembed(''.join(str(message.content).split(' ')[1:]), id)
+    embed = createembed(' '.join(str(message.content).split(' ')[1:]), id)
 
     channel = get(client.get_guild(531445761733296130).channels, id=545330367150817310)
     await channel.send(embed=embed)
@@ -37,7 +37,7 @@ def savejson(message):
     data[id] = {}
     data[id]["author"] = str(message.author.name)
     data[id]["authorID"] = str(message.author.id)
-    data[id]["text"] = ''.join(str(message.content).split(' ')[1:])
+    data[id]["text"] = ' '.join(str(message.content).split(' ')[1:])
     data[id]["answer"] = ""
     data[id]["answerfrom"] = ""
     data["latestID"] += 1
