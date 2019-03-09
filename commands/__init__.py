@@ -81,6 +81,9 @@ def register(func, settings):
         mod_commands[name] = wrapper
     else:
         async def wrapper(client, message, params):
+            if log:
+                print((str(datetime.datetime.now())[:-7]) + " " + str(
+                    message.author) + ' used ' + message.content)  # logging
             if any([e(message) for e in channel_conds]):  # check if any of the given channels were used
                 await func(client, message, params)
             else:
@@ -89,10 +92,6 @@ def register(func, settings):
                 else:
                     await message.channel.send(
                         content='Folgende Kanäle sind nicht zulässig: \n' + "\n".join(blacklisted))
-            if log:
-                print((str(datetime.datetime.now())[:-7]) + " " + str(
-                    message.author) + ' used ' + message.content)  # logging
-
         commands[name] = wrapper
     print('\033[92m' + (str(datetime.datetime.now())[:-7]) + f' \033[92m[BundestagsBot] registered {settings}')
 
