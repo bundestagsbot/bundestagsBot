@@ -7,12 +7,14 @@ settings = {
     'channels': ['dm', 'bot'],
 }
 
+
 async def main(client, message, params):
     if len(params) != 0:
         embed = createembed(int(params[0]))
     else:
         embed = createembed()
     await message.channel.send(embed=embed)
+
 
 def createembed(parl=0):
     data = json.loads(requests.get('https://api.dawum.de/').text)

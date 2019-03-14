@@ -35,7 +35,7 @@ def savejson(message):
     data = handleJson.readjson(path)
     id = int(data["latestID"]) + 1
     data[id] = {}
-    data[id]["author"] = str(message.author.name)
+    data[id]["author"] = str(message.author)
     data[id]["authorID"] = str(message.author.id)
     data[id]["text"] = ' '.join(str(message.content).split(' ')[1:])
     data[id]["answer"] = ""
