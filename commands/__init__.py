@@ -98,7 +98,7 @@ def register(func, settings):
 
 def user_in_team(user):
     for role in user.roles:
-        if role.id == 531814462412554240:
+        if role.id == 546243157101248512:
             return True
     return False
 
