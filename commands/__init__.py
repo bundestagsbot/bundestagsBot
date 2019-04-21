@@ -1,11 +1,13 @@
 import discord
 import datetime
+import pkgutil
+import importlib
 
 """
 
 init script for the commands module
-when adding a new command please add your file to register_all and specify your settings in
-a dictionary as in every other command file 
+when adding a new command please specify your settings in a dictionary as in every other command file 
+
 mandatory:
     name: the name of your command as a string
         example: 'test'
@@ -104,21 +106,10 @@ def user_in_team(user):
 
 
 def register_all():
-    from . import survey
-    from . import help
-    from . import umfrage
-    from . import iam
-    from . import roles
-    from . import warn
-    from . import publicsurvey
-    from . import result
-    from . import sub
-    from . import answer
-    from . import submit
-    from . import respond
-    from . import resolve
-
-    for command in [survey, help, umfrage, iam, roles, warn, publicsurvey, result, sub, answer, submit, resolve, respond]:
+    pkgutil.extend_path(__path__, __name__)
+    for importer, modname, ispkg in pkgutil.walk_packages(path=__path__, prefix=__name__ + '.'):
+        # importing all files in directory and registering them
+        command = importlib.import_module(modname)
         register(command.main, command.settings)
 
 
