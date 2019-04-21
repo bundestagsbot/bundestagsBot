@@ -5,7 +5,7 @@ settings = {
     'channels': ['bot'],
 }
 
-roles = ['Liberal', 'Konservativ', 'Sozialdemokratisch', 'Sozialistisch', 'Nationalistisch', 'nsfw', 'Sozialliberal', 'Wirtschaftsliberal', 'Grün', 'Podcast']
+roles = ['Liberal', 'Konservativ', 'Sozialdemokratisch', 'Sozialistisch', 'Nationalistisch', 'nsfw', 'Sozialliberal', 'Wirtschaftsliberal', 'Grün', 'Podcast', 'Patriotisch']
 
 async def main(client, message, params):
     role = ''.join(params)
