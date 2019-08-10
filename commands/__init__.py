@@ -1,7 +1,9 @@
+from utils.console import Console
 import discord
 import datetime
 import pkgutil
 import importlib
+SHL = Console("BundestagsBot")
 
 """
 
@@ -84,8 +86,7 @@ def register(func, settings):
     else:
         async def wrapper(client, message, params):
             if log:
-                print((str(datetime.datetime.now())[:-7]) + " " + str(
-                    message.author) + ' used ' + message.content)  # logging
+                SHL.output(f"{message.author} used {message.content}")  # logging
             if any([e(message) for e in channel_conds]):  # check if any of the given channels were used
                 await func(client, message, params)
             else:

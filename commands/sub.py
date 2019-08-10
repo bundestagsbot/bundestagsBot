@@ -1,5 +1,7 @@
+from utils.console import Console
 import discord
 from utils import handleJson
+SHL = Console("BundestagsBot Sub")
 
 settings = {
     'name': 'sub',

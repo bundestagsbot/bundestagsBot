@@ -1,4 +1,6 @@
+from utils.console import Console
 from discord.utils import get
+SHL = Console("BundestagsBot Iam")
 
 settings = {
     'name': 'iam',

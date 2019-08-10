@@ -1,5 +1,7 @@
+from utils.console import Console
 import discord
 from utils import handleJson
+SHL = Console("BundestagsBot Answer")
 
 settings = {
     'name': 'answer',
@@ -10,7 +12,7 @@ settings = {
 path = 'C:/server/settings/BoB/surveys.json'
 
 
-async def main(client, message, params):
+async def main(client, message, params, SHL):
 
     params = str(message.content).split(' ')
     if subscribed(message.author.id):

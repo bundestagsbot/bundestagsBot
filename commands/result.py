@@ -1,6 +1,8 @@
+from utils.console import Console
 import discord
 import datetime
 from utils import handleJson
+SHL = Console("BundestagsBot Result")
 
 settings = {
     'name': 'result',

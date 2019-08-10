@@ -1,6 +1,8 @@
+from utils.console import Console
 import requests
 import json
 import discord
+SHL = Console("BundestagsBot Umfrage")
 
 settings = {
     'name': 'umfrage',

@@ -1,6 +1,8 @@
+from utils.console import Console
 import discord
 import datetime
 from discord.utils import get
+SHL = Console("BundestagsBot Roles")
 
 settings = {
     'name': 'roles',

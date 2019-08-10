@@ -1,9 +1,12 @@
+from utils.console import Console
 from discord.utils import get
+SHL = Console("BundestagsBot Warn")
 
 settings = {
     'name': 'warn',
     'mod_cmd': True,
 }
+
 
 async def main(client, message, params):
     badbois = str(message.content)[5:].strip()

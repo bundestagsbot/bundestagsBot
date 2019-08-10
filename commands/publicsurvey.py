@@ -1,7 +1,9 @@
+from utils.console import Console
 import discord
 import datetime
 from utils import handleJson, pushedNotification
 from discord.utils import get
+SHL = Console("BundestagsBot PublicSurvey")
 
 settings = {
     'name': 'publicsurvey;',

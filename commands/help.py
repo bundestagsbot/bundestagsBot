@@ -1,4 +1,6 @@
+from utils.console import Console
 import discord
+SHL = Console("BundestagsBot Help")
 
 settings = {
     'name': 'help',

@@ -1,4 +1,6 @@
+from utils.console import Console
 from utils import handleJson
+SHL = Console("BundestagsBot Resolve")
 
 settings = {
     'name': 'resolve',

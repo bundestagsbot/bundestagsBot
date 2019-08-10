@@ -1,27 +1,25 @@
 from discord.utils import get
-import discord
-from utils import webhooks, handleJson, pushedNotification
-import datetime
-import subprocess
-from dhooks import Webhook, Embed
-
-prefix = ' \033[92m[BundestagsBot] '
-print('\033[92m' + (str(datetime.datetime.now())[:-7]) + prefix + 'started BundestagsBot')
-subprocess.call('cls', shell=True)
 import commands
+from utils import webhooks, handleJson, pushedNotification
+from utils import chat as c
+from utils.console import Console
+from dhooks import Webhook, Embed
+import discord
+import datetime
+SHL = Console(prefix="BundestagsBot", cls=True)
 
-blacklist = handleJson.readjson('C:/server/settings/BoB/botblacklist.json')["blacklist"]
+
+BLACK_LIST = handleJson.readjson('C:/server/settings/BoB/botblacklist.json')["blacklist"]
 data = handleJson.readjson('C:/server/settings/tokens.json')
 TOKEN = data['TOKENS']['umfrageBot']
-webhooklogs = webhooks.webhooks['logChannel']
-webhooklogsBoB = webhooks.webhooks['logChannelBoB']
-firstconnection = True
-tries_torec = 0
+WEBHOOK_LOGS = webhooks.webhooks['logChannel']
+WEBHOOK_LOGS_BOB = webhooks.webhooks['logChannelBoB']
+FIRST_CONNECTION = True
+TRIES_TO_REC = 0
 client = discord.Client()
 
 commands.prefix.standard = '>'
 commands.prefix.mod = '+'
-
 
 roles = {
     "607450684673097780": "Finanzen",
@@ -53,7 +51,7 @@ roles = {
 }
 
 
-def createembed():
+def create_embed():
     embed = discord.Embed(title=f'Willkommen!', color=discord.Color.dark_red(),
                           url="https://github.com/zaanposni/bundestagsBot")
     embed.timestamp = datetime.datetime.utcnow()
@@ -69,18 +67,17 @@ def createembed():
     Versuche doch mal `>umfrage`
     \n
     Gerne kannst du mir hier mit `>submit text` ein Feedback oder ein Hinweis hinterlassen, die ich anonym ans Serverteam weiterleite.
-    \n
     Wenn du Themen öffentlich ansprechen willst,
     kannst du das aber auch gerne in <#531816355608133632> tun.
     
-    Beteilige dich gerne an der Entwicklung des BundestagsBot: https://github.com/zaanposni/bundestagsBot
+    Beteilige dich gerne an der Entwicklung des BundestagsBot:\n https://github.com/zaanposni/bundestagsBot
     """
     return embed
 
 
 @client.event
 async def on_member_join(member):
-    await member.send(embed=createembed())
+    await member.send(embed=create_embed())
     roles = []
     roles.append(get(client.get_guild(531445761733296130).roles, id=607474719595298852))
     roles.append(get(client.get_guild(531445761733296130).roles, id=607474935132192797))
@@ -116,7 +113,11 @@ async def on_message(message):
     if message.author == client.user:
         return 0
 
-    if str(message.author.id) in blacklist:
+    if str(message.author.id) in BLACK_LIST:
+        return 0
+
+    if message.channel.id == 513355409021730816:
+        await message.delete()
         return 0
 
     if len(str(message.content)) > 1999:
@@ -142,23 +143,21 @@ async def on_ready():
     # console related
     # ================================================
 
-    print('\033[92m' + (str(datetime.datetime.now())[:-7]) + prefix + 'Logged in as')
-    print((str(datetime.datetime.now())[:-7]) + prefix + client.user.name)
-    print((str(datetime.datetime.now())[:-7]) + prefix + str(client.user.id))
-    print((str(datetime.datetime.now())[:-7]) + prefix + '------')
+    SHL.output("Logged in as")
+    SHL.output(client.user.name)
+    SHL.output(client.user.id)
+    SHL.output("========================")
 
     # discord related
     # ================================================
 
-    game1 = discord.Game(name='>help')
-    await client.change_presence(activity=game1)
-    print((str(datetime.datetime.now())[:-7]) + prefix + game1.name + ' als Status gesetzt.')
+    game = discord.Game(name='>help')
+    await client.change_presence(activity=game)
+    SHL.output(f"{game.name} als Status gesetzt.")
 
     # ================================================
-    hook = Webhook(webhooklogs)
-    hookBoB = Webhook(webhooklogsBoB)
-
-    # ================================================
+    hook = Webhook(WEBHOOK_LOGS)
+    hookBoB = Webhook(WEBHOOK_LOGS_BOB)
 
     embed = Embed(
         title='BundestagBot - Status',
@@ -168,11 +167,11 @@ async def on_ready():
     )
 
     # hook.send(embed=embed)
-    print((str(datetime.datetime.now())[:-7]) + prefix + 'Webhook Server')
+    # SHL.output("Webhook Server")
     # hookBoB.send(embed=embed)
-    print((str(datetime.datetime.now())[:-7]) + prefix + 'Webhook BoB-Server')
-    # pushedNotification.sendNot('BundestagBot: I am ready again!')
-    print((str(datetime.datetime.now())[:-7]) + prefix + 'Mobil Notification')
+    # SHL.output("Webhook BoB-Server")
+    pushedNotification.sendNot('BundestagBot: I am ready again!')
+    SHL.output("Mobil Notification")
 
     # script related
     # ================================================
