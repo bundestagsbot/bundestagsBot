@@ -73,7 +73,7 @@ def createembed():
     Wenn du Themen öffentlich ansprechen willst,
     kannst du das aber auch gerne in <#531816355608133632> tun.
     
-    https://discord.gg/ezMtSwR
+    Beteilige dich gerne an der Entwicklung des BundestagsBot: https://github.com/zaanposni/bundestagsBot
     """
     return embed
 
