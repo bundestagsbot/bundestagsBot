@@ -110,14 +110,14 @@ async def on_raw_reaction_remove(payload):
 
 @client.event
 async def on_message(message):
+    if message.channel.id == 513355409021730816:
+        await message.delete()
+        return 0
+
     if message.author == client.user:
         return 0
 
     if str(message.author.id) in BLACK_LIST:
-        return 0
-
-    if message.channel.id == 513355409021730816:
-        await message.delete()
         return 0
 
     if len(str(message.content)) > 1999:
