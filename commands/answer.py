@@ -12,7 +12,7 @@ settings = {
 path = 'C:/server/settings/BoB/surveys.json'
 
 
-async def main(client, message, params, SHL):
+async def main(client, message, params):
 
     params = str(message.content).split(' ')
     if subscribed(message.author.id):
