@@ -3,7 +3,7 @@ name: Remastered issue
 about: Suggest an idea or discuss anything related to the new REMASTERED version.
 title: ''
 labels: 'REMASTERED'
-assignees: ''
+assignees: 'zaanposni'
 
 ---
 
