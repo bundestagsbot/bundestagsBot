@@ -1,5 +1,8 @@
 <h1 align="center">BundestagsBot Remastering</h1>
-
+<p>
+<a href="https://pypi.org/project/discord.py/"><img src="https://img.shields.io/pypi/v/discord.py.svg" style="margin-right: 50px;"/></a>
+<a href="https://pypi.org/project/discord.py/"><img src="https://img.shields.io/pypi/pyversions/discord.py.svg"/></a>
+</p>
 <h3 align="center"> We are currently dedicated to implementing a new version "remastered".
 Feel free to provide help of any kind (coding or suggestions) @GitHub or in Discord.</h3>
 <h4 align="center"> Roadmap: https://github.com/bundestagsbot/bundestagsBot/projects/1 </h4>
