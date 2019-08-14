@@ -1,4 +1,14 @@
-<h1 align="center">BundestagsBot</h1>
+<h1 align="center">BundestagsBot Remastering</h1>
+
+<h3 align="center"> We are currently dedicated to implement a new version "remastered".
+Feel free to provide help of any kind (coding or suggestions) @GitHub or in Discord.</h3>
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<hr />
 
 <div align="center">
      
