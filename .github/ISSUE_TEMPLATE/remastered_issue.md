@@ -8,4 +8,4 @@ assignees: ''
 ---
 
 **Roadmap**
-Keep in mind that every action should be according to the definitions at <a href="https://github.com/zaanposni/bundestagsBot/projects/1">roadmap</a>.
+Keep in mind that every action should be according to the definitions at <a href="https://github.com/zaanposni/bundestagsBot/projects/1">roadmap</a>.<hr/>
