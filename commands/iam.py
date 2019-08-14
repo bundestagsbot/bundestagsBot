@@ -8,7 +8,7 @@ settings = {
 }
 
 roles = ['Liberal', 'Konservativ', 'Sozialdemokratisch', 'Sozialistisch', 'Nationalistisch', 'Nsfw', 'Sozialliberal',
-         'Wirtschaftsliberal', 'Grün', 'Podcast', 'Patriotisch', "Finanzen", "Außenpolitik", "Justiz", "Militär",
+         'Wirtschaftsliberal', 'Grün', 'Podcast', 'Developer', 'Patriotisch', "Finanzen", "Außenpolitik", "Justiz", "Militär",
          "Familie & Jugend", "Verkehr & Infrastruktur", "Bildung & Forschung", "Innenpolitik", "Wirtschaft",
          "Arbeit & Soziales", "Ernährung & Landwirtschaft", "Gesundheit", "Umwelt & Naturschutz", "Entwicklungshilfe"]
 lower_roles = [e.lower() for e in roles]
