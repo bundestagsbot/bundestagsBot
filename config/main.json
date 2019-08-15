@@ -9,10 +9,12 @@
   "team_role_id": 0,
   "mute_role_id": 0,
   "channel_ids": {
+    "welcome": [],
+    "suggestions": [],
     "roles": [],
     "dev": [],
     "bot": [],
-    "team": [],
+    "team1": [],
     "team2": []
   }
 

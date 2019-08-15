@@ -2,5 +2,6 @@
   "roles": {
     "emoji_id": "role_name"
   },
-  "roles_show": []
+  "roles_show": [],
+  "roles_on_join": []
 }
