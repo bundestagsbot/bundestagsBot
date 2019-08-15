@@ -8,6 +8,12 @@
   "invoke_mod": "+",
   "team_role_id": 0,
   "mute_role_id": 0,
-  "mod_channel_ids": [0],
-  "role_channel_ids": [0]
+  "channel_ids": {
+    "roles": [607294374900138022],
+    "dev": [546247189794652170],
+    "bot": [533005337482100736],
+    "team": [531818586105315355],
+    "team2": [545330367150817310]
+  }
+
 }

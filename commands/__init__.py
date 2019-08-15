@@ -29,13 +29,12 @@ optional:
 commands = {}
 mod_commands = {}
 
-# TODO: implement cfg.options["mod_channel_ids"]
 allowed_channels = {
     'dm': {"cond": lambda message: isinstance(message.channel, discord.DMChannel), "name": "Dm"},
-    'dev': {"cond": lambda message: message.channel.id == 546247189794652170, "name": ""},
-    'bot': {"cond": lambda message: message.channel.id == 533005337482100736, "name": "<#533005337482100736>"},
-    'team': {"cond": lambda message: message.channel.id == 531818586105315355, "name": ""},
-    'team2': {"cond": lambda message: message.channel.id == 545330367150817310, "name": ""},
+    'dev': {"cond": lambda message: message.channel.id == cfg.options["channel_ids"]["dev"], "name": ""},
+    'bot': {"cond": lambda message: message.channel.id == cfg.options["channel_ids"]["dev"], "name": "<#533005337482100736>"},
+    'team': {"cond": lambda message: message.channel.id == cfg.options["channel_ids"]["team"], "name": ""},
+    'team2': {"cond": lambda message: message.channel.id == cfg.options["channel_ids"]["team2"], "name": ""},
 }
 
 
@@ -51,9 +50,10 @@ def register(func, settings):
     name = settings.get('name')
     channels = settings.get('channels', ['bot'])  # if no channels are supplied the bot channel will be used
     log = settings.get('log', True)
-    if "dev" not in channels: channels.append('dev')
-    if "team" not in channels: channels.append('team')
-    if "team2" not in channels: channels.append('team2')
+
+    for channel in ["dev", "team1", "team2"]: # every command should be accessible in these channels
+        if channel not in channels: channels.append(channel)
+
     # use ['all'] to allow all channels
     mod_cmd = settings.get('mod_cmd', False)
     blacklisted = [channel[1:] for channel in channels if
@@ -68,7 +68,7 @@ def register(func, settings):
         channel_names = [allowed_channels[channel]['name'] for channel in channels if
                          channel != 'dev']  # dont show devchannel as alternative
     else:
-        channel_conds = [lambda x: True]
+        channel_conds = [lambda message: True]
         channel_names = []
 
     if mod_cmd:
