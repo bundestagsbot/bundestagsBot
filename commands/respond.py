@@ -1,5 +1,5 @@
-from utils.console import Console
-from utils import handleJson
+from bt_utils.console import Console
+from bt_utils import handleJson
 from discord.utils import get
 import discord
 import datetime
@@ -12,7 +12,7 @@ settings = {
     'log': True
 }
 
-path = 'C:/server/settings/BoB/submits.json'
+path = 'content/submits.json'
 
 
 async def main(client, message, params):
@@ -55,12 +55,9 @@ async def main(client, message, params):
 
 
 def createembed(id, data, message):
-
     embed = discord.Embed(title=f'Antwort auf Anfrage #{id}', color=discord.Color.dark_red())
     embed.timestamp = datetime.datetime.utcnow()
     embed.description = str(' '.join(str(message.content).split(' ')[2:])).strip()
     embed.set_footer(text=f'Antwort von {message.author.name}')
 
     return embed
-
-    pass

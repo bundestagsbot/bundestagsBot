@@ -1,6 +1,5 @@
-from utils.console import Console
-import discord
-from utils import handleJson
+from bt_utils.console import Console
+from bt_utils import handleJson
 SHL = Console("BundestagsBot Answer")
 
 settings = {
@@ -9,7 +8,7 @@ settings = {
     'log': False
 }
 
-path = 'C:/server/settings/BoB/surveys.json'
+path = 'content/surveys.json'
 
 
 async def main(client, message, params):

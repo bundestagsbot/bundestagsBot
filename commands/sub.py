@@ -1,6 +1,6 @@
-from utils.console import Console
+from bt_utils.console import Console
 import discord
-from utils import handleJson
+from bt_utils import handleJson
 SHL = Console("BundestagsBot Sub")
 
 settings = {
@@ -8,11 +8,10 @@ settings = {
     'channels': ['dm', 'bot'],
 }
 
-path = 'C:/server/settings/BoB/surveys.json'
+path = 'content/surveys.json'
 
 
 async def main(client, message, params):
-
     if len(str(message.content).split(' ')) == 2:
         sub = str(message.content).split(' ')[1]
         if sub.lower() in ['yes', 'no', 'ja', 'nein', 'true', 'false']:

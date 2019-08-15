@@ -1,4 +1,5 @@
-from utils.console import Console
+from bt_utils.console import Console
+from bt_utils.config import cfg
 from discord.utils import get
 SHL = Console("BundestagsBot Iam")
 
@@ -7,14 +8,11 @@ settings = {
     'channels': ['bot'],
 }
 
-roles = ['Liberal', 'Konservativ', 'Sozialdemokratisch', 'Sozialistisch', 'Nationalistisch', 'Nsfw', 'Sozialliberal',
-         'Wirtschaftsliberal', 'Grün', 'Podcast', 'Developer', 'Patriotisch', "Finanzen", "Außenpolitik", "Justiz", "Militär",
-         "Familie & Jugend", "Verkehr & Infrastruktur", "Bildung & Forschung", "Innenpolitik", "Wirtschaft",
-         "Arbeit & Soziales", "Ernährung & Landwirtschaft", "Gesundheit", "Umwelt & Naturschutz", "Entwicklungshilfe"]
-lower_roles = [e.lower() for e in roles]
-
 
 async def main(client, message, params):
+    roles = cfg.options["roles"] + ["Nsfw"]
+    lower_roles = [e.lower() for e in roles]
+
     want_role = ' '.join(params).strip().lower()
     if want_role in lower_roles:
         assign_role = roles[lower_roles.index(want_role)]

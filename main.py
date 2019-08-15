@@ -1,55 +1,16 @@
 from discord.utils import get
 import commands
-from utils import webhooks, handleJson, pushedNotification
-from utils import chat as c
-from utils.console import Console
+from bt_utils.console import Console
+from bt_utils import handleJson
+from bt_utils.config import cfg
 from dhooks import Webhook, Embed
 import discord
 import datetime
+
 SHL = Console(prefix="BundestagsBot", cls=True)
-
-
-BLACK_LIST = handleJson.readjson('C:/server/settings/BoB/botblacklist.json')["blacklist"]
-data = handleJson.readjson('C:/server/settings/tokens.json')
-TOKEN = data['TOKENS']['umfrageBot']
-WEBHOOK_LOGS = webhooks.webhooks['logChannel']
-WEBHOOK_LOGS_BOB = webhooks.webhooks['logChannelBoB']
-FIRST_CONNECTION = True
-TRIES_TO_REC = 0
+handleJson.BASE_PATH = __file__
+cfg.reload()
 client = discord.Client()
-
-commands.prefix.standard = '>'
-commands.prefix.mod = '+'
-
-roles = {
-    "607450684673097780": "Finanzen",
-    "607463294172659723": "Außenpolitik",
-    "607450685054910465": "Justiz",
-    "607451205266046976": "Militär",
-    "607450684521971714": "Familie & Jugend",
-    "607450686497488902": "Verkehr & Infrastruktur",
-    "607450685146923009": "Bildung & Forschung",
-    "607451624255913992": "Innenpolitik",
-    "607450685788913664": "Wirtschaft",
-    "607450685335666698": "Arbeit & Soziales",
-    "607450685067231232": "Ernährung & Landwirtschaft",
-    "607450684954116107": "Gesundheit",
-    "607450685398712358": "Umwelt & Naturschutz",
-    "607450684723560470": "Entwicklungshilfe",
-
-    "607450685457563648": "Liberal",
-    "607450685260431380": "Konservativ",
-    "546318962632294420": "Sozialdemokratisch",
-    "607453558031384576": "Sozialistisch",
-    "607450685327278080": "Nationalistisch",
-    "607463294805999616": "Sozialliberal",
-    "607463295288344576": "Wirtschaftsliberal",
-    "607463295741460480": "Grün",
-    "607463295372361729": "Patriotisch",
-
-    "607943313794007055": "Podcast",
-    "611104204781781002": "Developer"
-}
 
 
 def create_embed():
@@ -71,7 +32,7 @@ def create_embed():
     Wenn du Themen öffentlich ansprechen willst,
     kannst du das aber auch gerne in <#531816355608133632> tun.
     
-    Beteilige dich gerne an der Entwicklung des BundestagsBot:\n https://github.com/zaanposni/bundestagsBot
+    Beteilige dich gerne an der Entwicklung des BundestagsBot:\n https://github.com/bundestagsBot/bundestagsBot
     """
     return embed
 
@@ -89,9 +50,9 @@ async def on_member_join(member):
 
 @client.event
 async def on_raw_reaction_add(payload):
-    if payload.channel_id == 607294374900138022:
-        if str(payload.emoji.id) in roles.keys():
-            role = get(client.get_guild(531445761733296130).roles, name=roles[str(payload.emoji.id)])
+    if payload.channel_id in cfg.options["role_channel_ids"]:
+        if str(payload.emoji.id) in cfg.options["roles"].keys():
+            role = get(client.get_guild(531445761733296130).roles, name=cfg.options["roles"][str(payload.emoji.id)])
             user = client.get_guild(531445761733296130).get_member(payload.user_id)
             if role not in user.roles:
                 await user.add_roles(role)
@@ -100,9 +61,9 @@ async def on_raw_reaction_add(payload):
 
 @client.event
 async def on_raw_reaction_remove(payload):
-    if payload.channel_id == 607294374900138022:
-        if str(payload.emoji.id) in roles.keys():
-            role = get(client.get_guild(531445761733296130).roles, name=roles[str(payload.emoji.id)])
+    if payload.channel_id == cfg.options["role_channel_ids"]:
+        if str(payload.emoji.id) in cfg.options["roles"].keys():
+            role = get(client.get_guild(531445761733296130).roles, name=cfg.options["roles"][str(payload.emoji.id)])
             user = client.get_guild(531445761733296130).get_member(payload.user_id)
             if role in user.roles:
                 await user.remove_roles(role)
@@ -118,22 +79,18 @@ async def on_message(message):
     if message.author == client.user:
         return 0
 
-    if str(message.author.id) in BLACK_LIST:
+    if str(message.author.id) in cfg.options["blacklist"]:
         return 0
 
     if len(str(message.content)) > 1999:
         return 0
 
-    if message.author.id == 272655001329991681:
-        emoji = client.get_emoji(545649937598119936)
-        await message.add_reaction(emoji)
-
-    if message.content.startswith(commands.prefix.standard):
+    if message.content.startswith(cfg.options["invoke_normal"]):
         params = commands.parse(message.content, False)
         if params[0] in commands.commands.keys():
             await commands.commands[params[0]](client, message, params[1:])
 
-    elif  message.content.startswith(commands.prefix.mod):
+    elif message.content.startswith(cfg.options["invoke_mod"]):
         params = commands.parse(message.content, True)
         if params[0] in commands.mod_commands.keys():
             await commands.mod_commands[params[0]](client, message, params[1:])
@@ -143,7 +100,7 @@ async def on_message(message):
 async def on_ready():
     # console related
     # ================================================
-
+    SHL.output("========================")
     SHL.output("Logged in as")
     SHL.output(client.user.name)
     SHL.output(client.user.id)
@@ -151,31 +108,23 @@ async def on_ready():
 
     # discord related
     # ================================================
+    if cfg.options["use_game"]:
+        game = discord.Game(name=cfg.options["game_name"])
+        await client.change_presence(activity=game)
+        SHL.output(f"{game.name} als Status gesetzt.")
 
-    game = discord.Game(name='>help')
-    await client.change_presence(activity=game)
-    SHL.output(f"{game.name} als Status gesetzt.")
-
+    # W
     # ================================================
-    hook = Webhook(WEBHOOK_LOGS)
-    hookBoB = Webhook(WEBHOOK_LOGS_BOB)
+    if cfg.options["use_webhooks"]:
+        template = cfg.options["on_ready"]
+        embed = Embed(
+            title=template["title"],
+            description=template["description"],
+            thumbnail_url=template["thumbnail_url"],
+            color=template["color"]
+        )
+        for name, link in cfg.options["webhooks"]:
+            Webhook(link).send(embed=embed)
+            SHL.output(f"Webhook {name} sent.")
 
-    embed = Embed(
-        title='BundestagBot - Status',
-        description='I am ready again!',
-        thumbnail_url='https://i0.wp.com/www.activate-the-beast.com/wp-content/uploads/2015/05/Ern%C3%A4hrung-Umfrage-Icon-e1432756685893.png?fit=300%2C300',
-        color=0x6eff33
-    )
-
-    # hook.send(embed=embed)
-    # SHL.output("Webhook Server")
-    # hookBoB.send(embed=embed)
-    # SHL.output("Webhook BoB-Server")
-    pushedNotification.sendNot('BundestagBot: I am ready again!')
-    SHL.output("Mobil Notification")
-
-    # script related
-    # ================================================
-
-
-client.run(TOKEN, reconnect=True)
+client.run(cfg.options["BOT_TOKEN"], reconnect=cfg.options["use_reconnect"])

@@ -1,4 +1,4 @@
-from utils.console import Console
+from bt_utils.console import Console
 import requests
 import json
 import discord

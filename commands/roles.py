@@ -1,4 +1,5 @@
-from utils.console import Console
+from bt_utils.console import Console
+from bt_utils.config import cfg
 import discord
 import datetime
 from discord.utils import get
@@ -9,10 +10,9 @@ settings = {
     'channels': ['bot'],
 }
 
-roles = ['Liberal', 'Konservativ', 'Sozialdemokratisch', 'Sozialistisch', 'Nationalistisch', 'nsfw', 'Sozialliberal', 'Wirtschaftsliberal', 'Grün', 'Patriotisch']
-# usable roles
 
 async def main(client, message, params):
+    roles = cfg.options["roles_show"]
     embed = discord.Embed(title='Rollen Übersicht', color=discord.colour.Colour.orange())
     desc = 'Insgesamt hat der Server ' + str(client.get_guild(531445761733296130).member_count) + ' Mitglieder.\n\n'
     for r in [e for e in roles if e != 'nsfw']:

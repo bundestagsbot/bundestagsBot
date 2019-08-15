@@ -1,7 +1,7 @@
-from utils.console import Console
+from bt_utils.console import Console
+from bt_utils import handleJson
 import discord
 import datetime
-from utils import handleJson, pushedNotification
 from discord.utils import get
 SHL = Console("BundestagsBot PublicSurvey")
 
@@ -37,13 +37,13 @@ path: C:/server/settings/
 
 '''
 
-path = 'C:/server/settings/BoB/surveys.json'
+path = 'content/surveys.json'
 
 
 async def main(client, message, params):
 
     params = [p for p in str(message.content).split(';')]
-    if len(params) == 4 or params[4] == '':  params.append('https://github.com/zaanposni/bundestagsBot')
+    if len(params) == 4 or params[4] == '':  params.append('https://github.com/bundestagsBot/bundestagsBot')
     survey_id = get_survey_id()
     embed = createsurvey(params[1], params[2], message.author, params[3], params[4], survey_id)
     msg = await message.channel.send(embed=embed)
@@ -59,8 +59,6 @@ async def main(client, message, params):
 
     if str(reaction.emoji).startswith('❌'):  return
     # if approved add to json and send embed to all discord members who are not unsubscribed:
-
-    pushedNotification.sendNot(text="PublicSurvey: " + params[1].strip() + " von " + str(message.author.name))
 
     data = handleJson.readjson(path)
     data[survey_id] = {}

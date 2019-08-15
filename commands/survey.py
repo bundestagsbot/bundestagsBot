@@ -1,4 +1,4 @@
-from utils.console import Console
+from bt_utils.console import Console
 import discord
 import datetime
 SHL = Console("BundestagsBot Survey")
@@ -7,6 +7,7 @@ settings = {
     "name": "survey",
     "channels": ["!dm"],
 }
+
 
 async def main(client, message, params):
     # aufbau: survey title text answers

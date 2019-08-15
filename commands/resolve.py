@@ -1,5 +1,5 @@
-from utils.console import Console
-from utils import handleJson
+from bt_utils.console import Console
+from bt_utils import handleJson
 SHL = Console("BundestagsBot Resolve")
 
 settings = {
@@ -9,7 +9,7 @@ settings = {
     'log': True
 }
 
-path = 'C:/server/settings/BoB/submits.json'
+path = 'content/submits.json'
 
 
 async def main(client, message, params):

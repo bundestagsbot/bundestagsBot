@@ -1,0 +1,13 @@
+{
+  "use_webhooks": false,
+  "use_reconnect": true,
+  "use_blacklist": false,
+  "use_game": false,
+  "game_name": "",
+  "invoke_normal": ">",
+  "invoke_mod": "+",
+  "team_role_id": 0,
+  "mute_role_id": 0,
+  "mod_channel_ids": [0],
+  "role_channel_ids": [0]
+}

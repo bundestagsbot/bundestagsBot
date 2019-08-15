@@ -1,9 +1,10 @@
-from utils.console import Console
+from bt_utils.console import Console
+from bt_utils.config import cfg
 import discord
 import datetime
 import pkgutil
 import importlib
-SHL = Console("BundestagsBot")
+SHL = Console("BundestagsBot", cls=True)
 
 """
 
@@ -28,6 +29,7 @@ optional:
 commands = {}
 mod_commands = {}
 
+# TODO: implement cfg.options["mod_channel_ids"]
 allowed_channels = {
     'dm': {"cond": lambda message: isinstance(message.channel, discord.DMChannel), "name": "Dm"},
     'dev': {"cond": lambda message: message.channel.id == 546247189794652170, "name": ""},
@@ -37,16 +39,11 @@ allowed_channels = {
 }
 
 
-class prefix():
-    standard = ">"
-    mod = "+"
-
-
 def parse(content, mod_cmd):
     if mod_cmd:
-        ret = content[len(prefix.mod):].split(" ")
+        ret = content[len(cfg.options["invoke_mod"]):].split(" ")
     else:
-        ret = content[len(prefix.standard):].split(" ")
+        ret = content[len(cfg.options["invoke_normal"]):].split(" ")
     return [e for e in ret if e != ""]
 
 
@@ -101,7 +98,7 @@ def register(func, settings):
 
 def user_in_team(user):
     for role in user.roles:
-        if role.id == 546243157101248512:
+        if role.id == cfg.options["team_role_id"]:
             return True
     return False
 
