@@ -6,6 +6,7 @@ from bt_utils.config import cfg
 from dhooks import Webhook, Embed
 from others import welcome, role_reaction
 from others.message_conditions import check_message
+from discord.errors import LoginFailure
 import discord
 
 client = discord.Client()
@@ -55,6 +56,7 @@ async def on_message(message):
 async def on_ready():
     # console related
     # ================================================
+    SHL.output(f"{red}========================{white}")
     SHL.output("Logged in as")
     SHL.output(client.user.name)
     SHL.output(f"Online in {len(client.guilds)} Guilds.")
@@ -81,4 +83,16 @@ async def on_ready():
             Webhook(link).send(embed=embed)
             SHL.output(f"Webhook {name} sent.")
 
-client.run(cfg.options["BOT_TOKEN"], reconnect=cfg.options["use_reconnect"])
+try:
+    SHL.output(f"Logging in.")
+    client.run(cfg.options["BOT_TOKEN"], reconnect=cfg.options.get("use_reconnect", False))
+except LoginFailure:
+    SHL.output(f"{red}========================{white}")
+    SHL.output(f"{red}Login failure!{white}")
+    SHL.output(f"{red}Please check your token.{white}")
+except KeyError:
+    SHL.output(f"{red}========================{white}")
+    SHL.output(f"{red}'BOT_TOKEN' not found in config files!")
+except:
+    SHL.output(f"{red}========================{white}")
+    SHL.output(f"{red}Something went wrong{white}")
