@@ -2,6 +2,7 @@
 <p>
 <a href="https://pypi.org/project/discord.py/"><img src="https://img.shields.io/pypi/v/discord.py.svg" style="margin-right: 50px;"/></a>
 <a href="https://pypi.org/project/discord.py/"><img src="https://img.shields.io/pypi/pyversions/discord.py.svg"/></a>
+<a href="https://discord.gg/ezMtSwR"><img src="https://discordapp.com/api/guilds/531445761733296130/embed.png"/></a>
 </p>
 <h3 align="center"> We are currently dedicated to implementing a new version "remastered".
 Feel free to provide help of any kind (coding or suggestions) @GitHub or in Discord.</h3>
