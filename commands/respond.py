@@ -7,7 +7,7 @@ SHL = Console("BundestagsBot Respond")
 
 settings = {
     'name': 'respond',
-    'channels': ['team'],
+    'channels': ['team1'],
     'mod_cmd': True,
     'log': True
 }

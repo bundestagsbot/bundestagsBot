@@ -33,7 +33,7 @@ allowed_channels = {
     'dm': {"cond": lambda message: isinstance(message.channel, discord.DMChannel), "name": "Dm"},
     'dev': {"cond": lambda message: message.channel.id == cfg.options["channel_ids"]["dev"], "name": ""},
     'bot': {"cond": lambda message: message.channel.id == cfg.options["channel_ids"]["dev"], "name": "<#533005337482100736>"},
-    'team': {"cond": lambda message: message.channel.id == cfg.options["channel_ids"]["team"], "name": ""},
+    'team1': {"cond": lambda message: message.channel.id == cfg.options["channel_ids"]["team1"], "name": ""},
     'team2': {"cond": lambda message: message.channel.id == cfg.options["channel_ids"]["team2"], "name": ""},
 }
 
@@ -64,6 +64,7 @@ def register(func, settings):
         channel_names = []
         channels = [channel for channel in allowed_channels.keys() if channel not in blacklisted]
     elif channels[0] != 'all':
+        print(allowed_channels)
         channel_conds = [allowed_channels[channel]['cond'] for channel in channels]  # always allow in dev channel
         channel_names = [allowed_channels[channel]['name'] for channel in channels if
                          channel != 'dev']  # dont show devchannel as alternative

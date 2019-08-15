@@ -8,7 +8,7 @@ SHL = Console("BundestagsBot PublicSurvey")
 settings = {
     'name': 'publicsurvey;',
     'mod_cmd': True,
-    'channels': ['team'],
+    'channels': ['team1'],
 }
 
 '''
