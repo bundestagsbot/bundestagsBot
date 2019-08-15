@@ -1,8 +1,9 @@
 from bt_utils import handleJson
 from bt_utils.console import Console
 
-PATHS = ["config/blacklist.json", "config/main.json", "config/messages.json",
-         "config/role_table.json", "config/tokens.json"]
+BASE_PATH = "config/"
+PATHS = ["blacklist.json", "main.json", "messages.json",
+         "role_table.json", "tokens.json"]
 SHL = Console("ConfigLoader")
 
 
@@ -12,8 +13,8 @@ class Config:
     def reload(self, debug=False):
         SHL.output(f"Reloading config.")
         for path in PATHS:
-            SHL.output(f"Reloading configfile {path}")
-            data = handleJson.readjson(path)
+            SHL.output(f"Reloading configfile {BASE_PATH + path}")
+            data = handleJson.readjson(BASE_PATH + path)
             for key, value in data.items():
                 self.options[key] = value
                 if debug:
