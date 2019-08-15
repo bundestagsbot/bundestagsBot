@@ -113,7 +113,7 @@ async def on_ready():
         await client.change_presence(activity=game)
         SHL.output(f"{game.name} als Status gesetzt.")
 
-    # W
+    # WebHooks
     # ================================================
     if cfg.options["use_webhooks"]:
         template = cfg.options["on_ready"]
@@ -121,9 +121,9 @@ async def on_ready():
             title=template["title"],
             description=template["description"],
             thumbnail_url=template["thumbnail_url"],
-            color=template["color"]
+            color=int(template["color"], 16)
         )
-        for name, link in cfg.options["webhooks"]:
+        for name, link in cfg.options["webhooks"].items():
             Webhook(link).send(embed=embed)
             SHL.output(f"Webhook {name} sent.")
 
