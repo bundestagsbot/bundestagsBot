@@ -21,7 +21,7 @@ async def on_member_join(member):
         await member.send(embed=welcome.create_embed())
     except:
         pass  # member did not accept dm
-    for role in cfg.options["roles_on_join"]:
+    for role in cfg.options.get("roles_on_join", []):
         r = get(client.get_guild(531445761733296130).roles, id=int(role))  # TODO: replace guildID
         await member.add_roles(r)
 
@@ -64,14 +64,14 @@ async def on_ready():
 
     # discord related
     # ================================================
-    if cfg.options["use_game"]:
-        game = discord.Game(name=cfg.options["game_name"])
+    if cfg.options.get("use_game", False):
+        game = discord.Game(name=cfg.options.get("game_name", "Hello world"))
         await client.change_presence(activity=game)
         SHL.output(f"{game.name} als Status gesetzt.")
 
     # WebHooks
     # ================================================
-    if cfg.options["use_webhooks"]:
+    if cfg.options.get("use_webhooks", False):
         template = cfg.options["on_ready"]
         embed = Embed(
             title=template["title"],
