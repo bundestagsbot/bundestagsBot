@@ -1,18 +1,17 @@
 from discord.utils import get
 import commands
-from bt_utils.console import Console
+from bt_utils.console import *
 from bt_utils import handleJson
 from bt_utils.config import cfg
 from dhooks import Webhook, Embed
 from others import welcome, role_reaction
 from others.message_conditions import check_message
 import discord
-import datetime
 
-SHL = Console(prefix="BundestagsBot", cls=True)
+client = discord.Client()
+SHL = Console(prefix="BundestagsBot")
 handleJson.BASE_PATH = __file__
 cfg.reload()
-client = discord.Client()
 
 
 @client.event
@@ -56,11 +55,10 @@ async def on_message(message):
 async def on_ready():
     # console related
     # ================================================
-    SHL.output("========================")
     SHL.output("Logged in as")
     SHL.output(client.user.name)
-    SHL.output(client.user.id)
-    SHL.output("========================")
+    SHL.output(f"Online in {len(client.guilds)} Guilds.")
+    SHL.output(f"{red}========================{white}")
 
     # discord related
     # ================================================

@@ -1,5 +1,5 @@
 from bt_utils import handleJson
-from bt_utils.console import Console
+from bt_utils.console import *
 
 BASE_PATH = "config/"
 PATHS = ["blacklist.json", "main.json", "messages.json",
@@ -19,6 +19,7 @@ class Config:
                 self.options[key] = value
                 if debug:
                     SHL.output(f"[{key}]: {value}")
+        SHL.output(f"{red}========================{white}")
 
 
 cfg = Config()

@@ -1,10 +1,10 @@
-from bt_utils.console import Console
+from bt_utils.console import *
 from bt_utils.config import cfg
 import discord
 import datetime
 import pkgutil
 import importlib
-SHL = Console("BundestagsBot", cls=True)
+SHL = Console("CommandLoader", cls=True)
 
 """
 
@@ -64,7 +64,6 @@ def register(func, settings):
         channel_names = []
         channels = [channel for channel in allowed_channels.keys() if channel not in blacklisted]
     elif channels[0] != 'all':
-        print(allowed_channels)
         channel_conds = [allowed_channels[channel]['cond'] for channel in channels]  # always allow in dev channel
         channel_names = [allowed_channels[channel]['name'] for channel in channels if
                          channel != 'dev']  # dont show devchannel as alternative
@@ -94,7 +93,7 @@ def register(func, settings):
                     await message.channel.send(
                         content='Folgende Kanäle sind nicht zulässig: \n' + "\n".join(blacklisted))
         commands[name.lower()] = wrapper
-    print('\033[92m' + (str(datetime.datetime.now())[:-7]) + f' \033[92m[BundestagsBot] registered {settings}')
+    SHL.output(f"Registered {settings.get('name', 'unknown command')}")
 
 
 def user_in_team(user):
@@ -105,11 +104,15 @@ def user_in_team(user):
 
 
 def register_all():
+    SHL.output(f"{red}========================{white}")
     pkgutil.extend_path(__path__, __name__)
     for importer, modname, ispkg in pkgutil.walk_packages(path=__path__, prefix=__name__ + '.'):
-        # importing all files in directory and registering them
-        command = importlib.import_module(modname)
-        register(command.main, command.settings)
+        try:
+            command = importlib.import_module(modname)
+            register(command.main, command.settings)
+        except:
+            pass
+    SHL.output(f"{red}========================{white}")
 
 
 register_all()
