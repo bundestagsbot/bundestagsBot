@@ -79,7 +79,7 @@ def register(func, settings):
             else:
                 await message.channel.send(content='Du hast nicht genug Rechte um diesen Befehl zu benutzen!')
 
-        mod_commands[name] = wrapper
+        mod_commands[name.lower()] = wrapper
     else:
         async def wrapper(client, message, params):
             if log:
@@ -92,7 +92,7 @@ def register(func, settings):
                 else:
                     await message.channel.send(
                         content='Folgende Kanäle sind nicht zulässig: \n' + "\n".join(blacklisted))
-        commands[name] = wrapper
+        commands[name.lower()] = wrapper
     print('\033[92m' + (str(datetime.datetime.now())[:-7]) + f' \033[92m[BundestagsBot] registered {settings}')
 
 
