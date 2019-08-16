@@ -24,6 +24,9 @@ class Console:
         if c: return f'{yellow2}[{str(datetime.now()).split(".", 1)[0]}]{white}'
         return f'[{str(datetime.now()).split(".", 1)[0]}]'
 
+    def set_prefix(self, prefix):
+        self.prefix = f'{green2}[{prefix}]{white}'
+
     def __init__(self, prefix, cls=False):
         if cls: subprocess.call('cls', shell=True)
         self.prefix = f'{green2}[{prefix}]{white}'
