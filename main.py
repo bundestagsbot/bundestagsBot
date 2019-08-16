@@ -17,10 +17,9 @@ cfg.reload()
 
 @client.event
 async def on_member_join(member):
-    try:
-        await member.send(embed=welcome.create_embed())
-    except:
-        pass  # member did not accept dm
+    SHL.output(f"Send Welcome to {member.display_name}.")
+    await member.send(embed=welcome.create_embed())
+    # member did not accept dm
     for role in cfg.options.get("roles_on_join", []):
         r = get(client.get_guild(531445761733296130).roles, id=int(role))  # TODO: replace guildID
         await member.add_roles(r)

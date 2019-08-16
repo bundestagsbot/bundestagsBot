@@ -83,6 +83,7 @@ def register(func, settings):
     else:
         async def wrapper(client, message, params):
             if log:
+                SHL.set_prefix("CommandHandler")
                 SHL.output(f"{message.author} used {message.content}")  # logging
             if any([e(message) for e in channel_conds]):  # check if any of the given channels were used
                 await func(client, message, params)
