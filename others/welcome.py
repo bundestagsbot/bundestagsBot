@@ -1,6 +1,8 @@
 from discord import Embed, Color
 from datetime import datetime
 from bt_utils.config import cfg
+from bt_utils.console import *
+SHL = Console("WelcomeEmbed")
 
 welcome_de = """
     __**Willkommen**__
@@ -25,9 +27,16 @@ def create_embed(lang="de"):
     embed = Embed(title=f'Willkommen!', color=Color.dark_red(),
                           url="https://github.com/bundestagsBot/bundestagsBot")
     embed.timestamp = datetime.utcnow()
-    if lang == "de":
-        embed.description = welcome_de.format(cfg.options["channel_ids"]["roles"][0],
-                                              cfg.options["channel_ids"]["welcome"][0],
-                                              cfg.options["channel_ids"]["dev"][0],
-                                              cfg.options["channel_ids"]["suggestions"][0])
+    try:
+        if lang == "de":
+            embed.description = welcome_de.format(cfg.options["channel_ids"]["roles"][0],
+                                                  cfg.options["channel_ids"]["welcome"][0],
+                                                  cfg.options["channel_ids"]["bot"][0],
+                                                  cfg.options["channel_ids"]["suggestions"][0])
+    except KeyError:
+        SHL.output(f"{red}Could not send full Embed. Please check if you applied all needed configuration.{white}")
+        embed.description = "__**Welcome**__"
+    except IndexError:
+        SHL.output(f"{red}Could not send full Embed. Please check if you applied all needed configuration.{white}")
+        embed.description = "__**Welcome**__"
     return embed
