@@ -10,6 +10,7 @@
   "mute_role_id": 0,
   "bot_api_check": false,
   "bot_api_channel": 0,
+  "message_limit": 1999,
   "channel_ids": {
     "welcome": [],
     "suggestions": [],
