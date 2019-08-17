@@ -26,4 +26,5 @@ class Config:
         SHL.output(f"{red}========================{white}")
         return files_failed
 
+
 cfg = Config()

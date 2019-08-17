@@ -8,6 +8,7 @@ settings = {
     'mod': True
 }
 
+
 async def main(client, message, params):
     files_failed = cfg.reload()
     if files_failed == 0:
