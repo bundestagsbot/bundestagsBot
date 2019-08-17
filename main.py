@@ -5,7 +5,7 @@ from bt_utils.console import *
 from bt_utils import handleJson
 from bt_utils.config import cfg
 from dhooks import Webhook, Embed
-from others import welcome, role_reaction
+from others import welcome, role_assignment
 from others.message_conditions import check_message
 from discord.errors import LoginFailure
 import discord
@@ -28,12 +28,12 @@ async def on_member_join(member):
 
 @client.event
 async def on_raw_reaction_add(payload):
-    await role_reaction.reaction_add(client, payload)
+    await role_assignment.reaction_add(client, payload)
 
 
 @client.event
 async def on_raw_reaction_remove(payload):
-    await role_reaction.reaction_remove(client, payload)
+    await role_assignment.reaction_remove(client, payload)
 
 
 @client.event
