@@ -4,7 +4,7 @@ import discord
 import datetime
 import pkgutil
 import importlib
-SHL = Console("CommandLoader", cls=True)
+SHL = Console("CommandLoader")
 
 """
 
@@ -105,7 +105,6 @@ def user_in_team(user):
 
 
 def register_all():
-    SHL.output(f"{red}========================{white}")
     pkgutil.extend_path(__path__, __name__)
     for importer, modname, ispkg in pkgutil.walk_packages(path=__path__, prefix=__name__ + '.'):
         try:
