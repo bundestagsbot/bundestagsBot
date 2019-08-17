@@ -16,7 +16,7 @@ class Config:
         for path in PATHS:
             SHL.output(f"Reloading configfile {BASE_PATH + path}")
             data = handleJson.readjson(BASE_PATH + path)
-            if data == None:
+            if data is None:
                 files_failed += 1
                 continue
             for key, value in data.items():

@@ -73,6 +73,9 @@ def register(func, settings):
 
     if mod_cmd:
         async def wrapper(client, message, params):
+            if log:
+                SHL.set_prefix("CommandHandler")
+                SHL.output(f"{message.author} used {message.content}")
             if user_in_team(message.author):
                 await func(client, message, params)
 
