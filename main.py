@@ -1,9 +1,12 @@
+from bt_utils import handleJson
+from bt_utils.config import cfg
+handleJson.BASE_PATH = __file__
+cfg.reload()
+
 from discord.utils import get
 from bt_utils.cache_handler import cache
 import commands
 from bt_utils.console import *
-from bt_utils import handleJson
-from bt_utils.config import cfg
 from dhooks import Webhook, Embed
 from others import welcome, role_assignment
 from others.message_conditions import check_message
@@ -12,14 +15,14 @@ import discord
 
 client = discord.Client()
 SHL = Console(prefix="BundestagsBot")
-handleJson.BASE_PATH = __file__
-cfg.reload()
-
 
 @client.event
 async def on_member_join(member):
-    SHL.output(f"Send Welcome to {member.display_name}.")
-    await member.send(embed=welcome.create_embed())
+    try:
+        await member.send(embed=welcome.create_embed())
+        SHL.output(f"Send Welcome to {member.display_name}.")
+    except:  # if users privacy settings do not allow dm
+        pass
     # member did not accept dm
     for role in cfg.options.get("roles_on_join", []):
         r = get(client.get_guild(531445761733296130).roles, id=int(role))  # TODO: replace guildID

@@ -3,7 +3,7 @@ from bt_utils.config import cfg
 from bt_utils.console import *
 from datetime import datetime
 import os
-SHL = Console("CacheHandler", cls=True)
+SHL = Console("CacheHandler")
 
 
 class Cache:
