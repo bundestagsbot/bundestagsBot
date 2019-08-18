@@ -29,10 +29,9 @@ async def main(client, message, params):
 
     parliament = 0
     if len(params) != 0:
-        if parliament in range(0, 18):
-            parliament = int(params[0])
-        else:
-            parliament = 0
+        if isinstance(params[0], int):
+            if int(params[0]) in range(0, 18):
+                parliament = int(params[0])
 
     embed = create_embed(data, parliament)
 
