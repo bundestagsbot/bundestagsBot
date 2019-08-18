@@ -50,7 +50,7 @@ def register(func, settings):
     channels = settings.get('channels', ['bot'])  # if no channels are supplied the bot channel will be used
     log = settings.get('log', True)
 
-    if 'team' not in channels: channels.append('team')  # every command should be accessible in the team, channels
+    if 'team' not in channels: channels.append('team')  # every command should be accessible in the team channels
 
     # use ['all'] to allow all channels
     mod_cmd = settings.get('mod_cmd', False)
