@@ -3,7 +3,7 @@ import json
 import os
 SHL = Console(prefix="handleJSON")
 
-BASE_PATH = ""
+BASE_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 
 
 def writejson(path, data):
@@ -11,18 +11,12 @@ def writejson(path, data):
 
 
 def saveasjson(rel_path, data):
-    if not BASE_PATH:
-        SHL.output(f"Please set the BASE_PATH variable before.")
-        return
-    with open(os.path.join(os.path.dirname(BASE_PATH), rel_path), 'w') as outfile:
+    with open(os.path.join(BASE_PATH, rel_path), 'w') as outfile:
         json.dump(data, outfile)
 
 
 def readjson(rel_path, debug=True):
-    if not BASE_PATH:
-        SHL.output(f"Please set the BASE_PATH variable before.")
-        return
-    path = os.path.join(os.path.dirname(BASE_PATH), rel_path)
+    path = os.path.join(BASE_PATH, rel_path)
     try:
         with open(path, 'r') as c:
             data = json.load(c)
@@ -41,10 +35,7 @@ def read_json_raw(rel_path):
     :param rel_path: relative path which get combined with BASE_PATH
     :return: dict or None
     """
-    if not BASE_PATH:
-        SHL.output(f"Please set the BASE_PATH variable before.")
-        return
-    rel_path = os.path.join(os.path.dirname(BASE_PATH), rel_path)
+    rel_path = os.path.join(BASE_PATH, rel_path)
     with open(rel_path, 'r') as c:
         data = json.load(c)
     return data

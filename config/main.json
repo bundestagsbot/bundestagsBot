@@ -8,6 +8,7 @@
   "invoke_mod": "+",
   "team_role_id": 0,
   "mute_role_id": 0,
+  "warn_role_id": 0,
   "bot_api_check": false,
   "bot_api_channel": 0,
   "message_limit": 1999,
@@ -17,10 +18,8 @@
     "welcome": [],
     "suggestions": [],
     "roles": [],
-    "dev": [],
     "bot": [],
-    "team1": [],
-    "team2": []
+    "team": []
   }
 
 }

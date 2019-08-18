@@ -2,9 +2,9 @@ from bt_utils.console import Console
 from bt_utils.config import cfg
 from bt_utils import handleJson
 from bt_utils.cache_handler import cache
+from bt_utils.embed_templates import InfoEmbed, ErrorEmbed
 from datetime import datetime
 import requests
-from discord import Embed, Colour
 SHL = Console("BundestagsBot Umfrage")
 
 settings = {
@@ -29,10 +29,9 @@ async def main(client, message, params):
 
     parliament = 0
     if len(params) != 0:
-        if parliament in range(0, 18):
-            parliament = int(params[0])
-        else:
-            parliament = 0
+        if isinstance(params[0], int):
+            if int(params[0]) in range(0, 18):
+                parliament = int(params[0])
 
     embed = create_embed(data, parliament)
 
@@ -44,7 +43,11 @@ async def main(client, message, params):
             SHL.output("Something went wrong while loading the request.")
             data = {}
         cache.write_to_cache(data, key="dawum_api")
-        # TODO: Send a basic "Error occurred" embed here. That should be implemented everywhere
+        error = ErrorEmbed(title="Umfrage",
+                           description="Something went wrong while accessing the API data.\n"
+                                       "Please try again. If this error occurres again,"
+                                       " please check surveys yourself online at https://www.wahlrecht.de/umfragen/")
+        await message.channel.send(embed=error)
     else:
         await message.channel.send(embed=embed)
 
@@ -56,8 +59,7 @@ def create_embed(data, parl=0):
                 last = e
                 break
 
-        embed = Embed(title='Aktuelle Umfrage ' + data['Parliaments'][str(parl)]['Name'],
-                      color=Colour.dark_red())
+        embed = InfoEmbed(title='Aktuelle Umfrage ' + data['Parliaments'][str(parl)]['Name'])
         embed.description = 'Wahl: ' + data['Parliaments'][str(parl)]['Election'] +\
                             '\nUmfrage von: ' + data['Institutes'][data['Surveys'][last]['Institute_ID']]['Name'] + \
                             '\nUmfrage im Auftrag von: ' + data['Taskers'][data['Surveys'][last]['Tasker_ID']]['Name']
@@ -68,9 +70,9 @@ def create_embed(data, parl=0):
                             value=str(data['Surveys'][last]['Results'][party])+'%\n',
                             inline=False)
     except KeyError:
-        SHL.output("Got an invalid syntax. Perhaps the API is not available or deprecated")
+        SHL.output("Got an invalid syntax. Perhaps the API is not available or deprecated.")
         return
     except:
-        SHL.output("Something went wrong while parsing the Embed. Perhaps the API is not available or deprecated")
+        SHL.output("Something went wrong while parsing the Embed. Perhaps the API is not available or deprecated.")
         return
     return embed

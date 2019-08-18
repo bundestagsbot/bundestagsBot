@@ -4,11 +4,13 @@ from bt_utils.console import *
 BASE_PATH = "config/"
 PATHS = ["blacklist.json", "main.json", "messages.json",
          "role_table.json", "tokens.json"]
-SHL = Console("ConfigLoader")
+SHL = Console("ConfigLoader", cls=True)
 
 
 class Config:
-    options = {}
+    def __init__(self):
+        self.options = {}
+        self.reload()
 
     def reload(self, debug=False):
         SHL.output(f"Reloading config.")

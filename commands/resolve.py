@@ -4,7 +4,7 @@ SHL = Console("BundestagsBot Resolve")
 
 settings = {
     'name': 'resolve',
-    'channels': ['team1'],
+    'channels': ['team'],
     'mod_cmd': True,
     'log': True
 }

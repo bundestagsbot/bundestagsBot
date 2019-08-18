@@ -13,9 +13,7 @@ async def main(client, message, params):
     # aufbau: survey title text answers
     # answers 0 für antwort ja/nein
     # >1 für zaheln von 0-10 damit man dann im text schreibt 1:x 2:y 3:z 4:a 5:b 6:c und die leute dann deutlich mehr zur auswahl haben
-    print(params)
     args = " ".join(params).split(';')
-    print(args)
 
     if len(args) in range(2, 4):
         embed = createsurvey(args[0], args[1], message.author)
