@@ -31,10 +31,9 @@ mod_commands = {}
 
 allowed_channels = {
     'dm': {"cond": lambda message: isinstance(message.channel, discord.DMChannel), "name": "Dm"},
-    'dev': {"cond": lambda message: message.channel.id == cfg.options["channel_ids"]["dev"], "name": ""},
-    'bot': {"cond": lambda message: message.channel.id == cfg.options["channel_ids"]["dev"], "name": "<#533005337482100736>"},
-    'team1': {"cond": lambda message: message.channel.id == cfg.options["channel_ids"]["team1"], "name": ""},
-    'team2': {"cond": lambda message: message.channel.id == cfg.options["channel_ids"]["team2"], "name": ""},
+    'bot': {"cond": lambda message: message.channel.id in cfg.options["channel_ids"]["bot"], "name": f"<#{cfg.options['channel_ids']['bot']}>"},
+    'team': {"cond": lambda message: message.channel.id in cfg.options["channel_ids"]["team"], "name": ""},
+    'all': {"cond": lambda message: True, "name": ""}
 }
 
 
@@ -51,25 +50,18 @@ def register(func, settings):
     channels = settings.get('channels', ['bot'])  # if no channels are supplied the bot channel will be used
     log = settings.get('log', True)
 
-    for channel in ["dev", "team1", "team2"]: # every command should be accessible in these channels
-        if channel not in channels: channels.append(channel)
+    if 'team' not in channels: channels.append('team')  # every command should be accessible in the team, channels
 
     # use ['all'] to allow all channels
     mod_cmd = settings.get('mod_cmd', False)
-    blacklisted = [channel[1:] for channel in channels if
-                   channel[0] == '!']  # use '!' to blacklist a channel instead of whitelisting
+    blacklisted = [channel[1:] for channel in channels if channel[0] == '!']  # use '!' to blacklist a channel instead of whitelisting
 
-    if len(blacklisted) != 0:  # if a channel is blacklisted
+    if blacklisted:  # if a channel is blacklisted
         channel_conds = [lambda message: not (any([allowed_channels[e]['cond'](message) for e in blacklisted]))]
         channel_names = []
-        channels = [channel for channel in allowed_channels.keys() if channel not in blacklisted]
-    elif channels[0] != 'all':
-        channel_conds = [allowed_channels[channel]['cond'] for channel in channels]  # always allow in dev channel
-        channel_names = [allowed_channels[channel]['name'] for channel in channels if
-                         channel != 'dev']  # dont show devchannel as alternative
     else:
-        channel_conds = [lambda message: True]
-        channel_names = []
+        channel_conds = [allowed_channels[channel]['cond'] for channel in channels]
+        channel_names = [allowed_channels[channel]['name'] for channel in channels]
 
     if mod_cmd:
         async def wrapper(client, message, params):
