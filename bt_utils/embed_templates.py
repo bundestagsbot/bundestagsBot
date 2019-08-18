@@ -11,6 +11,18 @@ class SimpleEmbed(Embed):
         self.description = description
 
 
+# Copy of WarningEmbed for easy use
+# Only use this when an interal error occurred. e.g. invalid config or HTTPError
+class ErrorEmbed(Embed):
+    def __init__(self, title="", description=""):
+        super().__init__()
+        self.timestamp = datetime.utcnow()
+        self.colour = Colour.red()
+        self.url = "https://github.com/bundestagsBot/bundestagsBot"
+        self.title = title
+        self.description = description
+
+
 # Only use this when an interal error occurred. e.g. invalid config or HTTPError
 class WarningEmbed(Embed):
     def __init__(self, title="", description=""):
