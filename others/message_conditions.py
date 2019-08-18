@@ -11,7 +11,7 @@ async def check_message(client, message):
         return False
 
     if cfg.options.get("use_blacklist", False):
-        if str(message.author.id) in cfg.options.get("blacklist", []):
+        if str(message.author.id) in [str(x) for x in cfg.options.get("blacklist", [])]:
             return False
 
     if len(str(message.content)) > cfg.options.get("message_limit", len(str(message.content))):

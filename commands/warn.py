@@ -42,7 +42,7 @@ async def main(client, message, params):
                                                  f"Please read our server rules.\n"
                                                  f"If you do not understand this message, please ask a moderator.")
             await badboi.send(embed=badboi_embed)
-        except:
+        except:  # if users privacy settings do not allow dm
             pass
         await message.channel.send(embed=return_embed)
     else:
