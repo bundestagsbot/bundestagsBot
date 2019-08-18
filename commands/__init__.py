@@ -1,5 +1,6 @@
 from bt_utils.console import *
 from bt_utils.config import cfg
+from bt_utils.embed_templates import NoticeEmbed
 import discord
 import datetime
 import pkgutil
@@ -30,10 +31,14 @@ commands = {}
 mod_commands = {}
 
 allowed_channels = {
-    'dm': {"cond": lambda message: isinstance(message.channel, discord.DMChannel), "name": "Dm"},
-    'bot': {"cond": lambda message: message.channel.id in cfg.options["channel_ids"]["bot"], "name": f"<#{cfg.options['channel_ids']['bot']}>"},
-    'team': {"cond": lambda message: message.channel.id in cfg.options["channel_ids"]["team"], "name": ""},
-    'all': {"cond": lambda message: True, "name": ""}
+    'dm': {"cond": lambda message: isinstance(message.channel, discord.DMChannel),
+           "name": "Private Message"},
+    'bot': {"cond": lambda message: message.channel.id in cfg.options["channel_ids"]["bot"],
+            "name": " ".join([f"<#{e}>" for e in cfg.options['channel_ids']['bot']])},
+    'team': {"cond": lambda message: message.channel.id in cfg.options["channel_ids"]["team"],
+             "name": ""},
+    'all': {"cond": lambda message: True,
+            "name": ""}
 }
 
 
@@ -72,7 +77,9 @@ def register(func, settings):
                 await func(client, message, params)
 
             else:
-                await message.channel.send(content='Du hast nicht genug Rechte um diesen Befehl zu benutzen!')
+                info = NoticeEmbed(title="Permission",
+                                   description="You do not have the needed permission the use this command!")
+                await message.channel.send(embed=info)
 
         mod_commands[name.lower()] = wrapper
     else:
@@ -84,10 +91,16 @@ def register(func, settings):
                 await func(client, message, params)
             else:
                 if len(channel_names) != 0:
-                    await message.channel.send(content='Benutze einen dieser Kanäle: \n' + "\n".join(channel_names))
+                    info = NoticeEmbed(title="Invalid channel",
+                                       description="Please use one of these channels: \n\n>"
+                                                   + "\n> ".join([x for x in channel_names if x.strip()]))
+                    await message.channel.send(embed=info)
                 else:
-                    await message.channel.send(
-                        content='Folgende Kanäle sind nicht zulässig: \n' + "\n".join(blacklisted))
+                    blacklisted_channels = [allowed_channels[x]['name'] for x in blacklisted]
+                    info = NoticeEmbed(title="Invalid channel",
+                                       description="Following channels are not allowed: \n\n>"
+                                                   + "\n> ".join(blacklisted_channels))
+                    await message.channel.send(embed=info)
         commands[name.lower()] = wrapper
     SHL.output(f"Registered {settings.get('name', 'unknown command')}")
 
