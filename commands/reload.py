@@ -5,7 +5,7 @@ SHL = Console('BundestagsBot Reload')
 
 settings = {
     'name': 'reload',
-    'channels': ['team1'],
+    'channels': ['team'],
     'mod_cmd': True
 }
 
