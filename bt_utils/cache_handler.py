@@ -11,7 +11,16 @@ class Cache:
         return cfg.options.get("path_to_temp_cache", "temp/") + "cache.json"
 
     def __init__(self):
-        pass
+        try:
+            handleJson.saveasjson(self.path(), {})
+            SHL.output("Cleared cache.")
+        except FileNotFoundError:
+            SHL.output("Cache file not found. Creating it.")
+            cache_dir = os.path.join(handleJson.BASE_PATH,
+                                     cfg.options.get('path_to_temp_cache', 'temp/'))
+            if not os.path.exists(cache_dir):
+                os.makedirs(cache_dir)
+            handleJson.saveasjson(self.path(), {})
 
     def get_data(self, key=None):
         try:
@@ -24,7 +33,7 @@ class Cache:
             return data
         except FileNotFoundError:
             SHL.output("Cache file not found. Creating it.")
-            cache_dir = os.path.join(os.path.dirname(handleJson.BASE_PATH),
+            cache_dir = os.path.join(handleJson.BASE_PATH,
                                      cfg.options.get('path_to_temp_cache', 'temp/'))
             if not os.path.exists(cache_dir):
                 os.makedirs(cache_dir)

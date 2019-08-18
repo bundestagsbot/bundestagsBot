@@ -1,8 +1,5 @@
 from bt_utils import handleJson
 from bt_utils.config import cfg
-handleJson.BASE_PATH = __file__
-cfg.reload()
-
 from discord.utils import get
 from bt_utils.cache_handler import cache
 import commands
@@ -15,6 +12,7 @@ import discord
 
 client = discord.Client()
 SHL = Console(prefix="BundestagsBot")
+
 
 @client.event
 async def on_member_join(member):

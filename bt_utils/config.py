@@ -8,7 +8,9 @@ SHL = Console("ConfigLoader", cls=True)
 
 
 class Config:
-    options = {}
+    def __init__(self):
+        self.options = {}
+        self.reload()
 
     def reload(self, debug=False):
         SHL.output(f"Reloading config.")
