@@ -21,7 +21,7 @@ optional:
         default value: ['bot']
     log: a boolean that specifies if your command will log to the console when used
         default: True
-    mod: a boolean that specifies if your command can only be used by team members
+    mod_cmd: a boolean that specifies if your command can only be used by team members
         default: False
 
 """
