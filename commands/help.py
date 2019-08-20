@@ -1,5 +1,5 @@
 from bt_utils.console import Console
-import discord
+from bt_utils.embed_templates import InfoEmbed
 SHL = Console("BundestagsBot Help")
 
 settings = {
@@ -10,18 +10,19 @@ settings = {
 
 async def main(client, message, params):
     if len(params) == 0:
-        embed = helpembed()
+        embed = help_embed()
     elif params[0] == 'survey':
-        embed = surveyhelpembed()
+        embed = survey_help_embed()
     else:
-        embed = helpembed()
+        embed = help_embed()
     await message.channel.send(embed=embed)
 
 
-def helpembed():
-    embed = discord.Embed(title='Hilfe - BundestagsBot v1', color=discord.colour.Colour.orange())
+def help_embed():
+    embed = InfoEmbed(title='Hilfe - BundestagsBot v1')
     embed.set_thumbnail(url='https://cdn0.iconfinder.com/data/icons/handdrawn-ui-elements/512/Question_Mark-512.png')
-    embed.description = '-Benutze >survey Titel; Beschreibung; <Anzahl>\num eine Umfrage zu erstellen. >help survey für mehr Details\n\n'\
+    embed.description = '-Benutze >survey Titel; Beschreibung; <Anzahl>\n' \
+                        'um eine Umfrage zu erstellen. >help survey für mehr Details\n\n'\
                         '-Benutze >iam [Politik] um dir diese Rolle zuzuweisen.\n\n'\
                         '-Benutze >roles für eine Übersicht der Rollenverteilung.\n\n'\
                         '-Benutze >answer #id answer um auf eine Umfrage zu antworten.\n\n' \
@@ -31,12 +32,16 @@ def helpembed():
                         '-Benutze >umfrage [Parlamentsnummer]\nKeine Nummer für Bundestag'\
 
 
-    embed.add_field(name='Liste:', value='0: Bundestag\n1: Baden-Württemberg\n2: Bayern\n3: Berlin\n4: Brandeburg\n5: Bremen\n6: Hamburg\n7: Hessen\n8: Mecklenburg-Vorpommern\n9: Niedersachsen\n10: NRW\n11: Rheinland-Pfalz\n12: Saarland\n13: Sachsen\n14: Sachsen-Anhalt\n15: Schleswig-Holstein\n16: Thüringen\n17: Europäisches Parlament')
+    embed.add_field(name='Liste:',
+                    value='0: Bundestag\n1: Baden-Württemberg\n2: Bayern\n3: Berlin\n4: Brandeburg\n5: Bremen\n'
+                          '6: Hamburg\n7: Hessen\n8: Mecklenburg-Vorpommern\n9: Niedersachsen\n10: NRW\n'
+                          '11: Rheinland-Pfalz\n12: Saarland\n13: Sachsen\n14: Sachsen-Anhalt\n'
+                          '15: Schleswig-Holstein\n16: Thüringen\n17: Europäisches Parlament')
     return embed
 
 
-def surveyhelpembed():
-    embed = discord.Embed(title='Hilfe - BundestagsBot v1', color=discord.colour.Colour.orange())
+def survey_help_embed():
+    embed = InfoEmbed(title='Hilfe - BundestagsBot v1')
     embed.set_thumbnail(url='https://cdn0.iconfinder.com/data/icons/handdrawn-ui-elements/512/Question_Mark-512.png')
 
     embed.description = '>survey; Titel; Beschreibung; <Anzahl>\n\n'\

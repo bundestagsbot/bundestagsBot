@@ -1,6 +1,8 @@
 from bt_utils.console import Console
+from bt_utils.embed_templates import SuccessEmbed
+from bt_utils.config import cfg
 from bt_utils import handleJson
-import discord
+from discord import Embed, Colour
 import datetime
 from discord.utils import get
 SHL = Console("BundestagsBot PublicSurvey")
@@ -38,6 +40,7 @@ path: C:/server/settings/
 '''
 
 path = 'content/surveys.json'
+subs_path = 'content/subs.json'
 
 
 async def main(client, message, params):
@@ -57,7 +60,7 @@ async def main(client, message, params):
     reaction, user = await client.wait_for('reaction_add', timeout=60.0, check=check)
     await msg.delete()
 
-    if str(reaction.emoji).startswith('❌'):  return
+    if str(reaction.emoji).startswith('❌'): return
     # if approved add to json and send embed to all discord members who are not unsubscribed:
 
     data = handleJson.readjson(path)
@@ -76,8 +79,8 @@ async def main(client, message, params):
     handleJson.saveasjson(path, data)
 
     # send to subscribers:
-    members = client.get_guild(531445761733296130).members
-    unsubs = data['unsubs']
+    members = client.get_guild(message.guild.id).members
+    unsubs = handleJson.read_json_raw(subs_path)["unsubs"]
     received, failed = 0, 0
     for m in [e for e in members if e.id not in unsubs]:
         try:
@@ -86,17 +89,25 @@ async def main(client, message, params):
         except:
             failed += 1
 
-    await message.channel.send(content='Done.\nUmfrage an ' + str(received-failed) + ' Personen gesendet.\n' + str(failed) + ' Personen haben die Nachricht abgelehnt.')
+    success = SuccessEmbed(title="Publicsurvey")
+    success.description = f"Umfrage an {received-failed} Personen gesendet.\n" \
+                          f"{failed} Personen haben die Nachricht abgelehnt."
+    await message.channel.send(embed=embed)
 
 
 def createsurvey(title, text, author, answers, url, survey_id):
-    embed = discord.Embed(title='Umfrage #' + str(survey_id) + ': ' + title, color=discord.Colour.green(), url=url)
+    embed = Embed(title='Umfrage #' + str(survey_id) + ': ' + title, color=Colour.green(), url=url)
     embed.timestamp = datetime.datetime.utcnow()
     embed.add_field(name='Frage:', value= text.replace('|', '\n'), inline=False)
-    embed.add_field(name='Antwort:', value='Beantworte diese Umfrage mit:\n>answer #' + str(survey_id) + ' 1-' + answers.strip())
-    embed.add_field(name='Ergebnisse:', value='Ergebnisse erhälst du mit:\n>result #' + str(survey_id))
-    embed.add_field(name='Keine weitere Umfrage:', value='Wenn du keine weiteren Umfragen mehr erhalten willst, verwende: >sub False')
-    embed.add_field(name='Information:', value='Du kannst deine Antwort nicht mehr ändern.\nDiese Umfrage ist anonym.\nBei Fragen wende dich an die Developer.')
+    embed.add_field(name='Antwort:',
+                    value=f'Beantworte diese Umfrage mit:\n{cfg.options["invoke_normal"]}answer #{survey_id} 1-{answers.strip()}')
+    embed.add_field(name='Ergebnisse:',
+                    value=f'Ergebnisse erhälst du mit:\n{cfg.options["invoke_normal"]}result #{survey_id}')
+    embed.add_field(name='Keine weitere Umfrage:',
+                    value=f'Wenn du keine weiteren Umfragen mehr erhalten willst, verwende: {cfg.options["invoke_normal"]}sub False')
+    embed.add_field(name='Information:', value='Du kannst deine Antwort nicht mehr ändern.\n'
+                                               'Diese Umfrage ist anonym.\n'
+                                               'Bei Fragen wende dich an die Developer.')
     embed.set_footer(text="Umfrage von " + author.name)
     return embed
 

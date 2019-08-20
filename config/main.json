@@ -15,9 +15,10 @@
   "use_cache": true,
   "path_to_temp_cache": "temp/",
   "channel_ids": {
-    "welcome": [],
-    "suggestions": [],
-    "roles": [],
+    "welcome": 0,
+    "suggestions": 0,
+    "submits": 0,
+    "roles": 0,
     "bot": [],
     "team": []
   }

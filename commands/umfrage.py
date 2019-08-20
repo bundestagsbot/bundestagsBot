@@ -45,8 +45,8 @@ async def main(client, message, params):
         cache.write_to_cache(data, key="dawum_api")
         error = ErrorEmbed(title="Umfrage",
                            description="Something went wrong while accessing the API data.\n"
-                                       "Please try again. If this error occurres again,"
-                                       " please check surveys yourself online at https://www.wahlrecht.de/umfragen/")
+                                       "Please try again. If this error occurres again, "
+                                       "please check surveys yourself online at https://www.wahlrecht.de/umfragen/")
         await message.channel.send(embed=error)
     else:
         await message.channel.send(embed=embed)
