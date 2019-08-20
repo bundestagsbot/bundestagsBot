@@ -1,4 +1,6 @@
 from bt_utils.console import Console
+from bt_utils.config import cfg
+from bt_utils.embed_templates import SuccessEmbed, NoticeEmbed, ErrorEmbed
 from bt_utils import handleJson
 SHL = Console("BundestagsBot Answer")
 
@@ -12,44 +14,59 @@ path = 'content/surveys.json'
 
 
 async def main(client, message, params):
-
+    success = SuccessEmbed(title="Answer")
+    error = NoticeEmbed(title="Answer")
+    try:
+        data = handleJson.read_json_raw(path)
+    except:
+        error = ErrorEmbed(title="Submit",
+                           description="Something went wrong. Please contact an admin.")
+        await message.channel.send(embed=error)
+        return
     params = str(message.content).split(' ')
-    if subscribed(message.author.id):
+    if subscribed(data, message.author.id):
         if len(params) == 3:
-            if params[1][1:].isdigit():
-                survey_id = params[1][1:]
-                if surveyID_is_valid(survey_id):
-                    surveyData = handleJson.readjson(path)[survey_id]
-                    if message.author.id not in surveyData['voted']:
-                        if int(str(params[2]).lower().strip()) in range(1, int(surveyData['answers']) + 1):
+            survey_id = params[1][1:]
+            if survey_id.isdigit():
+                if survey_id_is_valid(data, survey_id):
+                    survey_data = handleJson.readjson(path)[survey_id]
+                    if message.author.id not in survey_data['voted']:
+                        if int(str(params[2]).lower().strip()) in range(1, int(survey_data['answers']) + 1):
                             vote(message.author.id, survey_id, params[2].lower().strip())
-                            await message.channel.send(content='Danke für deine Antwort!\nDu kannst die Ergebnisse mit\n>result #' + survey_id + ' sehen.')
+                            success.description = f'Danke für deine Antwort!\n' \
+                                                  f'Du kannst die Ergebnisse mit\n' \
+                                                  f'{cfg.options["invoke_normal"]}result #{survey_id} sehen.'
+                            await message.channel.send(embed=success)
                         else:
-                            await message.channel.send(content='Keine gültige Antwort.\nMögliche Antworten: 1-'
-                                                               + str(surveyData['answers']))
+                            error.description = f"Invalid answer.\nPossible answers: 1-{survey_data['answers']}"
+                            await message.channel.send(embed=error)
                     else:
-                        await message.channel.send(content='Du kannst nicht nochmal abstimmen.')
+                        error.description = "You cannot vote twice."
+                        await message.channel.send(embed=error)
                 else:
-                    await message.channel.send(content='#' + str(survey_id) +
-                                                       ' konnte keiner Umfrage zugeordnet werden.')
+                    error.description = f"#{survey_id} could not be assigned to a survey."
+                    await message.channel.send(embed=error)
             else:
-                await message.channel.send(content=str(params[1]) + ' ist keine gültige ID.')
+                error.description = f"{survey_id} is an invalid ID."
+                await message.channel.send(embed=error)
         else:
-            await message.channel.send(content='Ungültige Anzahl an Argumenten. Verwende:\n>answer #survey_id Antwort')
+            error.description = f"Invalid syntax.\nPlease use {cfg.options['invoke_normal']}answer #survey_id Answer"
+            await message.channel.send(embed=error)
     else:
-        await message.channel.send(content='Du musst die Umfragen abonniert haben, um abzustimmen. >sub True')
+        error.description = f"You have to be subscribed to participate. Use {cfg.options['invoke_normal']}sub True"
+        await message.channel.send(embed=error)
 
 
 def vote(user_id, survey_id, answer):
-    surveyData = handleJson.readjson(path)
-    surveyData[survey_id]['voted'].append(user_id)
-    surveyData[survey_id]['results'][answer] += 1
-    handleJson.saveasjson(path, surveyData)
+    data = handleJson.read_json_raw(path)
+    data[survey_id]['voted'].append(user_id)
+    data[survey_id]['results'][answer] += 1
+    handleJson.saveasjson(path, data)
 
 
-def surveyID_is_valid(survey_id):
-    return str(survey_id) in [key for key in handleJson.readjson(path).keys() if key not in ['unsubs', 'latestID']]
+def survey_id_is_valid(data, survey_id):
+    return str(survey_id) in [key for key in data.keys() if key not in ['unsubs', 'latestID']]
 
 
-def subscribed(user_id):
-    return user_id not in handleJson.readjson(path)['unsubs']
+def subscribed(data, user_id):
+    return user_id not in data['unsubs']

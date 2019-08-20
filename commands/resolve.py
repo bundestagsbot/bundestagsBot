@@ -1,4 +1,6 @@
 from bt_utils.console import Console
+from bt_utils.config import cfg
+from bt_utils.embed_templates import InfoEmbed, NoticeEmbed
 from bt_utils import handleJson
 SHL = Console("BundestagsBot Resolve")
 
@@ -13,16 +15,24 @@ path = 'content/submits.json'
 
 
 async def main(client, message, params):
+    error = NoticeEmbed(title="Resolve")
+    info = InfoEmbed(title="Resolve")
     if len(str(message.content).split(' ')) == 2:
-        id = str(message.content).split(' ')[1][1:]
-        if id.isdigit():
-            data = handleJson.readjson(path)
-            if id in data.keys():
-                await message.channel.send(content=f'Anfrage #{id} ist von:\n{data[id]["author"]}\n{data[id]["authorID"]}')
+        submit_id = params[0][1:]
+        if submit_id.isdigit():
+            data = handleJson.read_json_raw(path)
+            if submit_id in data.keys():
+                info.description = f"Anfrage #{submit_id} ist von:\n" \
+                                   f"{data[submit_id]['author']}\n" \
+                                   f"{data[submit_id]['authorID']}"
+                await message.channel.send(embed=info)
             else:
-                await message.channel.send(content=f'{id} konnte keiner Anfrage zugeordnet werden')
+                error.description = f"#{submit_id} could not be assigned to a submit."
+                await message.channel.send(embed=error)
         else:
-            await message.channel.send(content=f'{id} ist keine gültige ID')
+            error.description = f"{submit_id} is an invalid ID."
+            await message.channel.send(embed=error)
     else:
-        await message.channel.send(content='Ungültige Anzahl an Argumenten. Versuche +resolve #id')
+        error.description = f"Invalid syntax.\nPlease use {cfg.options['invoke_mod']}resolve #id"
+        await message.channel.send(embed=error)
 

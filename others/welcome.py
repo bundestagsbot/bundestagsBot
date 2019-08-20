@@ -25,15 +25,15 @@ welcome_de = """
 
 
 def create_embed(lang="de"):
-    embed = Embed(title=f'Willkommen!', color=Color.dark_red(),
-                  url="https://github.com/bundestagsBot/bundestagsBot")
+    embed = Embed(title=f'Willkommen!', color=Color.green(),
+                          url="https://github.com/bundestagsBot/bundestagsBot")
     embed.timestamp = datetime.utcnow()
     try:
         if lang == "de":
-            embed.description = welcome_de.format(cfg.options["channel_ids"]["roles"][0],
-                                                  cfg.options["channel_ids"]["welcome"][0],
+            embed.description = welcome_de.format(cfg.options["channel_ids"]["roles"],
+                                                  cfg.options["channel_ids"]["welcome"],
                                                   cfg.options["channel_ids"]["bot"][0],
-                                                  cfg.options["channel_ids"]["suggestions"][0])
+                                                  cfg.options["channel_ids"]["suggestions"])
     except KeyError:
         SHL.output(f"{red}Could not send full Embed. Please check if you applied all needed configuration.{white}")
         embed.description = "__**Welcome**__"

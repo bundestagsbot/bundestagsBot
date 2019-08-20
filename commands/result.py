@@ -1,7 +1,9 @@
 from bt_utils.console import Console
-import discord
+from bt_utils.embed_templates import SuccessEmbed, ErrorEmbed, NoticeEmbed, InfoEmbed
+from bt_utils.config import cfg
 import datetime
 from bt_utils import handleJson
+import os
 SHL = Console("BundestagsBot Result")
 
 settings = {
@@ -13,26 +15,55 @@ path = 'content/surveys.json'
 
 
 async def main(client, message, params):
+    error = NoticeEmbed(title="Result")
+    success = SuccessEmbed(title="Result")
+
     if len(str(message.content).split(' ')) == 2:
-        survey_id = str(message.content).split(' ')[1][1:]
+        survey_id = params[0][1:]
         if survey_id.isdigit():
-            if surveyID_is_valid(survey_id):
-                embed = createembed(survey_id)
-                await message.channel.send(embed=embed)
+            if survey_id_is_valid(survey_id):
+                try:
+                    info = create_embed(survey_id)
+                    await message.channel.send(embed=info)
+                except:
+                    error = ErrorEmbed(title="Result")
+                    error.description = "Something went wrong. Please contact an admin."
+                    await message.channel.send(embed=error)
             else:
-                await message.channel.send(content='#' + survey_id + ' konnte keiner Umfrage zugeordnet werden.')
+                error.description = f"#{survey_id} could not be assigned to a survey."
+                await message.channel.send(embed=error)
         else:
-            await message.channel.send(content=survey_id + ' ist keine gültige ID.')
+            error.description = f"{survey_id} is an invalid ID."
+            await message.channel.send(embed=error)
     else:
-        await message.channel.send(content='Ungültige Anzahl an Argumenten. Verwende: >result #survey_id')
+        error.description = f"Invalid syntax.\nPlease use {cfg.options['invoke_normal']}result #surveyID"
+        await message.channel.send(embed=error)
 
 
-def surveyID_is_valid(survey_id):
-    return str(survey_id) in [key for key in handleJson.readjson(path).keys() if key not in ['unsubs','latestID']]
+def survey_id_is_valid(survey_id):
+    try:
+        data = handleJson.read_json_raw(path)
+    except FileNotFoundError:
+        SHL.output("Survey file not found. Creating it.")
+        file_dir = os.path.join(handleJson.BASE_PATH, os.path.dirname(path))
+        if not os.path.exists(file_dir):
+            os.makedirs(file_dir)
+        handleJson.saveasjson(path, {})
+        data = handleJson.read_json_raw(path)
+    return str(survey_id) in [key for key in data.keys() if key not in ['unsubs', 'latestID']]
 
 
-def createembed(survey_id):
-    data = handleJson.readjson(path)
+def create_embed(survey_id):
+    try:
+        data = handleJson.read_json_raw(path)
+    except FileNotFoundError:
+        SHL.output("Survey file not found. Creating it.")
+        file_dir = os.path.join(handleJson.BASE_PATH, os.path.dirname(path))
+        if not os.path.exists(file_dir):
+            os.makedirs(file_dir)
+        handleJson.saveasjson(path, {})
+        data = handleJson.read_json_raw(path)
+
     title = data[survey_id]["title"]
     text = data[survey_id]["text"]
     author = data[survey_id]["author"]
@@ -41,8 +72,8 @@ def createembed(survey_id):
     answers = data[survey_id]["answers"]
     results = data[survey_id]["results"]
 
-    embed = discord.Embed(title='Umfrage #' + str(survey_id) + ': ' + title, color=discord.Colour.green(), url=url)
-    embed.timestamp = datetime.datetime.utcnow()
+    embed = InfoEmbed(title='Umfrage #' + str(survey_id) + ': ' + title)
+    embed.url = url
     embed.add_field(name='Frage:', value=text.replace('|', '\n'), inline=False)
     embed.add_field(name='Antwortmöglichkeiten:', value='1 - ' + str(answers))
     embed.add_field(name='Beteiligung: ', value='Insgesamt abgestimmt haben: ' + str(votes))

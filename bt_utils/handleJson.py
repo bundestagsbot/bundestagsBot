@@ -11,14 +11,14 @@ def writejson(path, data):
 
 
 def saveasjson(rel_path, data):
-    with open(os.path.join(BASE_PATH, rel_path), 'w') as outfile:
+    with open(os.path.join(BASE_PATH, rel_path), 'w', encoding="utf-8") as outfile:
         json.dump(data, outfile)
 
 
 def readjson(rel_path, debug=True):
     path = os.path.join(BASE_PATH, rel_path)
     try:
-        with open(path, 'r') as c:
+        with open(path, 'r', encoding="utf-8") as c:
             data = json.load(c)
     except FileNotFoundError:
         if debug: SHL.output(f"{path} not found.")
@@ -36,6 +36,6 @@ def read_json_raw(rel_path):
     :return: dict or None
     """
     rel_path = os.path.join(BASE_PATH, rel_path)
-    with open(rel_path, 'r') as c:
+    with open(rel_path, 'r', encoding="utf-8") as c:
         data = json.load(c)
     return data
