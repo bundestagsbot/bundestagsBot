@@ -28,8 +28,8 @@ async def main(client, message, params):
         cache.write_to_cache(data, key="dawum_api")
 
     parliament = 0
-    if len(params) != 0:
-        if isinstance(params[0], int):
+    if len(params):
+        if str(params[0]).isdigit():
             if int(params[0]) in range(0, 18):
                 parliament = int(params[0])
 
