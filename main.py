@@ -1,10 +1,10 @@
-from bt_utils import handleJson
+from bt_utils import handle_sqlite as db
 from bt_utils.config import cfg
 from discord.utils import get
-from bt_utils.cache_handler import cache
 import commands
 from bt_utils.console import *
 from dhooks import Webhook, Embed
+from bt_utils.handle_sqlite import DatabaseHandler
 from others import welcome, role_assignment
 from others.message_conditions import check_message
 from discord.errors import LoginFailure
@@ -12,6 +12,10 @@ import discord
 
 client = discord.Client()
 SHL = Console(prefix="BundestagsBot")
+DB = DatabaseHandler()
+
+# init users data structure
+users = {"": {"": 0}}
 
 
 @client.event
@@ -28,6 +32,19 @@ async def on_member_join(member):
 
 
 @client.event
+async def on_reaction_add(reaction, user):
+    # do not consider reactions on the users own messages
+    if user.id == reaction.message.author.id:
+        return
+
+    is_custom_emoji = hasattr(reaction.emoji, 'id')
+    if is_custom_emoji and str(reaction.emoji.id) in cfg.options["roles"].keys():
+        role_reaction = get(client.get_guild(531445761733296130).roles, name=cfg.options["roles"][str(reaction.emoji.id)])
+        reaction_recipient = reaction.message.author
+        DB.add_reaction(reaction_recipient, role_reaction)
+
+
+@client.event
 async def on_raw_reaction_add(payload):
     await role_assignment.reaction_add(client, payload)
 
@@ -35,6 +52,7 @@ async def on_raw_reaction_add(payload):
 @client.event
 async def on_raw_reaction_remove(payload):
     await role_assignment.reaction_remove(client, payload)
+    DB.remove_reaction()
 
 
 @client.event
@@ -70,6 +88,14 @@ async def on_ready():
         await client.change_presence(activity=game)
         SHL.output(f"{game.name} als Status gesetzt.")
 
+    # database related
+    # ================================================
+    roles = cfg.options["roles_show"]
+    print(client.get_guild(611950252131483648).members[0])
+    DB.create_structure(roles)
+    db_users = DB.get_all_users()
+    SHL.output("Setup database")
+
     # WebHooks
     # ================================================
     if cfg.options.get("use_webhooks", False):
@@ -83,6 +109,7 @@ async def on_ready():
         for name, link in cfg.options["webhooks"].items():
             Webhook(link).send(embed=embed)
             SHL.output(f"Webhook {name} sent.")
+
 
 try:
     SHL.output(f"Logging in.")

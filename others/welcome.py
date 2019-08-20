@@ -2,6 +2,7 @@ from discord import Embed, Color
 from datetime import datetime
 from bt_utils.config import cfg
 from bt_utils.console import *
+
 SHL = Console("WelcomeEmbed")
 
 welcome_de = """
@@ -25,7 +26,7 @@ welcome_de = """
 
 def create_embed(lang="de"):
     embed = Embed(title=f'Willkommen!', color=Color.dark_red(),
-                          url="https://github.com/bundestagsBot/bundestagsBot")
+                  url="https://github.com/bundestagsBot/bundestagsBot")
     embed.timestamp = datetime.utcnow()
     try:
         if lang == "de":

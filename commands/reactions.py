@@ -1,5 +1,5 @@
 from bt_utils.console import Console
-SHL = Console("BundestagsBot Roles")
+SHL = Console("BundestagsBot Reactions")
 
 settings = {
     'name': 'reactions',

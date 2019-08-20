@@ -21,15 +21,17 @@ white2 = '\033[97m'
 
 class Console:
     def ts(self, c=False):
-        if c: return f'{yellow2}[{str(datetime.now()).split(".", 1)[0]}]{white}'
+        if c:
+            return f'{yellow2}[{str(datetime.now()).split(".", 1)[0]}]{white}'
         return f'[{str(datetime.now()).split(".", 1)[0]}]'
 
     def set_prefix(self, prefix):
         self.prefix = f'{green2}[{prefix}]{white}'
 
     def __init__(self, prefix, cls=False):
-        if cls: subprocess.call('cls', shell=True)
+        if cls:
+            subprocess.call('cls', shell=True)
         self.prefix = f'{green2}[{prefix}]{white}'
 
     def output(self, text):
-        print(f'{self.ts(1)} {self.prefix} {str(text)}')
+        print(f'{self.ts(True)} {self.prefix} {str(text)}')
