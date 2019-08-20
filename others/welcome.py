@@ -24,7 +24,7 @@ welcome_de = """
 
 
 def create_embed(lang="de"):
-    embed = Embed(title=f'Willkommen!', color=Color.dark_red(),
+    embed = Embed(title=f'Willkommen!', color=Color.green(),
                           url="https://github.com/bundestagsBot/bundestagsBot")
     embed.timestamp = datetime.utcnow()
     try:
