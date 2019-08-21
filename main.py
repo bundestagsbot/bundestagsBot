@@ -14,9 +14,6 @@ client = discord.Client()
 SHL = Console(prefix="BundestagsBot")
 DB = DatabaseHandler()
 
-# init users data structure
-users = {"": {"": 0}}
-
 
 @client.event
 async def on_member_join(member):
@@ -38,10 +35,39 @@ async def on_reaction_add(reaction, user):
         return
 
     is_custom_emoji = hasattr(reaction.emoji, 'id')
-    if is_custom_emoji and str(reaction.emoji.id) in cfg.options["roles"].keys():
-        role_reaction = get(client.get_guild(531445761733296130).roles, name=cfg.options["roles"][str(reaction.emoji.id)])
+    roles = cfg.options["roles_show"]
+    is_role = str(reaction.emoji.id) in cfg.options["roles"].keys()
+    if is_custom_emoji and is_role:
+        role_reaction = cfg.options["roles"][str(reaction.emoji.id)]
         reaction_recipient = reaction.message.author
-        DB.add_reaction(reaction_recipient, role_reaction)
+        users = DB.get_all_users()
+        if reaction_recipient.id not in [item[0] for item in users]:
+            # add new user to db
+            DB.add_user(reaction_recipient.id, reaction_recipient.name, roles)
+        if role_reaction in cfg.options["roles_show"]:
+            DB.add_reaction(reaction_recipient, role_reaction)
+
+
+@client.event
+async def on_reaction_remove(reaction, user):
+    # do not consider reactions on the users own messages
+    if user.id == reaction.message.author.id:
+        return
+
+    is_custom_emoji = hasattr(reaction.emoji, 'id')
+    roles = cfg.options["roles_show"]
+    is_role = str(reaction.emoji.id) in cfg.options["roles"].keys()
+    if is_custom_emoji and is_role:
+        role_reaction = cfg.options["roles"][str(reaction.emoji.id)]
+        reaction_recipient = reaction.message.author
+        users = DB.get_all_users()
+        if reaction_recipient.id not in [item[0] for item in users]:
+            # add new user to db
+            DB.add_user(reaction_recipient.id, reaction_recipient.name, roles)
+            # finished here, because new user is initialized with 0 anyway
+            return
+        if role_reaction in cfg.options["roles_show"]:
+            DB.remove_reaction(reaction_recipient, role_reaction)
 
 
 @client.event
@@ -52,7 +78,6 @@ async def on_raw_reaction_add(payload):
 @client.event
 async def on_raw_reaction_remove(payload):
     await role_assignment.reaction_remove(client, payload)
-    DB.remove_reaction()
 
 
 @client.event
@@ -91,10 +116,13 @@ async def on_ready():
     # database related
     # ================================================
     roles = cfg.options["roles_show"]
-    print(client.get_guild(611950252131483648).members[0])
+
+    # creates basic table structures if not already present
     DB.create_structure(roles)
-    db_users = DB.get_all_users()
-    SHL.output("Setup database")
+
+    # updates table structure, e.g. if a new role has been added
+    DB.update_columns(roles)
+    SHL.output("Setup database completed")
 
     # WebHooks
     # ================================================
