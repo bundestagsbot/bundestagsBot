@@ -34,17 +34,17 @@ async def on_reaction_add(reaction, user):
     if user.id == reaction.message.author.id:
         return
 
+    roles = cfg.options["roles_stats"]
     is_custom_emoji = hasattr(reaction.emoji, 'id')
-    roles = cfg.options["roles_show"]
-    is_role = str(reaction.emoji.id) in cfg.options["roles"].keys()
+    is_role = str(reaction.emoji.id) in roles.keys()
     if is_custom_emoji and is_role:
-        role_reaction = cfg.options["roles"][str(reaction.emoji.id)]
+        role_reaction = cfg.options["roles_stats"][str(reaction.emoji.id)]
         reaction_recipient = reaction.message.author
         users = DB.get_all_users()
         if reaction_recipient.id not in [item[0] for item in users]:
             # add new user to db
             DB.add_user(reaction_recipient.id, reaction_recipient.name, roles)
-        if role_reaction in cfg.options["roles_show"]:
+        if role_reaction in cfg.options["roles_stats"].values():
             DB.add_reaction(reaction_recipient, role_reaction)
 
 
@@ -54,11 +54,11 @@ async def on_reaction_remove(reaction, user):
     if user.id == reaction.message.author.id:
         return
 
+    roles = cfg.options["roles_stats"]
     is_custom_emoji = hasattr(reaction.emoji, 'id')
-    roles = cfg.options["roles_show"]
-    is_role = str(reaction.emoji.id) in cfg.options["roles"].keys()
+    is_role = str(reaction.emoji.id) in roles.keys()
     if is_custom_emoji and is_role:
-        role_reaction = cfg.options["roles"][str(reaction.emoji.id)]
+        role_reaction = cfg.options["roles_stats"][str(reaction.emoji.id)]
         reaction_recipient = reaction.message.author
         users = DB.get_all_users()
         if reaction_recipient.id not in [item[0] for item in users]:
@@ -66,7 +66,7 @@ async def on_reaction_remove(reaction, user):
             DB.add_user(reaction_recipient.id, reaction_recipient.name, roles)
             # finished here, because new user is initialized with 0 anyway
             return
-        if role_reaction in cfg.options["roles_show"]:
+        if role_reaction in cfg.options["roles_stats"].values():
             DB.remove_reaction(reaction_recipient, role_reaction)
 
 
@@ -115,7 +115,7 @@ async def on_ready():
 
     # database related
     # ================================================
-    roles = cfg.options["roles_show"]
+    roles = cfg.options["roles_stats"].values()
 
     # creates basic table structures if not already present
     DB.create_structure(roles)

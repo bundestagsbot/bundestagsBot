@@ -1,6 +1,5 @@
 from bt_utils.console import Console
 from bt_utils.config import cfg
-from bt_utils import handleJson
 from bt_utils.cache_handler import cache
 from bt_utils.embed_templates import InfoEmbed, ErrorEmbed
 from datetime import datetime

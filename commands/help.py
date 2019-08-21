@@ -29,6 +29,7 @@ def help_embed():
                         '-Benutze >result #id um Ergebnisse einer Umfrage einzusehen.\n\n' \
                         '-Benutze >sub False um keine weiteren Umfragen mehr zu erhalten.\n\n' \
                         '-Benutze >submit Text um Anfragen ans Serverteam zu stellen.\n\n' \
+                        '-Benutze >reactions [@user] um Reaktionen an Nachrichten von [@user] zu sehen.\n\n' \
                         '-Benutze >umfrage [Parlamentsnummer]\nKeine Nummer für Bundestag'\
 
 
