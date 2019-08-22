@@ -7,10 +7,16 @@ from bt_utils.console import *
 from dhooks import Webhook, Embed
 from others import welcome, role_assignment
 from others.message_conditions import check_message
+from others.scheduler import schedule_check
+from others import scheduler
 from discord.errors import LoginFailure
+from threading import Thread
 import discord
+import asyncio
 
-client = discord.Client()
+loop = asyncio.new_event_loop()
+scheduler.main_loop = loop
+client = discord.Client(loop=loop)
 SHL = Console(prefix="BundestagsBot")
 
 
@@ -68,7 +74,7 @@ async def on_ready():
     if cfg.options.get("use_game", False):
         game = discord.Game(name=cfg.options.get("game_name", "Hello world"))
         await client.change_presence(activity=game)
-        SHL.output(f"{game.name} als Status gesetzt.")
+        SHL.output(f"Set game: {game.name}.")
 
     # WebHooks
     # ================================================
@@ -84,16 +90,24 @@ async def on_ready():
             Webhook(link).send(embed=embed)
             SHL.output(f"Webhook {name} sent.")
 
-try:
-    SHL.output(f"Logging in.")
-    client.run(cfg.options["BOT_TOKEN"], reconnect=cfg.options.get("use_reconnect", False))
-except LoginFailure:
-    SHL.output(f"{red}========================{white}")
-    SHL.output(f"{red}Login failure!{white}")
-    SHL.output(f"{red}Please check your token.{white}")
-except KeyError:
-    SHL.output(f"{red}========================{white}")
-    SHL.output(f"{red}'BOT_TOKEN' not found in config files!")
-except:
-    SHL.output(f"{red}========================{white}")
-    SHL.output(f"{red}Something went wrong{white}")
+
+def start_bot():
+    try:
+        SHL.output(f"Logging in.")
+        client.run(cfg.options["BOT_TOKEN"], reconnect=cfg.options.get("use_reconnect", False))
+    except LoginFailure:
+        SHL.output(f"{red}========================{white}")
+        SHL.output(f"{red}Login failure!{white}")
+        SHL.output(f"{red}Please check your token.{white}")
+    except KeyError:
+        SHL.output(f"{red}========================{white}")
+        SHL.output(f"{red}'BOT_TOKEN' not found in config files!")
+    except:
+        SHL.output(f"{red}========================{white}")
+        SHL.output(f"{red}Something went wrong{white}")
+
+
+thread_sched = Thread(target=schedule_check, name="sched", args=(client,))
+thread_main = Thread(target=start_bot, name="main")
+thread_sched.start()
+thread_main.start()

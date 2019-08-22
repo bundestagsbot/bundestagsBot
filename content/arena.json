@@ -1,0 +1,9 @@
+{
+  "arena_status": "wait_topic",
+  "participant_count": 2,
+  "topics": [ ],
+  "queue": [ ],
+  "participants": [],
+  "participants_name": [],
+  "last_poll_msg": 0
+}
