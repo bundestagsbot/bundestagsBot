@@ -159,6 +159,5 @@ def start_bot():
 
 
 thread_sched = Thread(target=schedule_check, name="sched", args=(client,))
-thread_main = Thread(target=start_bot, name="main")
 thread_sched.start()
-thread_main.start()
+start_bot()
