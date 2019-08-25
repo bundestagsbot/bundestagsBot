@@ -6,8 +6,6 @@ from bt_utils.console import *
 SHL = Console("WelcomeEmbed")
 
 welcome_de = """
-    __**Willkommen**__
-    
     Unter <#{}> kannst du dir Rollen zuweisen. 
     Beispielsweise Themen, die dich interessieren oder deine politische Ausrichtung
     \n
@@ -26,7 +24,7 @@ welcome_de = """
 
 def create_embed(lang="de"):
     embed = Embed(title=f'Willkommen!', color=Color.green(),
-                          url="https://github.com/bundestagsBot/bundestagsBot")
+                  url="https://github.com/bundestagsBot/bundestagsBot")
     embed.timestamp = datetime.utcnow()
     try:
         if lang == "de":

@@ -4,7 +4,6 @@ from bt_utils.config import cfg
 from bt_utils import handleJson
 from discord import Embed, Colour
 import datetime
-from discord.utils import get
 SHL = Console("BundestagsBot PublicSurvey")
 
 settings = {
@@ -13,42 +12,15 @@ settings = {
     'channels': ['team'],
 }
 
-'''
-
-syntax:
->publicsurvey title text [answers] {url}
-answers is a list of possible answers seperated by ','
-url is optional and is autofilled with the github link
-
-waits for approve via discord reaction
-sends survey to all discord members
-
-they will use 
->answer survey_id their_answer  
-
-they can unsubscribe via: 
->sub False
-or resubscribe:
->sub True
-
-they can see the result via:
->result survey_id
-
-all .json are stored in:
-path: C:/server/settings/
-
-'''
-
 path = 'content/surveys.json'
 subs_path = 'content/subs.json'
 
 
 async def main(client, message, params):
-
     params = [p for p in str(message.content).split(';')]
-    if len(params) == 4 or params[4] == '':  params.append('https://github.com/bundestagsBot/bundestagsBot')
+    if len(params) == 4 or not params[4]:  params.append('https://github.com/bundestagsBot/bundestagsBot')
     survey_id = get_survey_id()
-    embed = createsurvey(params[1], params[2], message.author, params[3], params[4], survey_id)
+    embed = create_survey(params[1], params[2], message.author, params[3], params[4], survey_id)
     msg = await message.channel.send(embed=embed)
     await msg.add_reaction('✅')
     await msg.add_reaction('❌')
@@ -95,16 +67,18 @@ async def main(client, message, params):
     await message.channel.send(embed=embed)
 
 
-def createsurvey(title, text, author, answers, url, survey_id):
+def create_survey(title, text, author, answers, url, survey_id):
     embed = Embed(title='Umfrage #' + str(survey_id) + ': ' + title, color=Colour.green(), url=url)
     embed.timestamp = datetime.datetime.utcnow()
-    embed.add_field(name='Frage:', value= text.replace('|', '\n'), inline=False)
+    embed.add_field(name='Frage:', value=text.replace('|', '\n'), inline=False)
     embed.add_field(name='Antwort:',
-                    value=f'Beantworte diese Umfrage mit:\n{cfg.options["invoke_normal"]}answer #{survey_id} 1-{answers.strip()}')
+                    value=f'Beantworte diese Umfrage mit:\n'
+                          f'{cfg.options["invoke_normal"]}answer #{survey_id} 1-{answers.strip()}')
     embed.add_field(name='Ergebnisse:',
                     value=f'Ergebnisse erhälst du mit:\n{cfg.options["invoke_normal"]}result #{survey_id}')
     embed.add_field(name='Keine weitere Umfrage:',
-                    value=f'Wenn du keine weiteren Umfragen mehr erhalten willst, verwende: {cfg.options["invoke_normal"]}sub False')
+                    value=f'Wenn du keine weiteren Umfragen mehr erhalten willst, verwende: '
+                          f'{cfg.options["invoke_normal"]}sub False')
     embed.add_field(name='Information:', value='Du kannst deine Antwort nicht mehr ändern.\n'
                                                'Diese Umfrage ist anonym.\n'
                                                'Bei Fragen wende dich an die Developer.')

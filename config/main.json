@@ -14,11 +14,15 @@
   "message_limit": 1999,
   "use_cache": true,
   "path_to_temp_cache": "temp/",
+  "enable_arena": false,
+  "enable_1v1": false,
   "channel_ids": {
     "welcome": 0,
     "suggestions": 0,
     "submits": 0,
     "roles": 0,
+    "arena": 0,
+    "1v1": 0,
     "bot": [],
     "team": []
   }
