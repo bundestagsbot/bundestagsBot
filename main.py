@@ -1,4 +1,3 @@
-from bt_utils import handle_sqlite as db
 from bt_utils.config import cfg
 from discord.utils import get
 import commands
@@ -7,6 +6,7 @@ from dhooks import Webhook, Embed
 from bt_utils.handle_sqlite import DatabaseHandler
 from others import welcome, role_assignment
 from others.message_conditions import check_message
+from others.reaction_assignment import handle_reaction
 from others.scheduler import schedule_check
 from others import scheduler
 from discord.errors import LoginFailure
@@ -35,55 +35,29 @@ async def on_member_join(member):
 
 
 @client.event
-async def on_reaction_add(reaction, user):
-    # do not consider reactions on the users own messages
-    if user.id == reaction.message.author.id:
-        return
-
-    roles = cfg.options["roles_stats"]
-    is_custom_emoji = hasattr(reaction.emoji, 'id')
-    is_role = str(reaction.emoji.id) in roles.keys()
-    if is_custom_emoji and is_role:
-        role_reaction = cfg.options["roles_stats"][str(reaction.emoji.id)]
-        reaction_recipient = reaction.message.author
-        users = DB.get_all_users()
-        if reaction_recipient.id not in [item[0] for item in users]:
-            # add new user to db
-            DB.add_user(reaction_recipient.id, reaction_recipient.name, roles)
-        if role_reaction in cfg.options["roles_stats"].values():
-            DB.add_reaction(reaction_recipient, role_reaction)
-
-
-@client.event
-async def on_reaction_remove(reaction, user):
-    # do not consider reactions on the users own messages
-    if user.id == reaction.message.author.id:
-        return
-
-    roles = cfg.options["roles_stats"]
-    is_custom_emoji = hasattr(reaction.emoji, 'id')
-    is_role = str(reaction.emoji.id) in roles.keys()
-    if is_custom_emoji and is_role:
-        role_reaction = cfg.options["roles_stats"][str(reaction.emoji.id)]
-        reaction_recipient = reaction.message.author
-        users = DB.get_all_users()
-        if reaction_recipient.id not in [item[0] for item in users]:
-            # add new user to db
-            DB.add_user(reaction_recipient.id, reaction_recipient.name, roles)
-            # finished here, because new user is initialized with 0 anyway
-            return
-        if role_reaction in cfg.options["roles_stats"].values():
-            DB.remove_reaction(reaction_recipient, role_reaction)
-
-
-@client.event
 async def on_raw_reaction_add(payload):
     await role_assignment.reaction_add(client, payload)
+
+    channel = client.get_channel(payload.channel_id)
+    is_private_channel = isinstance(channel, discord.DMChannel)
+    if is_private_channel:
+        return
+
+    msg = await channel.fetch_message(payload.message_id)
+    await handle_reaction(msg, payload, "add")
 
 
 @client.event
 async def on_raw_reaction_remove(payload):
     await role_assignment.reaction_remove(client, payload)
+
+    channel = client.get_channel(payload.channel_id)
+    is_private_channel = isinstance(channel, discord.DMChannel)
+    if is_private_channel:
+        return
+
+    msg = await channel.fetch_message(payload.message_id)
+    await handle_reaction(msg, payload, "remove")
 
 
 @client.event
