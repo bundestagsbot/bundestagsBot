@@ -1,7 +1,7 @@
 from bt_utils.console import Console
 from bt_utils.handle_sqlite import DatabaseHandler
 from bt_utils.config import cfg
-from bt_utils.embed_templates import NoticeEmbed
+from bt_utils.embed_templates import NoticeEmbed, InfoEmbed
 
 SHL = Console("BundestagsBot Reactions")
 DB = DatabaseHandler()
@@ -15,7 +15,8 @@ settings = {
 async def main(client, message, params):
     users = DB.get_all_users()
     if len(message.mentions) == 0:
-        await message.channel.send(content=message.author.mention + 'Bitte einen Nutzer angeben')
+        embed = NoticeEmbed(title="Reactions", description=message.author.mention + 'Bitte einen Nutzer angeben')
+        await message.channel.send(embed=embed)
         return
 
     for user in users:
@@ -32,7 +33,9 @@ async def main(client, message, params):
                     emoji_str = "<:" + emoji_obj.name + ":" + emoji_id + ">"
                     content += "" + emoji_str + ": " + str(user[i]) + "\n"
                 i = i + 1
-            embed = NoticeEmbed(title=header, description=content)
+            embed = InfoEmbed(title=header, description=content)
             await message.channel.send(embed=embed)
-        return
-    await message.channel.send(content=message.author.mention + 'Dieser Benutzer hat noch keine Reaktionen erhalten.')
+            return
+    embed = NoticeEmbed(title="Reactions",
+                        description=message.author.mention + 'Dieser Benutzer hat noch keine Reaktionen erhalten.')
+    await message.channel.send(embed=embed)
