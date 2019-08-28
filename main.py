@@ -1,12 +1,12 @@
-from bt_utils import handleJson
 from bt_utils.config import cfg
 from discord.utils import get
-from bt_utils.cache_handler import cache
 import commands
 from bt_utils.console import *
 from dhooks import Webhook, Embed
+from bt_utils.handle_sqlite import DatabaseHandler
 from others import welcome, role_assignment
 from others.message_conditions import check_message
+from others.reaction_assignment import handle_reaction
 from others.scheduler import schedule_check
 from others import scheduler
 from discord.errors import LoginFailure
@@ -18,6 +18,7 @@ loop = asyncio.new_event_loop()
 scheduler.main_loop = loop
 client = discord.Client(loop=loop)
 SHL = Console(prefix="BundestagsBot")
+DB = DatabaseHandler()
 
 
 @client.event
@@ -37,10 +38,26 @@ async def on_member_join(member):
 async def on_raw_reaction_add(payload):
     await role_assignment.reaction_add(client, payload)
 
+    channel = client.get_channel(payload.channel_id)
+    is_private_channel = isinstance(channel, discord.DMChannel)
+    if is_private_channel:
+        return
+
+    msg = await channel.fetch_message(payload.message_id)
+    await handle_reaction(msg, payload, "add")
+
 
 @client.event
 async def on_raw_reaction_remove(payload):
     await role_assignment.reaction_remove(client, payload)
+
+    channel = client.get_channel(payload.channel_id)
+    is_private_channel = isinstance(channel, discord.DMChannel)
+    if is_private_channel:
+        return
+
+    msg = await channel.fetch_message(payload.message_id)
+    await handle_reaction(msg, payload, "remove")
 
 
 @client.event
@@ -76,6 +93,17 @@ async def on_ready():
         await client.change_presence(activity=game)
         SHL.output(f"Set game: {game.name}.")
 
+    # database related
+    # ================================================
+    roles = cfg.options["roles_stats"].values()
+
+    # creates basic table structures if not already present
+    DB.create_structure(roles)
+
+    # updates table structure, e.g. if a new role has been added
+    DB.update_columns(roles)
+    SHL.output("Setup database completed")
+
     # WebHooks
     # ================================================
     if cfg.options.get("use_webhooks", False):
@@ -102,12 +130,8 @@ def start_bot():
     except KeyError:
         SHL.output(f"{red}========================{white}")
         SHL.output(f"{red}'BOT_TOKEN' not found in config files!")
-    except:
-        SHL.output(f"{red}========================{white}")
-        SHL.output(f"{red}Something went wrong{white}")
 
 
 thread_sched = Thread(target=schedule_check, name="sched", args=(client,))
-thread_main = Thread(target=start_bot, name="main")
 thread_sched.start()
-thread_main.start()
+start_bot()
