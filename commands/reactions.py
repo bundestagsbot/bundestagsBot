@@ -15,12 +15,12 @@ settings = {
 async def main(client, message, params):
     users = DB.get_all_users()
     if len(message.mentions) == 0:
-        await message.channel.send(content=message.author.mention + 'Bitte einen Nutzer mit angeben')
+        await message.channel.send(content=message.author.mention + 'Bitte einen Nutzer angeben')
         return
 
     for user in users:
         if message.mentions[0].id == user[0]:
-            user_name = user[1]
+            user_name = message.mentions[0].name
             header = 'Reaktionen zu Nachrichten von ' + user_name + '\n'
             content = ''
             # skip name and id
@@ -35,4 +35,4 @@ async def main(client, message, params):
             embed = NoticeEmbed(title=header, description=content)
             await message.channel.send(embed=embed)
         return
-    await message.channel.send(content=message.author.mention + 'Der Benutzer existiert nicht')
+    await message.channel.send(content=message.author.mention + 'Dieser Benutzer hat noch keine Reaktionen erhalten.')
