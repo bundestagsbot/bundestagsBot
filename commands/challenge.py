@@ -16,10 +16,6 @@ path = "content/challenge.json"
 
 
 async def close_channel(args):
-    print(args)
-    print(type(args))
-    print(args[0])
-    print(type(args[0]))
     client = args[0]
     data = handleJson.read_json_raw(path)
     data["arena_status"] = 0
