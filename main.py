@@ -8,7 +8,7 @@ from others import welcome, role_assignment
 from others.message_conditions import check_message
 from others.reaction_assignment import handle_reaction
 from others.scheduler import schedule_check
-from others import scheduler
+from others import scheduler, reset_temps
 from discord.errors import LoginFailure
 from threading import Thread
 import discord
@@ -121,6 +121,7 @@ async def on_ready():
 
 def start_bot():
     try:
+        reset_temps.reset()
         SHL.output(f"Logging in.")
         client.run(cfg.options["BOT_TOKEN"], reconnect=cfg.options.get("use_reconnect", False))
     except LoginFailure:
