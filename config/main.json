@@ -16,7 +16,7 @@
   "path_to_temp_cache": "temp/",
   "enable_arena": false,
   "enable_1v1": false,
-  "1v1_time_minutes": "15",
+  "1v1_time_minutes": 15,
   "channel_ids": {
     "welcome": 0,
     "suggestions": 0,
