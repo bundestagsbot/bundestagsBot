@@ -21,10 +21,10 @@ async def main(client, message, params):
         embed = WarningEmbed(title="Warn", description=f"Could not find '{str(message.content)[5:].strip()}'")
         await message.channel.send(embed=embed)
         return
-    warned = get(client.get_guild(531445761733296130).roles, id=cfg.options.get("warn_role_id", 0)) in badboi.roles
+    warned = get(message.guild.roles, id=cfg.options.get("warn_role_id", 0)) in badboi.roles
     if not warned:
         try:
-            punishrole = get(client.get_guild(531445761733296130).roles, id=cfg.options.get("warn_role_id", 0))
+            punishrole = get(message.guild.roles, id=cfg.options.get("warn_role_id", 0))
             await badboi.add_roles(punishrole)
         except:
             if cfg.options.get("warn_role_id", 0):

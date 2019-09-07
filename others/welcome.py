@@ -12,7 +12,7 @@ welcome_de = """
     Oder sag doch einfach in <#{}> hallo :smiley:
     \n
     In <#{}> kannst du den Bot verwenden.
-    Versuche doch mal `>umfrage`
+    Versuche doch mal `>umfrage` um aktuelle Wahlumfragen zu sehen :)
     \n
     Gerne kannst du mir hier mit `>submit text` ein Feedback oder ein Hinweis hinterlassen, die ich anonym ans Serverteam weiterleite.
     Wenn du Themen öffentlich ansprechen willst,
