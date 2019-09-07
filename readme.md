@@ -1,8 +1,10 @@
 <h1 align="center">BundestagsBot Remastering</h1>
-<p>
+<p align="center">
 <a href="https://pypi.org/project/discord.py/"><img src="https://img.shields.io/pypi/v/discord.py.svg" style="margin-right: 50px;"/></a>
 <a href="https://pypi.org/project/discord.py/"><img src="https://img.shields.io/pypi/pyversions/discord.py.svg"/></a>
 <a href="https://discord.gg/ezMtSwR"><img src="https://discordapp.com/api/guilds/531445761733296130/embed.png"/></a>
+     [![star this repo](http://githubbadges.com/star.svg?user=bundestagsBot&repo=bundestagsbot&style=default)](https://github.com/bundestagsBot/bundestagsbot)
+[![fork this repo](http://githubbadges.com/fork.svg?user=bundestagsBot&repo=bundestagsbot&style=default)](https://github.com/bundestagsBot/bundestagsbot/fork)
 </p>
 <h3 align="center"> We are currently dedicated to implementing a new version "remastered".
 Feel free to provide help of any kind (coding or suggestions) @GitHub or in Discord.</h3>
