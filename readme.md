@@ -11,12 +11,30 @@
 Feel free to provide help of any kind (coding or suggestions) @GitHub or in Discord.</h3>
 <h4 align="center"> Roadmap: https://github.com/bundestagsbot/bundestagsBot/projects/1 </h4>
 <br/>
+
+
+## Requirements
+```
+-
+```
+
+## Installation
+```
+-
+```
+
+## Note
+foobar
+
+## Contributors <img src="https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat"/>
+- <a href="https://github.com/loknop">Loknop</a>
+- <a href="https://github.com/MarkGeiger">MarkGeiger</a>
+- <a href="https://github.com/FelixRewer">FelixRewer</a>
 <br/>
 <br/>
 <br/>
 <br/>
 <hr />
-
 <div align="center">
      
   <strong><i>A discord bot for <a href="https://www.youtube.com/channel/UCkN8kMDOekn8uxxxsvwEnow">BestofBundestag</a>.</i></strong>
