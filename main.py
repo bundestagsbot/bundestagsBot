@@ -18,7 +18,6 @@ loop = asyncio.new_event_loop()
 scheduler.main_loop = loop
 client = discord.Client(loop=loop)
 SHL = Console(prefix="BundestagsBot")
-DB = DatabaseHandler()
 
 
 @client.event
@@ -94,17 +93,6 @@ async def on_ready():
         game = discord.Game(name=cfg.options.get("game_name", "Hello world"))
         await client.change_presence(activity=game)
         SHL.output(f"Set game: {game.name}.")
-
-    # database related
-    # ================================================
-    roles = cfg.options["roles_stats"].values()
-
-    # creates basic table structures if not already present
-    DB.create_structure(roles)
-
-    # updates table structure, e.g. if a new role has been added
-    DB.update_columns(roles)
-    SHL.output("Setup database completed")
 
     # WebHooks
     # ================================================
