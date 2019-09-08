@@ -67,13 +67,15 @@ async def on_message(message):
 
     if message.content.lower().startswith(str(cfg.options["invoke_normal"]).lower()):
         params = commands.parse(message.content, False)
-        if params[0].lower() in commands.commands.keys():
-            await commands.commands[params[0].lower()](client, message, params[1:])
+        if params:
+            if params[0].lower() in commands.commands.keys():
+                await commands.commands[params[0].lower()](client, message, params[1:])
 
     elif message.content.lower().startswith(str(cfg.options["invoke_mod"]).lower()):
         params = commands.parse(message.content, True)
-        if params[0].lower() in commands.mod_commands.keys():
-            await commands.mod_commands[params[0].lower()](client, message, params[1:])
+        if params:
+            if params[0].lower() in commands.mod_commands.keys():
+                await commands.mod_commands[params[0].lower()](client, message, params[1:])
 
 
 @client.event
