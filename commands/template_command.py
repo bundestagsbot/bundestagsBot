@@ -1,5 +1,5 @@
 from bt_utils.console import Console
-SHL = Console("BundestagsBot Template Command")
+SHL = Console("BundestagsBot Template Command")  # Use SHL.output(text) for all console based output!
 
 settings = {
     'name': 'template',  # name/invoke of your command
