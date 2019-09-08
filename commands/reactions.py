@@ -13,29 +13,25 @@ settings = {
 
 
 async def main(client, message, params):
-    users = DB.get_all_users()
-    if len(message.mentions) == 0:
+    if not len(message.mentions):
         embed = NoticeEmbed(title="Reactions", description=message.author.mention + 'Bitte einen Nutzer angeben')
         await message.channel.send(embed=embed)
         return
 
-    for user in users:
-        if message.mentions[0].id == user[0]:
-            user_name = message.mentions[0].name
-            header = 'Reaktionen zu Nachrichten von ' + user_name + '\n'
-            content = ''
-            # skip name and id
-            i = 2
-            for role in cfg.options["roles_stats"].items():
-                if user[i] > 0:
-                    emoji_id = role[0]
-                    emoji_obj = await message.guild.fetch_emoji(emoji_id)
-                    emoji_str = "<:" + emoji_obj.name + ":" + emoji_id + ">"
-                    content += "" + emoji_str + ": " + str(user[i]) + "\n"
-                i = i + 1
-            embed = InfoEmbed(title=header, description=content)
-            await message.channel.send(embed=embed)
-            return
-    embed = NoticeEmbed(title="Reactions",
-                        description=message.author.mention + 'Dieser Benutzer hat noch keine Reaktionen erhalten.')
-    await message.channel.send(embed=embed)
+    data = DB.get_specific_user(message.mentions[0].id)
+    if data:
+        header = 'Reaktionen zu Nachrichten von ' + message.mentions[0].display_name + '\n'
+        content = ''
+        # skip name and id
+        for i, role in enumerate(cfg.options["roles_stats"].items(), 1):
+            if data[i] > 0:
+                emoji_id = role[0]
+                emoji_obj = await message.guild.fetch_emoji(emoji_id)
+                emoji_str = "<:" + emoji_obj.name + ":" + emoji_id + ">"
+                content += "" + emoji_str + ": " + str(data[i]) + "\n"
+        embed = InfoEmbed(title=header, description=content)
+        await message.channel.send(embed=embed)
+    else:
+        embed = NoticeEmbed(title="Reactions",
+                            description=message.author.mention + 'Dieser Benutzer hat noch keine Reaktionen erhalten.')
+        await message.channel.send(embed=embed)

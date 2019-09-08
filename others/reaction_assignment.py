@@ -1,6 +1,7 @@
 from bt_utils.config import cfg
 from bt_utils.handle_sqlite import DatabaseHandler
-
+from bt_utils.console import *
+SHL = Console("ReactionStats")
 DB = DatabaseHandler()
 
 
@@ -26,13 +27,17 @@ async def handle_reaction(msg, payload, mode):
     if mode == "add":
         if reaction_recipient.id not in [item[0] for item in users]:
             # add new user to db
-            DB.add_user(reaction_recipient.id, reaction_recipient.name, roles)
+            SHL.output(f"Adding user {reaction_recipient.id} to the DB.")
+            DB.add_user(reaction_recipient.id, roles)
         if role_reaction in cfg.options["roles_stats"].values():
-            DB.add_reaction(reaction_recipient, role_reaction)
+            SHL.output(f"Added reaction {role_reaction} for user {reaction_recipient.display_name}")
+            DB.add_reaction(reaction_recipient.id, role_reaction)
     elif mode == "remove":
         if reaction_recipient.id not in [item[0] for item in users]:
-            DB.add_user(reaction_recipient.id, reaction_recipient.name, roles)
+            SHL.output(f"Adding user {reaction_recipient.id} to the DB.")
+            DB.add_user(reaction_recipient.id, roles)
             # finished here, because new user is initialized with 0 anyway
             return
         if role_reaction in cfg.options["roles_stats"].values():
-            DB.remove_reaction(reaction_recipient, role_reaction)
+            SHL.output(f"Removed reaction {role_reaction} for user {reaction_recipient.display_name}")
+            DB.remove_reaction(reaction_recipient.id, role_reaction)
