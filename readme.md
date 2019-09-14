@@ -3,8 +3,8 @@
 <a href="https://pypi.org/project/discord.py/"><img src="https://img.shields.io/pypi/v/discord.py.svg" style="margin-right: 50px;"/></a>
 <a href="https://pypi.org/project/discord.py/"><img src="https://img.shields.io/pypi/pyversions/discord.py.svg"/></a>
 <a href="https://discord.gg/ezMtSwR"><img src="https://discordapp.com/api/guilds/531445761733296130/embed.png"/></a>
-<a href="https://github.com/bundestagsBot/bundestagsbot"><img alt="star this repo" src="http://githubbadges.com/star.svg?user=bundestagsBot&repo=bundestagsbot&style=default" /></a>
-<a href="https://github.com/bundestagsBot/bundestagsbot/fork"><img alt="fork this repo" src="http://githubbadges.com/fork.svg?user=bundestagsBot&repo=bundestagsbot&style=default" /></a>
+<a href="https://github.com/bundestagsBot/bundestagsbot"><img alt="star this repo" src="https://img.shields.io/github/stars/bundestagsbot/bundestagsBot" /></a>
+<a href="https://github.com/bundestagsBot/bundestagsbot/fork"><img alt="fork this repo" src="https://img.shields.io/github/forks/bundestagsbot/bundestagsBot" /></a>
 <a href="https://github.com/bundestagsbot/bundestagsBot/blob/dev/LICENSE"><img src="https://img.shields.io/github/license/bundestagsBot/bundestagsBot.svg"/></a>
 <img src="http://hits.dwyl.io/bundestagsbot/bundestagsbot.svg)](http://hits.dwyl.io/bundestagsbot/bundestagsbot"/>
 </p>
