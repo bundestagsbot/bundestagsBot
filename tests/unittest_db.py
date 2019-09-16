@@ -11,7 +11,6 @@ class TestClass(unittest.TestCase):
     def testDB(self):
         if os.path.exists("content"):
             shutil.rmtree("content", ignore_errors=True)
-        time.sleep(1)
         if not os.path.exists("content"):
             os.makedirs("content")
         else:
@@ -36,7 +35,7 @@ class TestClass(unittest.TestCase):
         print("Add user to database and check if he exists.")
         self.db.add_user(123, self.roles)
         user = self.db.get_specific_user(123)
-        self.assertEqual(user, (123, 0, 0))
+        self.assertEqual(user, (123, 1, 0))
 
         print("Add reaction to user and check if it exists.")
         self.db.add_reaction(123, "role1")
