@@ -1,10 +1,10 @@
-from src.bt_utils.config import cfg
+from bt_utils.config import cfg
 from discord.utils import get
 import commands
 from bt_utils.console import *
 from dhooks import Webhook, Embed
 from others import welcome
-from src.others import role_assignment
+from others import role_assignment
 from others.message_conditions import check_message
 from others.reaction_assignment import handle_reaction
 from others.scheduler import schedule_check

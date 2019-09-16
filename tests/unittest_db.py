@@ -6,6 +6,7 @@ import shutil
 import time
 from sqlite3 import IntegrityError
 
+
 class TestClass(unittest.TestCase):
     def testDB(self):
         if os.path.exists("content"):
