@@ -3,7 +3,11 @@
     "emoji_id": "role_name"
   },
   "roles_show": [],
+  "roles_iam": [],
   "roles_on_join": [],
   "arena_role": 0,
-  "1v1_role": 0
+  "1v1_role": 0,
+  "roles_stats": {
+    "emoji_id": "role_name"
+  }
 }
