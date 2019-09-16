@@ -19,8 +19,7 @@ jobs:
         python -m pip install -r requirements.txt
     - name: Copy src to UnitTest
       run: |
-        ls -a
-        cp -r ./src /tests
+        cp -r ./src ./tests
     - name: UnitTests
       run: |
         pip install unittest
