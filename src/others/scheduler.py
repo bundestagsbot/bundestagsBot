@@ -1,6 +1,4 @@
 from bt_utils.console import Console
-from bt_utils.config import cfg
-from others.arena import start_discussion, end_discussion, end_poll, announce_topic, announce_participant
 import schedule
 import time
 SHL = Console("Scheduler")

@@ -1,7 +1,6 @@
 from bt_utils.console import Console
 from bt_utils.embed_templates import SuccessEmbed, ErrorEmbed, NoticeEmbed, InfoEmbed
 from bt_utils.config import cfg
-import datetime
 from bt_utils import handleJson
 import os
 SHL = Console("BundestagsBot Result")

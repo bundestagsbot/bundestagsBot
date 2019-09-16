@@ -2,7 +2,6 @@ from bt_utils.console import *
 from bt_utils.config import cfg
 from bt_utils.embed_templates import NoticeEmbed
 import discord
-import datetime
 import pkgutil
 import importlib
 SHL = Console("CommandLoader")

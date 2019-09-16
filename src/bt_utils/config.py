@@ -1,5 +1,5 @@
-from bt_utils import handleJson
-from bt_utils.console import *
+from . import handleJson
+from .console import *
 
 BASE_PATH = "config/"
 PATHS = ["blacklist.json", "main.json", "messages.json",
