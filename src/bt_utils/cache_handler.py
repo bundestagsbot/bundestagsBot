@@ -1,6 +1,6 @@
-from bt_utils import handleJson
-from bt_utils.config import cfg
-from bt_utils.console import *
+from . import handleJson
+from .config import cfg
+from .console import *
 from datetime import datetime
 import os
 SHL = Console("CacheHandler")

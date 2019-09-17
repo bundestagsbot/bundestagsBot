@@ -34,7 +34,7 @@ class DatabaseHandler:
         for role in roles:
             if role not in [col[1] for col in structure]:
                 # add new role to table
-                cursor.execute("ALTER TABLE users ADD \"" + role + "\" integer")
+                cursor.execute("ALTER TABLE users ADD \"" + role + "\" integer DEFAULT 0")
                 if self.debug: SHL.output("Adding new role to users table " + role)
                 self.con.commit()
 

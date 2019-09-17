@@ -2,6 +2,7 @@ from bt_utils.console import Console
 from bt_utils.config import cfg
 from bt_utils.embed_templates import InfoEmbed, NoticeEmbed
 from bt_utils import handleJson
+
 SHL = Console("BundestagsBot Resolve")
 
 settings = {
