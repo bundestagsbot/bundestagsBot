@@ -53,7 +53,8 @@ class TestClass(unittest.TestCase):
         self.assertEqual(users, [(123, 0, 0), (124, 0, 0)])
 
         print("Add another user with invalid id and check if it still get created.")
-        self.assertRaises(IntegrityError, self.db.add_user(124, self.roles))
+        with self.assertRaises(IntegrityError):
+            self.db.add_user(124, self.roles)
         users = self.db.get_all_users()
         self.assertEqual(users, [(123, 0, 0), (124, 0, 0)])
 
