@@ -6,6 +6,7 @@
 <a href="https://github.com/bundestagsBot/bundestagsbot"><img alt="star this repo" src="https://img.shields.io/github/stars/bundestagsbot/bundestagsBot" /></a>
 <a href="https://github.com/bundestagsBot/bundestagsbot/fork"><img alt="fork this repo" src="https://img.shields.io/github/forks/bundestagsbot/bundestagsBot" /></a>
 <a href="https://github.com/bundestagsbot/bundestagsBot/blob/dev/LICENSE"><img src="https://img.shields.io/github/license/bundestagsBot/bundestagsBot.svg"/></a>
+<a href="https://www.codefactor.io/repository/github/bundestagsbot/bundestagsbot"><img src="https://www.codefactor.io/repository/github/bundestagsbot/bundestagsbot/badge"/></a>
 <img src="http://hits.dwyl.io/bundestagsbot/bundestagsbot.svg)](http://hits.dwyl.io/bundestagsbot/bundestagsbot"/>
 </p>
 <h3 align="center"> We are currently dedicated to implementing a new version "remastered".
