@@ -11,26 +11,28 @@ settings = {
     'log': False
 }
 
-path = 'content/surveys.json'
+path_to_surveys = 'content/surveys.json'
+path_to_unsubs = 'content/subs.json'
 
 
 async def main(client, message, params):
     success = SuccessEmbed(title="Answer")
     error = NoticeEmbed(title="Answer")
     try:
-        data = handleJson.read_json_raw(path)
+        data = handleJson.read_json_raw(path_to_surveys)
+        unsubs = handleJson.read_json_raw(path_to_unsubs)
     except:
         error = ErrorEmbed(title="Submit",
                            description="Something went wrong. Please contact an admin.")
         await message.channel.send(embed=error)
         return
     params = str(message.content).split(' ')
-    if subscribed(data, message.author.id):
+    if subscribed(unsubs, message.author.id):
         if len(params) == 3:
             survey_id = params[1][1:]
             if survey_id.isdigit():
                 if survey_id_is_valid(data, survey_id):
-                    survey_data = handleJson.readjson(path)[survey_id]
+                    survey_data = data[survey_id]
                     if message.author.id not in survey_data['voted']:
                         if int(str(params[2]).lower().strip()) in range(1, int(survey_data['answers']) + 1):
                             vote(message.author.id, survey_id, params[2].lower().strip())
@@ -59,10 +61,10 @@ async def main(client, message, params):
 
 
 def vote(user_id, survey_id, answer):
-    data = handleJson.read_json_raw(path)
+    data = handleJson.read_json_raw(path_to_surveys)
     data[survey_id]['voted'].append(user_id)
     data[survey_id]['results'][answer] += 1
-    handleJson.saveasjson(path, data)
+    handleJson.saveasjson(path_to_surveys, data)
 
 
 def survey_id_is_valid(data, survey_id):

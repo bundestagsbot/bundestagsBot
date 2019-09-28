@@ -64,7 +64,7 @@ async def main(client, message, params):
     success = SuccessEmbed(title="Publicsurvey")
     success.description = f"Umfrage an {received-failed} Personen gesendet.\n" \
                           f"{failed} Personen haben die Nachricht abgelehnt."
-    await message.channel.send(embed=embed)
+    await message.channel.send(embed=success)
 
 
 def create_survey(title, text, author, answers, url, survey_id):
