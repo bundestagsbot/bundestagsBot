@@ -11,7 +11,6 @@ settings = {
     'mod_cmd': True,
     'channels': ['team'],
 }
-
 path = 'content/surveys.json'
 subs_path = 'content/subs.json'
 
