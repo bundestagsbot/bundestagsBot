@@ -70,7 +70,7 @@ async def main(client, message, params):
 def vote(user_id, survey_id, answers):
     data = handleJson.read_json_raw(path_to_surveys)
     data[survey_id]['voted'].append(user_id)
-    for answer in answers:
+    for answer in set(answers):
         data[survey_id]['results'][answer] += 1
     handleJson.saveasjson(path_to_surveys, data)
 
@@ -85,7 +85,6 @@ def subscribed(data, user_id):
 
 def check_answers(answers, max_ind):
     invalid = []
-    answers = set(answers)
     for answer in answers:
         try:
             if int(answer) not in range(1, int(max_ind) + 1):
