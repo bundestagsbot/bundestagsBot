@@ -85,6 +85,7 @@ def subscribed(data, user_id):
 
 def check_answers(answers, max_ind):
     invalid = []
+    answers = set(answers)
     for answer in answers:
         try:
             if int(answer) not in range(1, int(max_ind) + 1):
