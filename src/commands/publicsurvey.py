@@ -72,7 +72,10 @@ def create_survey(title, text, author, answers, url, survey_id):
     embed.add_field(name='Frage:', value=text.replace('|', '\n'), inline=False)
     embed.add_field(name='Antwort:',
                     value=f'Beantworte diese Umfrage mit:\n'
-                          f'{cfg.options["invoke_normal"]}answer #{survey_id} 1-{answers.strip()}')
+                          f'{cfg.options["invoke_normal"]}answer #{survey_id} 1-{answers.strip()}\n'
+                          f'Mehrfachantwort:\n'
+                          f'{cfg.options["invoke_normal"]}answer #{survey_id} 1 2'
+                    )
     embed.add_field(name='Ergebnisse:',
                     value=f'Ergebnisse erhälst du mit:\n{cfg.options["invoke_normal"]}result #{survey_id}')
     embed.add_field(name='Keine weitere Umfrage:',
