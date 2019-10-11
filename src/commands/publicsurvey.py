@@ -48,10 +48,21 @@ async def main(client, message, params):
             break
         else:
             answers.append(answer)
+
+    await message.channel.send('How many answers is a user allowed to give?')
+    while True:
+        try:
+            msg = await client.wait_for('message', check=message_check)
+            max_answers = int(msg.content)
+        except ValueError:
+            await message.channel.send("Invalid input. Please try again")
+        else:
+            break
+
     answers = dict(enumerate(answers, 1))
 
     survey_id = get_survey_id()
-    embed = create_survey(title, text, message.author, answers, url, survey_id)
+    embed = create_survey(title, text, message.author, answers, max_answers, url, survey_id)
     msg = await message.channel.send(embed=embed)
     await msg.add_reaction('✅')
     await msg.add_reaction('❌')
@@ -69,22 +80,23 @@ async def main(client, message, params):
 
     data = handleJson.readjson(path)
     data[survey_id] = {}
-    data[survey_id]["title"] = title.strip()
-    data[survey_id]["text"] = text.strip()
-    data[survey_id]["author"] = str(message.author.name)
-    data[survey_id]["url"] = url
-    data[survey_id]["voted"] = []
-    data[survey_id]["answers"] = answers
-    data[survey_id]["results"] = {}
-    for a in range(1, len(data[survey_id]["answers"]) + 1):  # so answers will be displayed sorted
+    data[survey_id]['title'] = title.strip()
+    data[survey_id]['text'] = text.strip()
+    data[survey_id]['author'] = str(message.author.name)
+    data[survey_id]['url'] = url
+    data[survey_id]['voted'] = []
+    data[survey_id]['max_answers'] = max_answers
+    data[survey_id]['answers'] = answers
+    data[survey_id]['results'] = {}
+    for a in range(1, len(data[survey_id]['answers']) + 1):  # so answers will be displayed sorted
         data[survey_id]['results'][a] = 0
-    data["latestID"] += 1
+    data['latestID'] += 1
 
     handleJson.saveasjson(path, data)
 
     # send to subscribers:
     members = client.get_guild(message.guild.id).members
-    unsubs = handleJson.read_json_raw(subs_path)["unsubs"]
+    unsubs = handleJson.read_json_raw(subs_path)['unsubs']
     received, failed = 0, 0
     for m in [e for e in members if e.id not in unsubs]:
         try:
@@ -93,13 +105,13 @@ async def main(client, message, params):
         except:
             failed += 1
 
-    success = SuccessEmbed(title="Publicsurvey")
-    success.description = f"Umfrage an {received-failed} Personen gesendet.\n" \
-                          f"{failed} Personen haben die Nachricht abgelehnt."
+    success = SuccessEmbed(title='Publicsurvey')
+    success.description = f'Umfrage an {received-failed} Personen gesendet.\n' \
+                          f'{failed} Personen haben die Nachricht abgelehnt.'
     await message.channel.send(embed=success)
 
 
-def create_survey(title, text, author, answers, url, survey_id):
+def create_survey(title, text, author, answers, max_answers, url, survey_id):
     answers_text = "\n".join([f'{e} - {answers[e]}' for e in answers])
     embed = Embed(title='Umfrage #' + str(survey_id) + ': ' + title, color=Colour.green(), url=url)
     embed.timestamp = datetime.datetime.utcnow()
@@ -109,7 +121,8 @@ def create_survey(title, text, author, answers, url, survey_id):
                     value=f'Beantworte diese Umfrage mit:\n'
                           f'{cfg.options["invoke_normal"]}answer #{survey_id} 1-{len(answers)+1}\n'
                           f'Mehrfachantwort:\n'
-                          f'{cfg.options["invoke_normal"]}answer #{survey_id} 1 2'
+                          f'{cfg.options["invoke_normal"]}answer #{survey_id} 1 2\n'
+                          f'Du kannst maximal {max_answers} Antworten angeben'
                     )
     embed.add_field(name='Ergebnisse:',
                     value=f'Ergebnisse erhälst du mit:\n{cfg.options["invoke_normal"]}result #{survey_id}')

@@ -71,7 +71,7 @@ def create_embed(survey_id):
 
     for e in sorted(results, key=lambda x: results[x])[::-1]:
         if sum(results.values()):
-            answer_pct = round(results[e] * 100 / sum(results.values()), 2)
+            answer_pct = round(results[e] * 100 / sum(results.values()), 1)
             answer_pct = str(answer_pct).replace(".", ",")
         else:
             answer_pct = "0"

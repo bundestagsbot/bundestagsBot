@@ -1,5 +1,5 @@
 """
-This implement custom errors used across the project
+This implements custom errors used across the project
 """
 
 
@@ -29,6 +29,10 @@ class InvalidSurveyIdException(Exception):
         super(InvalidSurveyIdException, self).__init__()
         self.survey_id = survey_id
 
+class TooManyAnswersException(Exception):
+    def __init__(self, max_answers):
+        super(TooManyAnswersException, self).__init__()
+        self.max_answers = max_answers
 
 class CommandSyntaxException(Exception):
     pass
