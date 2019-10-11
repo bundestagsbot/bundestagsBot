@@ -26,14 +26,13 @@ async def main(client, message, params):
                            description="Something went wrong. Please contact an admin.")
         await message.channel.send(embed=error)
         return
-    params = str(message.content).split(' ')
     embed = error
     try:
         if not subscribed(unsubs, message.author.id):
             raise UserNotSubscribedException()
-        if len(params) < 3:
+        if len(params) < 2 or params[0][0] != '#':
             raise CommandSyntaxException()
-        survey_id = params[1][1:]
+        survey_id = params[0][1:]
         if not survey_id.isdigit():
             raise InvalidSurveyIdException(survey_id)
         if not survey_id_is_valid(data, survey_id):
@@ -41,8 +40,8 @@ async def main(client, message, params):
         survey_data = data[survey_id]
         if message.author.id in survey_data['voted']:
             raise AlreadyVotedException()
-        answers = [e.lower().strip() for e in params[2:]]
-        invalid_answers = check_answers(answers, int(survey_data['answers']))
+        answers = [e.lower().strip() for e in params[1:]]
+        invalid_answers = check_answers(answers, len(survey_data['answers']))
         if invalid_answers:
             raise AnswerNotFoundException(invalid_answers, survey_data['answers'])
         vote(message.author.id, survey_id, answers)
