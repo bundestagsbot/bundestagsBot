@@ -7,7 +7,7 @@ import datetime
 SHL = Console("BundestagsBot PublicSurvey")
 
 settings = {
-    'name': 'publicsurvey;',
+    'name': 'publicsurvey',
     'mod_cmd': True,
     'channels': ['team'],
 }
@@ -16,34 +16,67 @@ subs_path = 'content/subs.json'
 
 
 async def main(client, message, params):
-    params = [p for p in str(message.content).split(';')]
-    if len(params) == 4 or not params[4]:  params.append('https://github.com/bundestagsBot/bundestagsBot')
+
+    def message_check(m):
+        return m.channel == message.channel and message.author == m.author
+
+    await message.channel.send('Title:')
+    msg = await client.wait_for('message', check=message_check)
+    title = msg.content
+
+    await message.channel.send('Text:')
+    msg = await client.wait_for('message', check=message_check)
+    text = msg.content
+
+    await message.channel.send('Do you want to supply a url?(y/n)')
+    msg = await client.wait_for('message', check=message_check)
+    choice = msg.content
+    if choice.lower()[0] == 'y':
+        await message.channel.send('Url:')
+        msg = await client.wait_for('message', check=message_check)
+        url = msg.content
+    else:
+        url = 'https://github.com/bundestagsBot/bundestagsBot'
+
+    await message.channel.send('Type +finish once you\'re done')
+    answers = []
+    while True:
+        await message.channel.send(f'Answer#{len(answers) + 1}:')
+        msg = await client.wait_for('message', check=message_check)
+        answer = msg.content.strip()
+        if answer == "+finish":
+            break
+        else:
+            answers.append(answer)
+    answers = dict(enumerate(answers, 1))
+
     survey_id = get_survey_id()
-    embed = create_survey(params[1], params[2], message.author, params[3], params[4], survey_id)
+    embed = create_survey(title, text, message.author, answers, url, survey_id)
     msg = await message.channel.send(embed=embed)
     await msg.add_reaction('✅')
     await msg.add_reaction('❌')
 
-    def check(reaction, user):
+    def reaction_check(reaction, user):
         e = str(reaction.emoji)
         return user == message.author and e.startswith(('✅', '❌'))
 
-    reaction, user = await client.wait_for('reaction_add', timeout=60.0, check=check)
+    reaction, user = await client.wait_for('reaction_add', timeout=60.0, check=reaction_check)
     await msg.delete()
 
-    if str(reaction.emoji).startswith('❌'): return
+    if str(reaction.emoji).startswith('❌'):
+        return
     # if approved add to json and send embed to all discord members who are not unsubscribed:
 
     data = handleJson.readjson(path)
     data[survey_id] = {}
-    data[survey_id]["title"] = params[1].strip()
-    data[survey_id]["text"] = params[2].strip()
+    data[survey_id]["title"] = title.strip()
+    data[survey_id]["text"] = text.strip()
     data[survey_id]["author"] = str(message.author.name)
-    data[survey_id]["url"] = params[4]
+    data[survey_id]["url"] = url
     data[survey_id]["voted"] = []
-    data[survey_id]["answers"] = params[3].strip().lower()
+    data[survey_id]["answers"] = answers
     data[survey_id]["results"] = {}
-    for a in range(1, int(data[survey_id]["answers"]) + 1):  # so answers will be displayed sorted
+    for a in range(1, len(data[survey_id]["answers"]) + 1):  # so answers will be displayed sorted
         data[survey_id]['results'][a] = 0
     data["latestID"] += 1
 
@@ -67,12 +100,14 @@ async def main(client, message, params):
 
 
 def create_survey(title, text, author, answers, url, survey_id):
+    answers_text = "\n".join([f'{e} - {answers[e]}' for e in answers])
     embed = Embed(title='Umfrage #' + str(survey_id) + ': ' + title, color=Colour.green(), url=url)
     embed.timestamp = datetime.datetime.utcnow()
-    embed.add_field(name='Frage:', value=text.replace('|', '\n'), inline=False)
+    embed.add_field(name='Frage:', value=text, inline=False)
+    embed.add_field(name='Antwortmöglichkeiten:', value=answers_text, inline=False)
     embed.add_field(name='Antwort:',
                     value=f'Beantworte diese Umfrage mit:\n'
-                          f'{cfg.options["invoke_normal"]}answer #{survey_id} 1-{answers.strip()}\n'
+                          f'{cfg.options["invoke_normal"]}answer #{survey_id} 1-{len(answers)+1}\n'
                           f'Mehrfachantwort:\n'
                           f'{cfg.options["invoke_normal"]}answer #{survey_id} 1 2'
                     )
