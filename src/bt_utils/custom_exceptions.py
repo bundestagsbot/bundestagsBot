@@ -3,6 +3,12 @@ This implements custom errors used across the project
 """
 
 
+class InvalidChannel(Exception):
+    def __init__(self, message):
+        super(InvalidChannel, self).__init__()
+        self.message = message
+
+
 class UserNotSubscribedException(Exception):
     pass
 
@@ -29,10 +35,12 @@ class InvalidSurveyIdException(Exception):
         super(InvalidSurveyIdException, self).__init__()
         self.survey_id = survey_id
 
+
 class TooManyAnswersException(Exception):
     def __init__(self, max_answers):
         super(TooManyAnswersException, self).__init__()
         self.max_answers = max_answers
+
 
 class CommandSyntaxException(Exception):
     pass

@@ -1,6 +1,7 @@
 from bt_utils.console import *
 from bt_utils.config import cfg
 from bt_utils.embed_templates import NoticeEmbed
+from bt_utils.custom_exceptions import InvalidChannel
 import discord
 import pkgutil
 import importlib
@@ -72,12 +73,16 @@ def register(func, settings):
             if log:
                 SHL.set_prefix("CommandHandler")
                 SHL.output(f"{message.author} used {message.content}")
-            if user_in_team(message.author):
-                await func(client, message, params)
-
-            else:
-                info = NoticeEmbed(title="Permission",
-                                   description="You do not have the needed permission the use this command!")
+            try:
+                if user_in_team(message.author):
+                    await func(client, message, params)
+                else:
+                    info = NoticeEmbed(title="Permission",
+                                       description="You do not have the needed permission the use this command!")
+                    await message.channel.send(embed=info)
+            except InvalidChannel as e:
+                info = NoticeEmbed(title="Invalid channel type",
+                                   description=f"{e.message}")
                 await message.channel.send(embed=info)
 
         mod_commands[name.lower()] = wrapper
@@ -105,10 +110,13 @@ def register(func, settings):
 
 
 def user_in_team(user):
-    for role in user.roles:
-        if role.id == cfg.options["team_role_id"]:
-            return True
-    return False
+    try:
+        for role in user.roles:
+            if role.id == cfg.options["team_role_id"]:
+                return True
+        return False
+    except AttributeError:
+        raise InvalidChannel("Please write this on a server to validate your roles and permissions.")
 
 
 def register_all():
