@@ -13,6 +13,7 @@ path = "content/arena.json"
 
 
 async def main(client, message, params):
+    return  # not implemented right now
     data = handleJson.read_json_raw(path)
     success = SuccessEmbed(title="Queue")
     if message.author.id in data["queue"]:
