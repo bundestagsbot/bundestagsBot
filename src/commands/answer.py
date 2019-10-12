@@ -26,14 +26,13 @@ async def main(client, message, params):
                            description="Something went wrong. Please contact an admin.")
         await message.channel.send(embed=error)
         return
-    params = str(message.content).split(' ')
     embed = error
     try:
         if not subscribed(unsubs, message.author.id):
             raise UserNotSubscribedException()
-        if len(params) < 3:
+        if len(params) < 2 or params[0][0] != '#':
             raise CommandSyntaxException()
-        survey_id = params[1][1:]
+        survey_id = params[0][1:]
         if not survey_id.isdigit():
             raise InvalidSurveyIdException(survey_id)
         if not survey_id_is_valid(data, survey_id):
@@ -41,8 +40,11 @@ async def main(client, message, params):
         survey_data = data[survey_id]
         if message.author.id in survey_data['voted']:
             raise AlreadyVotedException()
-        answers = [e.lower().strip() for e in params[2:]]
-        invalid_answers = check_answers(answers, int(survey_data['answers']))
+        answers = [e.lower().strip() for e in params[1:]]
+        if len(answers) > data[survey_id]['max_answers']:
+            raise TooManyAnswersException(data[survey_id]['max_answers'])
+
+        invalid_answers = check_answers(answers, len(survey_data['answers']))
         if invalid_answers:
             raise AnswerNotFoundException(invalid_answers, survey_data['answers'])
         vote(message.author.id, survey_id, answers)
@@ -52,17 +54,19 @@ async def main(client, message, params):
                             f'{cfg.options["invoke_normal"]}result #{survey_id} sehen.'
 
     except UserNotSubscribedException as e:
-        embed.description = f"You have to be subscribed to participate. Use {cfg.options['invoke_normal']}sub True"
+        embed.description = f'You have to be subscribed to participate. Use {cfg.options["invoke_normal"]}sub True'
     except AnswerNotFoundException as e:
-        embed.description = f"Invalid answers: {e.invalid_answers}\nPossible answers: 1-{e.max_index}"
+        embed.description = f'Invalid answers: {e.invalid_answers}\nPossible answers: 1-{e.max_index}'
     except AlreadyVotedException as e:
-        embed.description = "You cannot vote twice."
+        embed.description = 'You cannot vote twice.'
     except SurveyNotFoundException as e:
-        embed.description = f"#{e.survey_id} could not be assigned to a survey."
+        embed.description = f'#{e.survey_id} could not be assigned to a survey.'
     except InvalidSurveyIdException as e:
-        embed.description = f"{e.survey_id} is an invalid ID."
+        embed.description = f'{e.survey_id} is an invalid ID.'
     except CommandSyntaxException as e:
-        embed.description = f"Invalid syntax.\nPlease use {cfg.options['invoke_normal']}answer #survey_id Answer"
+        embed.description = f'Invalid syntax.\nPlease use {cfg.options["invoke_normal"]}answer #survey_id Answer'
+    except TooManyAnswersException as e:
+        embed.description = f'Too many answers.\nYou are only allowed to give up to {e.max_answers} answers'
     finally:
         await message.channel.send(embed=embed)
 
