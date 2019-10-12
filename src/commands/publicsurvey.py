@@ -83,6 +83,7 @@ async def main(client, message, params):
     data[survey_id]['title'] = title.strip()
     data[survey_id]['text'] = text.strip()
     data[survey_id]['author'] = str(message.author.name)
+    data[survey_id]['author_id'] = message.author.id
     data[survey_id]['url'] = url
     data[survey_id]['voted'] = []
     data[survey_id]['max_answers'] = max_answers
