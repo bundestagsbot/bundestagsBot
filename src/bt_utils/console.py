@@ -1,5 +1,5 @@
 from datetime import datetime
-import subprocess
+import os
 
 black = '\033[30m'
 red = '\033[31m'
@@ -30,7 +30,7 @@ class Console:
 
     def __init__(self, prefix, cls=False):
         if cls:
-            subprocess.call('cls', shell=True)
+            os.system("cls" if os.name == "nt" else "clear")
         self.prefix = f'{green2}[{prefix}]{white}'
 
     def output(self, text):

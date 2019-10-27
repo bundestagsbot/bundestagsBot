@@ -75,7 +75,7 @@ def create_embed(survey_id):
             answer_pct = str(answer_pct).replace(".", ",")
         else:
             answer_pct = "0"
-        answers_text.append(f'{e} - {answers[e]}: {answer_pct}% ({results[e]})')
+        answers_text.append(f'{answer_pct}% ({results[e]}): {answers[e]}')
     answers_text = '\n'.join(answers_text)
 
     embed = InfoEmbed(title='Umfrage #' + str(survey_id) + ': ' + title)
