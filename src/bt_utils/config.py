@@ -3,7 +3,7 @@ import os.path
 from . import handleJson
 from .console import Console, red, white
 
-BASE_PATH = content_dir = "/config/" if os.path.isdir("/config/") else "/config-default"
+BASE_PATH = content_dir = "config" if os.path.isdir("config") else "config-default"
 
 PATHS = ["blacklist.json", "main.json", "messages.json",
          "role_table.json", "tokens.json"]
