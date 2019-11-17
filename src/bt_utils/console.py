@@ -29,9 +29,8 @@ class Console:
         self.prefix = f'{green2}[{prefix}]{white}'
 
     def __init__(self, prefix, cls=False):
-        if cls:
-            if os.isatty(0):
-                os.system("cls" if os.name == "nt" else "clear")
+        if cls and os.isatty(0):
+            os.system("cls" if os.name == "nt" else "clear")
         self.prefix = f'{green2}[{prefix}]{white}'
 
     def output(self, text):
