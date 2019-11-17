@@ -27,7 +27,7 @@ class TestClass(unittest.TestCase):
         # creates basic table structures if not already present
         print("Create database and test if creation was successful")
         self.db.create_structure(self.roles)
-        db_path = Path("content/bundestag.db")
+        db_path = Path(os.path.join(content_dir, "bundestag.db"))
         self.assertTrue(db_path.is_file())
 
         print("Check if database is empty")

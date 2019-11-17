@@ -120,7 +120,7 @@ def start_bot():
         SHL.output(f"{red}Please check your token.{white}")
     except KeyError:
         SHL.output(f"{red}========================{white}")
-        SHL.output(f"{red}'BOT_TOKEN' not found in config files!")
+        SHL.output(f"{red}'BOT_TOKEN' not found in config files!{white}")
 
 
 thread_sched = Thread(target=schedule_check, name="sched", args=(client,))
