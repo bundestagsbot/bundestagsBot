@@ -1,6 +1,7 @@
+from discord.utils import get
+
 from bt_utils.config import cfg
 from bt_utils.embed_templates import InfoEmbed
-from discord.utils import get
 
 
 async def reaction_add(client, payload):

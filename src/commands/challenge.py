@@ -1,10 +1,16 @@
+import os.path
+from asyncio import TimeoutError
+
+from discord.utils import get
+
 from bt_utils.console import Console
 from bt_utils.embed_templates import SuccessEmbed, InfoEmbed, NoticeEmbed
 from bt_utils.config import cfg
 from bt_utils import handleJson
-from discord.utils import get
+from bt_utils.get_content import content_dir
 from others.scheduler import schedule_job, clear_tag
-from asyncio import TimeoutError
+
+
 SHL = Console("BundestagsBot Challenge")
 
 settings = {
@@ -12,7 +18,7 @@ settings = {
     'channels': ['!dm'],
 }
 
-path = "content/challenge.json"
+path = os.path.join(content_dir, "challenge.json")
 
 
 async def close_channel(args):

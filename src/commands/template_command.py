@@ -1,4 +1,8 @@
+import os.path
+
 from bt_utils.console import Console
+from bt_utils.get_content import content_dir
+
 SHL = Console("BundestagsBot Template Command")  # Use SHL.output(text) for all console based output!
 
 settings = {
@@ -9,7 +13,7 @@ settings = {
 }
 
 # global / changeable variables
-PATH = "content/template.json"
+PATH = os.path.join(content_dir, "template.json")
 
 
 # client, message object

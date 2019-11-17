@@ -1,9 +1,12 @@
+import os
+
 from bt_utils.console import Console
 from bt_utils.embed_templates import SuccessEmbed, ErrorEmbed, NoticeEmbed, InfoEmbed
 from bt_utils.config import cfg
 from bt_utils import handleJson
 from bt_utils.custom_exceptions import *
-import os
+from bt_utils.get_content import content_dir
+
 SHL = Console("BundestagsBot Result")
 
 settings = {
@@ -11,7 +14,7 @@ settings = {
     'channels': ['all'],
 }
 
-path = 'content/surveys.json'
+path = os.path.join(content_dir, "surveys.json")
 
 
 async def main(client, message, params):

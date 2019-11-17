@@ -1,7 +1,9 @@
+from discord.utils import get
+
 from bt_utils.console import Console
 from bt_utils.embed_templates import SuccessEmbed, NoticeEmbed
 from bt_utils.config import cfg
-from discord.utils import get
+
 SHL = Console("BundestagsBot Iam")
 
 settings = {

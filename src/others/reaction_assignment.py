@@ -1,6 +1,7 @@
 from bt_utils.config import cfg
 from bt_utils.handle_sqlite import DatabaseHandler
 from bt_utils.console import *
+
 SHL = Console("ReactionStats")
 DB = DatabaseHandler()
 

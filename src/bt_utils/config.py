@@ -1,7 +1,10 @@
-from . import handleJson
-from .console import *
+import os.path
 
-BASE_PATH = "config/"
+from . import handleJson
+from .console import Console, red, white
+
+BASE_PATH = content_dir = "/config/" if os.path.isdir("/config/") else "/config-default"
+
 PATHS = ["blacklist.json", "main.json", "messages.json",
          "role_table.json", "tokens.json"]
 SHL = Console("ConfigLoader", cls=True)
@@ -16,8 +19,8 @@ class Config:
         SHL.output(f"Reloading config.")
         files_failed = 0
         for path in PATHS:
-            SHL.output(f"Reloading configfile {BASE_PATH + path}")
-            data = handleJson.readjson(BASE_PATH + path)
+            SHL.output(f"Reloading configfile {os.path.join(BASE_PATH, path)}")
+            data = handleJson.readjson(os.path.join(BASE_PATH, path))
             if data is None:
                 files_failed += 1
                 continue

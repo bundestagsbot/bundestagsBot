@@ -1,7 +1,9 @@
-from discord import Embed, Color
 from datetime import datetime
+
+from discord import Embed, Color
+
 from bt_utils.config import cfg
-from bt_utils.console import *
+from bt_utils.console import Console, red, white
 
 SHL = Console("WelcomeEmbed")
 

@@ -1,14 +1,16 @@
-from . import handleJson
-from .config import cfg
-from .console import *
 from datetime import datetime
 import os
+
+from . import handleJson
+from .config import cfg
+from .console import Console, red, white
+
 SHL = Console("CacheHandler")
 
 
 class Cache:
     def path(self):
-        return cfg.options.get("path_to_temp_cache", "temp/") + "cache.json"
+        return os.path.join(cfg.options.get("path_to_temp_cache", "temp/"), "cache.json")
 
     def __init__(self):
         try:

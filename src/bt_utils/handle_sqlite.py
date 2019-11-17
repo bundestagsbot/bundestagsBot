@@ -1,8 +1,12 @@
-from .console import Console
+import os.path
 import sqlite3
+
+from .console import Console
+from .get_content import content_dir
+
 SHL = Console(prefix="handleSQLITE")
 
-BASE_PATH = "content/"
+BASE_PATH = content_dir
 DB_PATH = "bundestag.db"
 
 
@@ -11,7 +15,7 @@ class DatabaseHandler:
     debug = False
 
     def __init__(self):
-        self.con = sqlite3.connect(BASE_PATH + DB_PATH)
+        self.con = sqlite3.connect(os.path.join(BASE_PATH, DB_PATH))
 
     def create_structure(self, roles):
         cursor = self.con.cursor()

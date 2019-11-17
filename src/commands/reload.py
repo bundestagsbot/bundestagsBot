@@ -2,6 +2,7 @@ from bt_utils.console import Console
 from bt_utils.config import cfg
 from bt_utils.embed_templates import SuccessEmbed, WarningEmbed
 from bt_utils.handle_sqlite import DatabaseHandler
+
 SHL = Console('BundestagsBot Reload')
 DB = DatabaseHandler()
 

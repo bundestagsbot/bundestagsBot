@@ -1,8 +1,12 @@
+import os.path
+
 from bt_utils.console import Console
 from bt_utils.config import cfg
 from bt_utils.embed_templates import SuccessEmbed, NoticeEmbed, ErrorEmbed
 from bt_utils import handleJson
 from bt_utils.custom_exceptions import *
+from bt_utils.get_content import content_dir
+
 SHL = Console("BundestagsBot Answer")
 
 settings = {
@@ -11,8 +15,8 @@ settings = {
     'log': False
 }
 
-path_to_surveys = 'content/surveys.json'
-path_to_unsubs = 'content/subs.json'
+path_to_surveys = os.path.join(content_dir, "surveys.json")
+path_to_unsubs = os.path.join(content_dir, "subs.json")
 
 
 async def main(client, message, params):

@@ -1,8 +1,11 @@
+import datetime
+
+import discord
+
 from bt_utils.console import Console
 from bt_utils.embed_templates import NoticeEmbed
 from bt_utils.config import cfg
-import discord
-import datetime
+
 SHL = Console("BundestagsBot Survey")
 
 settings = {
