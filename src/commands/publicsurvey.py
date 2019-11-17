@@ -4,6 +4,10 @@ from bt_utils.config import cfg
 from bt_utils import handleJson
 from discord import Embed, Colour
 import datetime
+import os.path
+
+from bt_utils.get_content import content_dir
+
 SHL = Console("BundestagsBot PublicSurvey")
 
 settings = {
@@ -11,8 +15,9 @@ settings = {
     'mod_cmd': True,
     'channels': ['team'],
 }
-path = 'content/surveys.json'
-subs_path = 'content/subs.json'
+
+path = os.path.join(content_dir, "surveys.json")
+subs_path = os.path.join(content_dir, "subs.json")
 
 
 async def main(client, message, params):

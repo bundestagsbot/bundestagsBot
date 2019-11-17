@@ -1,5 +1,6 @@
 from bt_utils.console import Console
 from bt_utils.embed_templates import InfoEmbed
+
 SHL = Console("BundestagsBot Help")
 
 settings = {

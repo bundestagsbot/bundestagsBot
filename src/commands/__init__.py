@@ -1,10 +1,13 @@
+import pkgutil
+import importlib
+
+import discord
+
 from bt_utils.console import *
 from bt_utils.config import cfg
 from bt_utils.embed_templates import NoticeEmbed
 from bt_utils.custom_exceptions import InvalidChannel
-import discord
-import pkgutil
-import importlib
+
 SHL = Console("CommandLoader")
 
 """

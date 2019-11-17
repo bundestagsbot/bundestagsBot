@@ -1,6 +1,8 @@
-from .console import Console
 import json
 import os
+
+from .console import Console
+
 SHL = Console(prefix="handleJSON")
 
 BASE_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))

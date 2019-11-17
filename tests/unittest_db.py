@@ -1,21 +1,23 @@
-from src.bt_utils.handle_sqlite import DatabaseHandler
 import unittest
 from pathlib import Path
 import os
 import shutil
 import time
+
+from src.bt_utils.handle_sqlite import DatabaseHandler
+from src.bt_utils.get_content import content_dir
 from sqlite3 import IntegrityError
 
 
 class TestClass(unittest.TestCase):
     def testDB(self):
-        if os.path.exists("content"):
-            shutil.rmtree("content", ignore_errors=True)
-        if not os.path.exists("content"):
-            os.makedirs("content")
+        if os.path.exists(content_dir):
+            shutil.rmtree(content_dir, ignore_errors=True)
+        if not os.path.exists(content_dir):
+            os.makedirs(content_dir)
         else:
             try:
-                os.remove("content/bundestag.db")
+                os.remove(os.path.join(content_dir, "bundestag.db"))
             except OSError:
                 pass
 
@@ -25,7 +27,7 @@ class TestClass(unittest.TestCase):
         # creates basic table structures if not already present
         print("Create database and test if creation was successful")
         self.db.create_structure(self.roles)
-        db_path = Path("content/bundestag.db")
+        db_path = Path(os.path.join(content_dir, "bundestag.db"))
         self.assertTrue(db_path.is_file())
 
         print("Check if database is empty")

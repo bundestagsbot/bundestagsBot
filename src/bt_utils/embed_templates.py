@@ -1,5 +1,6 @@
-from discord import Embed, Colour
 from datetime import datetime
+
+from discord import Embed, Colour
 
 
 class SimpleEmbed(Embed):

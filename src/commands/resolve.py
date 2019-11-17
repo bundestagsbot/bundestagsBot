@@ -1,7 +1,10 @@
+import os.path
+
 from bt_utils.console import Console
 from bt_utils.config import cfg
 from bt_utils.embed_templates import InfoEmbed, NoticeEmbed
 from bt_utils import handleJson
+from bt_utils.get_content import content_dir
 
 SHL = Console("BundestagsBot Resolve")
 
@@ -12,7 +15,7 @@ settings = {
     'log': True
 }
 
-path = 'content/submits.json'
+path = os.path.join(content_dir, "submits.json")
 
 
 async def main(client, message, params):

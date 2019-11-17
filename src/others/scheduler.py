@@ -1,6 +1,9 @@
-from bt_utils.console import Console
-import schedule
 import time
+
+import schedule
+
+from bt_utils.console import Console
+
 SHL = Console("Scheduler")
 
 main_loop = None

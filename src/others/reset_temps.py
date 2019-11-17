@@ -1,8 +1,10 @@
+import os
+
 from bt_utils.console import Console
 from bt_utils.config import cfg
 from bt_utils import handleJson
 from bt_utils.handle_sqlite import DatabaseHandler
-import os
+
 SHL = Console("Reset")
 DB = DatabaseHandler()
 
