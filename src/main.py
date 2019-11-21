@@ -113,16 +113,16 @@ def start_bot():
     try:
         reset_temps.reset()
         token = cfg.options["BOT_TOKEN"]
+    except KeyError:
+        SHL.output(f"{red}========================{white}")
+        SHL.output(f"{red}'BOT_TOKEN' not found in config files!{white}")
+    try:
+        SHL.output(f"Logging in.")
+        client.run(token, reconnect=cfg.options.get("use_reconnect", False))
     except LoginFailure:
         SHL.output(f"{red}========================{white}")
         SHL.output(f"{red}Login failure!{white}")
         SHL.output(f"{red}Please check your token.{white}")
-    except KeyError:
-        SHL.output(f"{red}========================{white}")
-        SHL.output(f"{red}'BOT_TOKEN' not found in config files!{white}")
-    else:
-        SHL.output(f"Logging in.")
-        client.run(token, reconnect=cfg.options.get("use_reconnect", False))
 
 
 thread_sched = Thread(target=schedule_check, name="sched", args=(client,))
