@@ -4,6 +4,7 @@
   },
   "roles_show": [],
   "roles_on_join": [],
+  "roles_on_10_minute": [],
   "arena_role": 0,
   "1v1_role": 0
 }
