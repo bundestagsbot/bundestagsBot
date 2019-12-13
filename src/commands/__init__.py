@@ -99,13 +99,13 @@ def register(func, settings):
             else:
                 if len(channel_names) != 0:
                     info = NoticeEmbed(title="Invalid channel",
-                                       description="Please use one of these channels: \n\n>"
+                                       description="Please use one of these channels: \n\n> "
                                                    + "\n> ".join([x for x in channel_names if x.strip()]))
                     await message.channel.send(embed=info)
                 else:
                     blacklisted_channels = [allowed_channels[x]['name'] for x in blacklisted]
                     info = NoticeEmbed(title="Invalid channel",
-                                       description="Following channels are not allowed: \n\n>"
+                                       description="Following channels are not allowed: \n\n> "
                                                    + "\n> ".join(blacklisted_channels))
                     await message.channel.send(embed=info)
         commands[name.lower()] = wrapper
