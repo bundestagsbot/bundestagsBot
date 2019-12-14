@@ -31,6 +31,10 @@ async def on_member_join(member):
     for role in cfg.options.get("roles_on_join", []):
         r = get(client.get_guild(member.guild.id).roles, id=int(role))
         await member.add_roles(r)
+    await asyncio.sleep(600)
+    for role in cfg.options.get("roles_on_10_minute", []):
+        r = get(client.get_guild(member.guild.id).roles, id=int(role))
+        await member.add_roles(r)
 
 
 @client.event
