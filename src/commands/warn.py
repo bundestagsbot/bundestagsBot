@@ -35,7 +35,7 @@ async def main(client, message, params):
                                                 description=f"No 'warn_role_id' defined!")
                 await message.channel.send(embed=except_embed)
                 return
-            return_embed = SuccessEmbed(title="Warn", description=f"Warned {user.name}")
+            return_embed = SuccessEmbed(title="Warn", description=f"Warned {user.display_name}")
             try:
                 pm_embed = InfoEmbed(title="Warn",
                                          description=f"You were warned by {message.author.display_name}\n"
