@@ -46,5 +46,5 @@ async def main(client, message, params):
                 pass
             await message.channel.send(embed=return_embed)
         else:
-            warned_embed = NoticeEmbed(title="Warn", description=f"User {user.name} has already been warned once!")
+            warned_embed = NoticeEmbed(title="Warn", description=f"User {user.display_name} has already been warned once!")
             await message.channel.send(embed=warned_embed)
