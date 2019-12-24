@@ -33,7 +33,7 @@ async def main(client, message, params):
                     await msg.add_reaction('❌')
                 else:
                     error.description = "Please enter a valid digit (0-9)."
-                await message.channel.send(embed=error)
+                    await message.channel.send(embed=error)
             else:
                 error.description = "Please enter a valid digit (0-9)."
                 await message.channel.send(embed=error)
