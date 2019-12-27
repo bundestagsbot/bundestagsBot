@@ -24,7 +24,7 @@ try:
         SHL.output(f"{blue2}Found local version: {git_version_short_hash}, Git over SSH{white}")
 
         __generated_link = git_remote_url + "/commits/" + git_version_hash
-        __msg = f"Current Version is <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"{__generated_link}\">{git_version_short_hash}</a>.<br />"
+        __msg = f"Current Version is {__generated_link}"
 
     elif git_remote_url.startswith("https://"):
         git_remote_url.replace(".git", "")
@@ -32,15 +32,14 @@ try:
         SHL.output(f"{blue2}Found local version: {git_version_short_hash}, Git over HTTPS{white}")
 
         __generated_link = git_remote_url + "/commits/" + git_version_hash
-        __msg = f"Current Version is <a target=\"_blank\" rel=\"noopener noreferrer\" href=\"{__generated_link}\">{git_version_short_hash}</a>.<br />"
+        __msg = f"Current Version is {__generated_link}."
 
     else:
         SHL.output(f"{red}Git remote URL could not be parsed, gitversion cannot link to the repo.{white}")
 
         SHL.output(f"{yellow}Found local version: {git_version_short_hash}, Git remote not found{white}")
 
-        __msg = f"Current Version is {git_version_short_hash}.<br /> " \
-                f"<a class=\"text-danger\">Error getting remote URL, cannot link to repo. Server owner messed up.</a>"
+        __msg = f"Current Version is {git_version_short_hash}."
 
 
 except subprocess.CalledProcessError:
