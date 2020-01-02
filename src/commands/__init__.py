@@ -81,7 +81,7 @@ def register(func, settings):
                     await func(client, message, params)
                 else:
                     info = NoticeEmbed(title="Permission",
-                                       description="You do not have the needed permission the use this command!")
+                                       description="You do not have the needed permission to use this command!")
                     await message.channel.send(embed=info)
             except InvalidChannel as e:
                 info = NoticeEmbed(title="Invalid channel type",
