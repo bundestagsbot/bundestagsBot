@@ -30,7 +30,6 @@ def help_embed():
                         '-Benutze >result #id um Ergebnisse einer Umfrage einzusehen.\n\n' \
                         '-Benutze >sub False um keine weiteren Umfragen mehr zu erhalten.\n\n' \
                         '-Benutze >submit Text um Anfragen ans Serverteam zu stellen.\n\n' \
-                        '-Benutze >reactions [@user] um Reaktionen an Nachrichten von [@user] zu sehen.\n\n' \
                         '-Benutze >umfrage [Parlamentsnummer]\nKeine Nummer für Bundestag'\
 
 
@@ -46,7 +45,7 @@ def survey_help_embed():
     embed = InfoEmbed(title='Hilfe - BundestagsBot v1')
     embed.set_thumbnail(url='https://cdn0.iconfinder.com/data/icons/handdrawn-ui-elements/512/Question_Mark-512.png')
 
-    embed.description = '>survey; Titel; Beschreibung; <Anzahl>\n\n'\
+    embed.description = '>survey Titel; Beschreibung; <Anzahl>\n\n'\
                         'Anzahl ist optional und beschreibt die Anzahl an Reactionmöglichkeiten.\n\n'\
                         'So erzeugt >survey; Titel; Beschreibung; 5 eine Umfrage mit 5 Antwortmöglichkeiten, die du\n'\
                         'dann in deiner Beschreibung erklären musst.\n'\
