@@ -9,7 +9,7 @@ SHL = Console("WelcomeEmbed")
 
 welcome_de = """
     Unter <#{}> kannst du dir Rollen zuweisen. 
-    Beispielsweise Themen, die dich interessieren oder deine politische Ausrichtung
+    Beispielsweise Themen, die dich interessieren, oder deine politische Ausrichtung
     \n
     Oder sag doch einfach in <#{}> hallo :smiley:
     \n

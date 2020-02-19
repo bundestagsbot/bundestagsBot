@@ -2,6 +2,7 @@ import os.path
 import sqlite3
 
 from .console import Console
+from .config import cfg
 from .get_content import content_dir
 
 SHL = Console(prefix="handleSQLITE")
@@ -15,9 +16,13 @@ class DatabaseHandler:
     debug = False
 
     def __init__(self):
+        if cfg.get("disable_database"):
+            return
         self.con = sqlite3.connect(os.path.join(BASE_PATH, DB_PATH))
 
     def create_structure(self, roles):
+        if cfg.get("disable_database"):
+            return
         cursor = self.con.cursor()
         role_entries = ''
         for role in roles:
@@ -31,6 +36,8 @@ class DatabaseHandler:
         self.con.commit()
 
     def update_columns(self, roles):
+        if cfg.get("disable_database"):
+            return
         cursor = self.con.cursor()
         statement = "PRAGMA table_info('users')"
         cursor.execute(statement)
@@ -43,6 +50,8 @@ class DatabaseHandler:
                 self.con.commit()
 
     def add_user(self, uid, roles):
+        if cfg.get("disable_database"):
+            return
         cursor = self.con.cursor()
         roles_tuple = (0,) * len(roles)
         user = (uid,) + roles_tuple
@@ -53,12 +62,16 @@ class DatabaseHandler:
         self.con.commit()
 
     def get_all_users(self):
+        if cfg.get("disable_database"):
+            return
         cursor = self.con.cursor()
         cursor.execute('SELECT * FROM users')
         rows = cursor.fetchall()
         return rows
 
     def get_specific_user(self, uid):
+        if cfg.get("disable_database"):
+            return
         cursor = self.con.cursor()
         cursor.execute('SELECT * FROM users WHERE user_id = ' + str(uid))
         user = cursor.fetchall()
@@ -66,6 +79,8 @@ class DatabaseHandler:
         return ()
 
     def add_reaction(self, uid, role_reaction):
+        if cfg.get("disable_database"):
+            return
         cursor = self.con.cursor()
 
         # statement to increment reaction counter
@@ -76,6 +91,8 @@ class DatabaseHandler:
         if self.debug: SHL.output("added reaction to db")
 
     def remove_reaction(self, uid, role_reaction):
+        if cfg.get("disable_database"):
+            return
         cursor = self.con.cursor()
 
         # statement to increment reaction counter
@@ -86,4 +103,6 @@ class DatabaseHandler:
         if self.debug: SHL.output("removed reaction from db")
 
     def __del__(self):
+        if cfg.get("disable_database"):
+            return
         self.con.close()
