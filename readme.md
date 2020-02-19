@@ -6,14 +6,14 @@
 </p>
 <div align="center">
      <strong><i>
-          A discord bot for <a href="https://www.youtube.com/channel/UCkN8kMDOekn8uxxxsvwEnow">BestofBundestag</a>. 
+          A discord bot for <a href="https://www.youtube.com/channel/UCkN8kMDOekn8uxxxsvwEnow">BestOfBundestag</a>. 
      </i></strong>
 </div>
 <br/>
 
 ## Requirements
 ```
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 ```
 
 ## Installation
