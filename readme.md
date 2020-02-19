@@ -4,20 +4,16 @@
 <a href="https://github.com/bundestagsbot/bundestagsBot/blob/dev/LICENSE"><img src="https://img.shields.io/github/license/bundestagsBot/bundestagsBot.svg"/></a>
 <img src="http://hits.dwyl.io/bundestagsbot/bundestagsbot.svg)](http://hits.dwyl.io/bundestagsbot/bundestagsbot"/>
 </p>
-<h3 align="center"> We are currently dedicated to implementing a new version "remastered".
-Feel free to provide help of any kind (coding or suggestions) @GitHub or in Discord.</h3>
-<h4 align="center"> Roadmap: https://github.com/bundestagsbot/bundestagsBot/projects/1 </h4>
-<hr/>
 <div align="center">
      <strong><i>
-          A discord bot for <a href="https://www.youtube.com/channel/UCkN8kMDOekn8uxxxsvwEnow">BestofBundestag</a>. 
+          A discord bot for <a href="https://www.youtube.com/channel/UCkN8kMDOekn8uxxxsvwEnow">BestOfBundestag</a>. 
      </i></strong>
 </div>
 <br/>
 
 ## Requirements
 ```
-pip install -r requirements.txt
+python -m pip install -r requirements.txt
 ```
 
 ## Installation
