@@ -31,7 +31,7 @@ class Config:
         SHL.output(f"{red}========================{white}")
         return files_failed
 
-    def get(self, key: str, default):
+    def get(self, key: str, default=None):
         return self.options.get(key, default)
 
 
