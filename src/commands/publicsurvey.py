@@ -125,7 +125,7 @@ def create_survey(title, text, author, answers, max_answers, url, survey_id):
     embed.add_field(name='Antwortmöglichkeiten:', value=answers_text, inline=False)
     embed.add_field(name='Antwort:',
                     value=f'Beantworte diese Umfrage mit:\n'
-                          f'{cfg.options["invoke_normal"]}answer #{survey_id} 1-{len(answers)+1}\n'
+                          f'{cfg.options["invoke_normal"]}answer #{survey_id} 1-{len(answers)}\n'
                           f'Mehrfachantwort:\n'
                           f'{cfg.options["invoke_normal"]}answer #{survey_id} 1 2\n'
                           f'Du kannst maximal {max_answers} Antworten angeben'
