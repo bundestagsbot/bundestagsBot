@@ -68,6 +68,10 @@ async def on_message(message):
     if not await check_message(client, message):  # check basic conditions like length and not responding to himself
         return 0
 
+    if message.channel.id == cfg.get("channel_ids", dict()).get("suggestions"):
+        await message.add_reaction('👍')
+        await message.add_reaction('👎')
+
     if message.content.lower().startswith(str(cfg.options["invoke_normal"]).lower()):
         params = commands.parse(message.content, False)
         if params:
