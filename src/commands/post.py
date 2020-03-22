@@ -14,7 +14,7 @@ settings = {
 
 suffix_text = """
 Bei Fragen lest euch bitte die Regeln durch. 
-Rehabilitation sind möglich, wendet euch hierfür bitte an einen Moderator. 
+Rehabilitationen sind möglich, wendet euch hierfür bitte an einen Moderator. 
 """
 
 
@@ -41,6 +41,7 @@ async def main(client, message, params):
 
     if not str(reaction.emoji).startswith('✅'):
         return
+
     try:
         await target_channel.send(embed=embed)
     except:
