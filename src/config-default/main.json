@@ -21,6 +21,7 @@
   "channel_ids": {
     "welcome": 0,
     "suggestions": 0,
+    "main": 0,
     "submits": 0,
     "roles": 0,
     "arena": 0,

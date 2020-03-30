@@ -125,19 +125,21 @@ def create_survey(title, text, author, answers, max_answers, url, survey_id):
     embed.add_field(name='Antwortmöglichkeiten:', value=answers_text, inline=False)
     embed.add_field(name='Antwort:',
                     value=f'Beantworte diese Umfrage mit:\n'
-                          f'{cfg.options["invoke_normal"]}answer #{survey_id} 1-{len(answers)}\n'
+                          f'{cfg.get("invoke_normal")}answer #{survey_id} 1-{len(answers)}\n'
                           f'Mehrfachantwort:\n'
-                          f'{cfg.options["invoke_normal"]}answer #{survey_id} 1 2\n'
+                          f'{cfg.get("invoke_normal")}answer #{survey_id} 1 2\n'
                           f'Du kannst maximal {max_answers} Antworten angeben'
                     )
     embed.add_field(name='Ergebnisse:',
-                    value=f'Ergebnisse erhälst du mit:\n{cfg.options["invoke_normal"]}result #{survey_id}')
+                    value=f'Ergebnisse erhälst du mit:\n{cfg.get("invoke_normal")}result #{survey_id}')
     embed.add_field(name='Keine weitere Umfrage:',
                     value=f'Wenn du keine weiteren Umfragen mehr erhalten willst, verwende: '
-                          f'{cfg.options["invoke_normal"]}sub False')
-    embed.add_field(name='Information:', value='Du kannst deine Antwort nicht mehr ändern.\n'
-                                               'Diese Umfrage ist anonym.\n'
-                                               'Bei Fragen wende dich an die Developer.')
+                          f'{cfg.get("invoke_normal")}sub False')
+    embed.add_field(name='Information:',
+                    value=f'Diskutiere über diese Umfrage in <#{cfg.get("channel_ids", dict()).get("main", 0)}>.\n'
+                          'Du kannst deine Antwort nicht mehr ändern.\n'
+                          'Diese Umfrage ist anonym.\n'
+                          'Bei Fragen wende dich an die Developer.')
     embed.set_footer(text="Umfrage von " + author.name)
     return embed
 
