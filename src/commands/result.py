@@ -84,6 +84,9 @@ def create_embed(survey_id):
     embed = InfoEmbed(title='Umfrage #' + str(survey_id) + ': ' + title)
     embed.url = url
     embed.add_field(name='Frage:', value=text, inline=False)
+    embed.add_field(name='Information:',
+                    value=f'Diskutiere über diese Umfrage in <#{cfg.get("channel_ids", dict()).get("main", 0)}>.',
+                    inline=False)
     embed.add_field(name='Ergebnis:', value=answers_text)
     embed.add_field(name='Beteiligung: ', value='Insgesamt abgestimmt haben: ' + str(votes))
     embed.set_footer(text='Umfrage von ' + author)
