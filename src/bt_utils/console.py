@@ -33,5 +33,20 @@ class Console:
             os.system("cls" if os.name == "nt" else "clear")
         self.prefix = f'{green2}[{prefix}]{white}'
 
-    def output(self, text):
-        print(f'{self.ts(True)} {self.prefix} {str(text)}')
+    def output(self, text: str, prefix: str = None):
+        if prefix:
+            print(f'{self.ts(True)} {green2}[{prefix}]{white} {str(text)}')
+        else:
+            print(f'{self.ts(True)} {self.prefix} {str(text)}')
+
+    def info(self, text: str, p: str = None):
+        self.output(text=f"{blue2}{text}{white}", prefix=p)
+
+    def warning(self, text: str, p: str = None):
+        self.output(text=f"{yellow}{text}{white}", prefix=p)
+
+    def error(self, text: str, p: str = None):
+        self.output(text=f"{red}{text}{white}", prefix=p)
+
+    def debug(self, text: str, p: str = None):
+        self.output(text=f"{white}{text}{white}", prefix=p)
