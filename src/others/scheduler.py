@@ -17,7 +17,7 @@ class Scheduler:
         schedule.clear(str(tag))
 
     def schedule_daily(self, func, tag, args=None):
-        schedule.every().day.at("23:06").do(self.starter, func, args).tag(str(tag))
+        schedule.every().day.at("01:00").do(self.starter, func, args).tag(str(tag))
 
     def schedule_check(self):
         SHL.info("Started scheduler.")
