@@ -6,34 +6,25 @@ from bt_utils.console import Console
 
 SHL = Console("Scheduler")
 
-main_loop = None
+
+class Scheduler:
+    main_loop = None
+
+    def starter(self, f, args=None):
+        self.main_loop.create_task(f(args))
+
+    def clear_tag(self, tag):
+        schedule.clear(str(tag))
+
+    def schedule_daily(self, func, tag, args=None):
+        schedule.every().day.at("23:06").do(self.starter, func, args).tag(str(tag))
+
+    def schedule_check(self):
+        SHL.info("Started scheduler.")
+
+        while True:
+            time.sleep(60)
+            schedule.run_pending()
 
 
-def starter(func, *args):
-    main_loop.create_task(func(args[0]))
-
-
-def clear_tag(tag):
-    schedule.clear(str(tag))
-
-
-def schedule_job(func, minutes, tag, *args):
-    schedule.every(int(minutes)).minutes.do(starter, func, args).tag(str(tag))
-
-
-def schedule_arena(client):  # TODO: change to correct dates
-    # schedule.every().day.at("20:57").do(starter, start_discussion, client)
-    # schedule.every().day.at("20:58").do(starter, end_discussion, client)
-    # schedule.every().day.at("20:59").do(starter, end_poll, client)
-    # schedule.every().day.at("20:55").do(starter, announce_topic, client)
-    # schedule.every().day.at("20:56").do(starter, announce_participant, client)
-    pass
-
-
-def schedule_check(client):
-    schedule_arena(client)
-    SHL.output("Started scheduler")
-
-    while True:
-        time.sleep(60)
-        schedule.run_pending()
+app_scheduler = Scheduler()

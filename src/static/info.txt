@@ -1,0 +1,5 @@
+Dieser Bot analysiert die Anzahl Nachricht aller Benutzer des BestOfBundestags-Discords.
+Die Benutzer mit den meisten Nachrichten bekommen eine hervorhebende Rolle zugeteilt.
+Du kannst mit dem Befehl `>analyze false` die Datenerhebung für dich deaktivieren.
+Für weitere Infos wende dich an <@272655001329991681>.
+Der Source Code des Bots ist unter https://github.com/bundestagsbot/bundestagsbot einsehbar.
