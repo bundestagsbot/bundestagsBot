@@ -27,6 +27,8 @@
     "roles": 0,
     "arena": 0,
     "1v1": 0,
+    "rules": 0,
+    "announcement": 0,
     "bot": [],
     "team": []
   }
