@@ -1,0 +1,8 @@
+{
+  "guild_id": null,
+  "exclude_channels": [],
+  "needed_messages": null,
+  "apply_roles": [],
+  "log_channel": null,
+  "announce_channel": null
+}
