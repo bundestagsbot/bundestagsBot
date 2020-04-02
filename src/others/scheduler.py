@@ -3,8 +3,12 @@ import time
 import schedule
 
 from bt_utils.console import Console
+from bt_utils.config import cfg
 
 SHL = Console("Scheduler")
+
+x = cfg.get("daily_schedule", "01:00")
+SHL.info(f"Register daily jobs for {x}")
 
 
 class Scheduler:
@@ -17,7 +21,7 @@ class Scheduler:
         schedule.clear(str(tag))
 
     def schedule_daily(self, func, tag, args=None):
-        schedule.every().day.at("01:00").do(self.starter, func, args).tag(str(tag))
+        schedule.every().day.at(x).do(self.starter, func, args).tag(str(tag))
 
     def schedule_check(self):
         SHL.info("Started scheduler.")

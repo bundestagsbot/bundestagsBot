@@ -18,6 +18,7 @@
   "enable_1v1": false,
   "1v1_time_minutes": 15,
   "disable_database": false,
+  "daily_schedule": "01:00",
   "channel_ids": {
     "welcome": 0,
     "suggestions": 0,
