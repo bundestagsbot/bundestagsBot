@@ -141,5 +141,5 @@ def start_bot():
 
 thread_sched = Thread(target=app_scheduler.schedule_check, name="sched")
 thread_sched.start()
-app_scheduler.schedule_daily(func=assign_active_member, args=client, tag="daily")
+app_scheduler.schedule_monthly(func=assign_active_member, args=client, tag="daily")
 start_bot()
