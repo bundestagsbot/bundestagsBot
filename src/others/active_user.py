@@ -76,14 +76,15 @@ async def assign_active_member(*args):
                          key=lambda item: item.count, reverse=True)
     SHL.debug(f"{len(sorted_list)} users sent enough messages.")
 
-    log_embed = InfoEmbed(title="Aktivste User")
+    log_embed = InfoEmbed(title="Aktivste User", description="Für die Auswahl der Stammmitglieder.\n"
+                                                             "Anzahl an Nachrichten in den letzten 31 Tagen.\n")
     for stat in sorted_list:  # active user
         try:
             member = await guild.fetch_member(stat.user_obj.id)
         except:  # if user left or got banned
             continue
         SHL.debug(f"Apply roles for {member}")
-        log_embed.description += f"{member.mention} : {stat.count} Nachrichten.\n"
+        log_embed.description += f"{member.mention}  {stat.count} Nachrichten.\n"
         for role in cfg.get("apply_roles"):
             assign_role = get(guild.roles, id=role)
             try:
@@ -91,14 +92,7 @@ async def assign_active_member(*args):
             except:
                 SHL.debug(f"Failed for {stat.user_obj}")
                 break
+
     await log_channel.send(embed=log_embed)
-
-    announcement = InfoEmbed(title="Aktivste User", description="Für die Auswahl der Stammmitglieder.\n"
-                                                                "Anzahl an Nachrichten in den letzten 31 Tagen.\n")
-    for stat in sorted_list[:3]:  # most active user
-        member = await guild.fetch_member(stat.user_obj.id)
-        announcement.description += f"{member.mention} : {stat.count} Nachrichten.\n"
-
-    await announcement_channel.send(embed=announcement)
-    await log_channel.send(embed=announcement)
+    await announcement_channel.send(embed=log_embed)
     SHL.info("Done.")
