@@ -21,7 +21,7 @@
   "daily_schedule": "01:00",
   "channel_ids": {
     "welcome": 0,
-    "suggestions": 0,
+    "suggestions": [],
     "main": 0,
     "submits": 0,
     "roles": 0,
