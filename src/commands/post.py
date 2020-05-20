@@ -37,7 +37,7 @@ async def main(client, message, params):
         e = str(reaction.emoji)
         return user == message.author and e.startswith(('✅', '❌'))
 
-    reaction, user = await client.wait_for('reaction_add', timeout=60.0, check=reaction_check)
+    reaction, user = await client.wait_for('reaction_add', timeout=180.0, check=reaction_check)
 
     if not str(reaction.emoji).startswith('✅'):
         return
