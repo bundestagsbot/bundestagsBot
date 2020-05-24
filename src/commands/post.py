@@ -35,7 +35,7 @@ async def main(client, message, params):
 
     def reaction_check(reaction, user):
         e = str(reaction.emoji)
-        return user == message.author and e.startswith(('✅', '❌'))
+        return user == message.author and e.startswith(('✅', '❌')) and reaction.message.id == msg.id
 
     reaction, user = await client.wait_for('reaction_add', timeout=180.0, check=reaction_check)
 
