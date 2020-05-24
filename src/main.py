@@ -15,8 +15,6 @@ from discord.errors import LoginFailure
 from threading import Thread
 import discord
 import asyncio
-from datetime import datetime, timedelta
-import json
 
 loop = asyncio.new_event_loop()
 app_scheduler.main_loop = loop
@@ -68,13 +66,20 @@ async def on_raw_reaction_remove(payload):
 
 
 @client.event
-async def on_message(message):
+async def on_message(message: discord.Message):
     if not await check_message(client, message):  # check basic conditions like length and not responding to himself
-        return 0
+        return
 
     if message.channel.id in cfg.get("channel_ids", dict()).get("suggestions", []):
-        await message.add_reaction('👍')
-        await message.add_reaction('👎')
+        await message.delete()
+        info = InfoEmbed(f"Suggestion by {message.author.display_name}")
+        info.description = message.content
+        info.set_author(name=message.author.display_name, icon_url=message.author.avatar_url_as(format="webp"))
+        info.set_footer(text=f"UserID: {message.author.id}")
+        new_message = await message.channel.send(embed=info)
+        await new_message.add_reaction('👍')
+        await new_message.add_reaction('👎')
+        return
 
     if message.content.lower().startswith(str(cfg.options["invoke_normal"]).lower()):
         params = commands.parse(message.content, False)
